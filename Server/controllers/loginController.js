@@ -4,16 +4,10 @@ const crypto = require('crypto');
 async function postLogin(body) {
     console.log("controller body:", body);
     try {
-        const { password, salt } = body;
-        // const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
-        // console.log(hashedPassword);
-
-        
+        const { password, salt } = body;       
         const saltedPassword = password + salt;
         const hashedPassword = crypto.createHash('sha256').update(saltedPassword).digest('hex');
        
-
-
         return model.postLogin({ ...body, password: hashedPassword });
 
     } catch (err) {

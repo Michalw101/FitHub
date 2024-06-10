@@ -7,11 +7,6 @@ async function postSignup(body) {
         console.log("controller body", body);
 
         const { password } = body;
-        // const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
-        // console.log(hashedPassword);
-
-        // return await model.postSignup({ ...body, password: hashedPassword });
-
         const salt = crypto.randomBytes(16).toString('hex');
 
         const saltedPassword = password + salt;
