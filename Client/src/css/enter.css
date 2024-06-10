@@ -1,0 +1,107 @@
+/* === removing default button style ===*/
+.button {
+    margin: 0;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+/* button styling */
+.button1 {
+    text-align: left;
+    --border-right: 6px;
+    --text-stroke-color: rgba(102, 167, 152, 0.6);
+    --animation-color: #00ffc8;
+    --fs-size: 2em;
+    letter-spacing: 3px;
+    text-decoration: none;
+    font-size: 50px;
+    font-family: "Arial";
+    position: relative;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--text-stroke-color);
+}
+
+/* this is the text, when you hover on button */
+.hover-text {
+    position: absolute;
+    box-sizing: border-box;
+    content: attr(data-text);
+    color: var(--animation-color);
+    width: 0%;
+    inset: 0;
+    border-right: var(--border-right) solid var(--animation-color);
+    overflow: hidden;
+    transition: 0.5s;
+    -webkit-text-stroke: 1px var(--animation-color);
+}
+
+/* hover */
+.button1:hover .hover-text {
+    width: 100%;
+    filter: drop-shadow(0 0 23px var(--animation-color))
+}
+
+.enterLinks {
+    text-underline-offset: none;
+}
+
+
+.enterLinks {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.styledLink {
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.styledLink:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300%;
+    height: 100%;
+    background: linear-gradient(45deg, #75ffed, #00c594);
+    z-index: -1;
+    transition: all 0.3s ease;
+}
+
+.styledLink:hover:before {
+    width: 100%;
+}
+
+.styledLink:hover {
+    color: white;
+    border-color: #2bffed;
+}
+
+.imageGallery {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.image-gallery-slide img {
+    object-fit: cover;
+    width: 100%;
+    height: 400px;
+}
+
+.enterPageWelcome {
+    margin-top: 70px;
+}

@@ -1,0 +1,126 @@
+
+  .file-upload-form {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .file-upload-label input {
+    display: none;
+  }
+  .file-upload-label svg {
+    height: 50px;
+    fill: rgb(82, 82, 82);
+    margin-bottom: 20px;
+  }
+  .file-upload-label {
+    cursor: pointer;
+    background-color: #ddd;
+    padding: 30px 70px;
+    border-radius: 40px;
+    border: 2px dashed rgb(82, 82, 82);
+    box-shadow: 0px 0px 200px -50px rgba(0, 0, 0, 0.719);
+  }
+  .file-upload-design {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .browse-button {
+    background-color: rgb(82, 82, 82);
+    padding: 5px 15px;
+    border-radius: 10px;
+    color: white;
+    transition: all 0.3s;
+  }
+  .browse-button:hover {
+    background-color: rgb(14, 14, 14);
+  }
+
+
+  .button {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(120deg, #833ab4, #fd1d1d, #fcb045);
+    position: relative;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    transition: 0.1s;
+  }
+  .button svg {
+    color: white;
+    width: 30px;
+    height: 30px;
+    z-index: 9;
+  }
+  .button:nth-child(2) {
+    background: #1877F2;
+  }
+  .button:nth-child(3) {
+    background: linear-gradient(120deg, #02e1ff, #008fa8);
+  }
+  
+  .button:nth-child(4) {
+    background: rgb(69, 187, 255);
+  }
+  
+  .button:nth-child(5) {
+    background: rgb(255, 33, 33);
+  }
+  
+  .button:nth-child(6) {
+    background: black;
+  }
+  
+  .button:active {
+    transform: scale(0.85);
+  }
+  
+  .button::before {
+    content: "";
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    background-color: #212121;
+    border-radius: 50px;
+    z-index: -1;
+    border: 0px solid rgba(255, 255, 255, 0.411);
+    transition: 0.4s;
+  }
+  
+  .button:hover::before {
+    width: 0px;
+    height: 0px;
+  }
+
+  
+  .linksInput {
+    display: flex;
+    text-align: center;
+  }   
+
+  .button.facebook svg {
+    fill: #1877F2; 
+    transition: fill 0.3s ease-in-out;
+}
+
+.button.facebook:hover svg {
+    fill: #0A5A97; 
+}
+
+.headerP {
+  font-size: 22px;
+}
+
+.topics {
+  font-size: 16px;
+}
