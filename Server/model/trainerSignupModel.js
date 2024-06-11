@@ -35,7 +35,7 @@ async function postSignup(body) {
     }
 }
 
-const { SENDER_EMAIL, ADMIN_EMAIL, APP_PASSWORD } = process.env
+const { SENDER_EMAIL, ADMIN_1_EMAIL, ADMIN_2_EMAIL, APP_PASSWORD } = process.env
 
 const sendMail = async (transporter, mailOptions) => {
 
@@ -64,8 +64,8 @@ const sendEmailToAdmin = (user) => {
 
     const mailOptions = {
         from: SENDER_EMAIL, // sender address
-        to: [SENDER_EMAIL, ADMIN_EMAIL], // list of receivers
-        subject: "New trainer registration", // Subject line
+        to: [SENDER_EMAIL, ADMIN_1_EMAIL, ADMIN_2_EMAIL], // list of receivers
+        subject: `New trainer registration (${user.email})`, // Subject line
         text: `trainer name: ${user.first_name} ${user.last_name}
                 url: ${user.degree_link}`, // plain text body
         // html: "<b>Hello world?</b>", // html body
@@ -78,8 +78,8 @@ const sendEmailToUser = (user) => {
     const mailOptions = {
         from: SENDER_EMAIL, // sender address
         to: user.email, // list of receivers
-        subject: "Thank you", // Subject line
-        text: "Your application has been checked. We will contact you soon. Thanks!"
+        subject: `Thank you for your registration ${user.first_name} 🤗`, // Subject line
+        text: `We have received your request to apply as a trainer in our application, we are handling your request and will answer you as soon as possible! Thank you! FitHub`
     }
     sendMail(transporter, mailOptions)
 }
