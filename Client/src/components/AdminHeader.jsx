@@ -3,20 +3,16 @@ import { useNavigate } from "react-router-dom"
 import { UserContext } from '../App'
 import '../css/TraineeHome.css'
 
-export default function HomeHeader({ setUserData }) {
+export default function AdminHeader({ setUserData }) {
 
     const navigate = useNavigate();
 
     const profileHandleClick = () => {
-        navigate('profile')
-    }
-
-    const handleClassesClick = () => {
-        navigate('classes')
+        navigate('admin-profile')
     }
 
     const trainersHandleClick = () => {
-        navigate('trainers')
+        navigate('new-trainers')
     }
 
     return (
@@ -57,10 +53,10 @@ export default function HomeHeader({ setUserData }) {
                             />
                         </g>
                     </svg>
-                    Trainers
+                    New Trainers
                 </button>
 
-                <button className="value" onClick={handleClassesClick}>
+                {/* <button className="value" onClick={handleClassesClick}>
                     <svg width="24" height="24" viewBox="-5.4 0 98.4 98.4" xmlns="http://www.w3.org/2000/svg">
                         <g id="Group_4" data-name="Group 4" transform="translate(-822.7 -241.5)">
                             <path id="Path_52" data-name="Path 52" d="M899.4,254.3H833.6a8.92,8.92,0,0,0-8.9,8.9V329a8.92,8.92,0,0,0,8.9,8.9h65.8a8.92,8.92,0,0,0,8.9-8.9V263.2A8.92,8.92,0,0,0,899.4,254.3Z" fill="none" stroke="#7D8590" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="4" />
@@ -71,7 +67,7 @@ export default function HomeHeader({ setUserData }) {
                         </g>
                     </svg>
                     Classes
-                </button>
+                </button> */}
                 <button className="value">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 25" fill="none">
                         <path
@@ -106,7 +102,6 @@ export default function HomeHeader({ setUserData }) {
                 </button>
 
             </div>
-
         </header>
     )
 }

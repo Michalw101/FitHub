@@ -247,3 +247,9 @@ VALUES
 (9, 3),
 (10, 3);
 
+UPDATE users
+SET role_id = 1
+WHERE user_id = 214955064;
+
+
+
