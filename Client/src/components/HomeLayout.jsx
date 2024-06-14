@@ -1,20 +1,32 @@
-import React from "react"
-import { Outlet } from "react-router-dom"
-import HomeHeader from "./HomeHeader"
-import Footer from "./Footer"
-import AdminHeader from "./AdminHeader"
+import React from "react";
+import { Outlet } from "react-router-dom";
+import HomeHeader from "./HomeHeader";
+import Footer from "./Footer";
+import AdminHeader from "./AdminHeader";
+import TrainerHeader from "./TrainerHeader"; 
 
 export default function HomeLayout({ setUserData, userData }) {
+    const renderHeader = () => {
+        switch (userData.role_id) {
+            case 1:
+                return <AdminHeader setUserData={setUserData} userData={userData} />;
+            case 2:
+                return <TrainerHeader setUserData={setUserData} userData={userData} />;
+            case 3:
+                return <HomeHeader setUserData={setUserData} userData={userData} />;
+            default:
+                console.log('no role id');
+                return null;
+        }
+    };
+
     return (
         <div className="site-wrapper">
-            {userData.role_id == 1 ? <AdminHeader setUserData={setUserData} userData={userData}/> : <HomeHeader setUserData={setUserData} userData={userData} />}
-
-
+            {renderHeader()}
             <main>
                 <Outlet />
             </main>
-
             <Footer />
         </div>
-    )
+    );
 }

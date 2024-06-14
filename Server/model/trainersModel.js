@@ -1,6 +1,7 @@
 const pool = require('../DB.js');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+const crypto = require('crypto');
 
 async function getAllTrainers() {
     try {
@@ -44,6 +45,7 @@ async function getTrainer() {
     // }
 };
 
+
 async function createTrainer(body) {
     try {
         console.log('Model received data:', body);
@@ -58,8 +60,16 @@ async function createTrainer(body) {
         const trainerInsertQuery = `INSERT INTO trainers (trainer_id, degree_link, specialization, experience, instegram_link, facebook_link, twitter_link) VALUES (?,?,?,?,?,?,?)`;
         await pool.query(trainerInsertQuery, [user_id, degree_link, specialization, experience, instegram_link, facebook_link, twitter_link]);
 
+        const password = generateRandomPassword(8);
+        const salt = crypto.randomBytes(16).toString('hex');
+        const saltedPassword = password + salt;
+        const hashedPassword = crypto.createHash('sha256').update(saltedPassword).digest('hex');
+
+        const passwordInsertQuery = `INSERT INTO passwords (user_id, user_password, salt) VALUES (?, ?, ?)`;
+        await pool.query(passwordInsertQuery, [user_id, hashedPassword, salt]);
+
         const currentUser = body;
-        sendEmailToUser(currentUser);
+        sendEmailToUser(currentUser, password);
 
         console.log("User created successfully");
         return { user: currentUser, ok: true };
@@ -69,6 +79,18 @@ async function createTrainer(body) {
         throw error;
     }
 }
+
+const generateRandomPassword = (length) => {
+    const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let password = "";
+    for (let i = 0; i < length; i++) {
+        const randomNumber = Math.floor(Math.random() * chars.length);
+        password += chars.substring(randomNumber, randomNumber + 1);
+    }
+    return password;
+};
+
+
 
 const { SENDER_EMAIL, APP_PASSWORD } = process.env
 
@@ -94,7 +116,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-const sendEmailToUser = (user) => {
+const sendEmailToUser = (user, password) => {
     const mailOptions = {
         from: SENDER_EMAIL,
         to: user.email,
@@ -105,14 +127,21 @@ const sendEmailToUser = (user) => {
 
            I'm excited to let you know that we'd love to have you join our team at FITHUB. Your skills and passion for fitness really stood out to us, and we think you'll be a great fit.
 
+           Here is your password: 
+
+           ${password} 
+           
+           Feel free to change it after your first login.
+
            I've attached the job offer with all the details about the role, responsibilities, and pay. Please take a look and let us know if you're in.
 
             If you have any questions or need more info, feel free to reach out. We're looking forward to having you with us!
             
             FitHub Teams`
-    }
-    sendMail(transporter, mailOptions)
+    };
+    sendMail(transporter, mailOptions);
 }
+
 
 
 

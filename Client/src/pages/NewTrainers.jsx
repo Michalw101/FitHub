@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import TrainerProfile from '../components/TrainerProfile';
+import TrainerProfile from '../components/TrainerSmallProfile';
 import NewTrainer from '../components/NewTrainer';
 import { serverRequests } from '../Api';
 

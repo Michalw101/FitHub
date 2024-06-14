@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../App';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
-import TrainerProfile from '../components/TrainerProfile'
+import TrainerProfile from '../components/TrainerSmallProfile'
 import '../css/trainers.css'
 
 const Trainers = ({ setUserData }) => {
