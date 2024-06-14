@@ -7,8 +7,12 @@ router.use(express.urlencoded({ extended: true }));
 
 router.get("/", async (req, res) => {
     try {
+        console.log('Request received:', req.body); 
+
         res.send(await controller.getAllTrainers());
     } catch (err) {
+        console.error("Error in POST /:", err); 
+
         res.status(404).send({ ok: false });
     }
 });

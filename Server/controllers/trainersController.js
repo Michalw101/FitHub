@@ -2,11 +2,12 @@ const model = require('../model/trainersModel');
 
 async function createTrainer(body) {
     try {
-        console.log("controller body" + body);
+        console.log('Controller received data:', body);
 
         return model.createTrainer(body);
     }
     catch (err) {
+        console.error("Error in createTrainer:", err);
         throw err;
     }
 };

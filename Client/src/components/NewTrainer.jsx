@@ -3,13 +3,13 @@ import '../css/newTrainer.css'
 import { serverRequests } from '../Api';
 
 export default function NewTrainer({ trainer, setTrainers, trainers }) {
-    const [acceptingTrainer, setAcceptingTrainer]= useState(false);
+    const [acceptingTrainer, setAcceptingTrainer] = useState(false);
 
     const handleDeleteClick = () => {
 
         if (confirm(`Are you sure you want to delete ${trainer.first_name} forever 🥺?`)) {
             const url = `new-trainers/${trainer.user_id}`;
-            serverRequests('DELETE', url, {...trainer, sendMail:true})
+            serverRequests('DELETE', url, { ...trainer, sendMail: true })
                 .then(response => {
                     console.log(response);
                     if (!response.ok) {
@@ -32,7 +32,7 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
     const handleAcceptClick = () => {
         if (confirm(`Are you sure you want to accept ${trainer.first_name}?`)) {
             const url = `new-trainers/${trainer.user_id}`;
-            serverRequests('DELETE', url, {...trainer, sendMail:false})
+            serverRequests('DELETE', url, { ...trainer, sendMail: false })
                 .then(response => {
                     console.log(response);
                     if (!response.ok) {
@@ -51,28 +51,30 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
     }
 
     useEffect(() => {
+
         if (acceptingTrainer) {
-    
-          serverRequests('POST', "trainers", trainer)
-            .then(response => {
-              console.log(response);
-              if (!response.ok) {
-                console.error("error in creating trainer");
-                return;
-              }
-              return response.json();
-            })
-            .then(data => {
-              if (data) {
-                setTrainers(trainers.filter(currentTrainer => currentTrainer.user_id !== trainer.user_id));
-                setAcceptingTrainer(false);
-              }
-            })
-            .catch(error => {
-                console.error('Error', error);
-            });
+            console.log('Sending POST request for trainer:', trainer); // Add this line
+
+            serverRequests('POST', "trainers", trainer)
+                .then(response => {
+                    console.log(response);
+                    if (!response.ok) {
+                        console.error("error in creating trainer");
+                        return;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data) {
+                        setTrainers(trainers.filter(currentTrainer => currentTrainer.user_id !== trainer.user_id));
+                        setAcceptingTrainer(false);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error', error);
+                });
         }
-      }, [acceptingTrainer]);
+    }, [acceptingTrainer]);
 
     return (
         <div className="trainer-container">

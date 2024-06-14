@@ -46,16 +46,19 @@ async function getTrainer() {
 
 async function createTrainer(body) {
     try {
+        console.log('Model received data:', body);
         const { user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, specialization, experience,
             instegram_link, facebook_link, twitter_link } = body;
 
+        const formattedBirthDate = new Date(birth_date).toISOString().split('T')[0];
+
         const userInsertQuery = `INSERT INTO users (user_id, first_name, last_name, email, phone, birth_date, gender, role_id) VALUES (?,?,?,?,?,?,?,?)`;
-        await pool.query(userInsertQuery, [user_id, first_name, last_name, email, phone, birth_date, gender, 2]);
+        await pool.query(userInsertQuery, [user_id, first_name, last_name, email, phone, formattedBirthDate, gender, 2]);
 
         const trainerInsertQuery = `INSERT INTO trainers (trainer_id, degree_link, specialization, experience, instegram_link, facebook_link, twitter_link) VALUES (?,?,?,?,?,?,?)`;
         await pool.query(trainerInsertQuery, [user_id, degree_link, specialization, experience, instegram_link, facebook_link, twitter_link]);
-        const currentUser = body;
 
+        const currentUser = body;
         sendEmailToUser(currentUser);
 
         console.log("User created successfully");
@@ -65,7 +68,7 @@ async function createTrainer(body) {
         console.error("Error creating user:", error);
         throw error;
     }
-};
+}
 
 const { SENDER_EMAIL, APP_PASSWORD } = process.env
 
@@ -93,8 +96,8 @@ const transporter = nodemailer.createTransport({
 
 const sendEmailToUser = (user) => {
     const mailOptions = {
-        from: SENDER_EMAIL, 
-        to: user.email, 
+        from: SENDER_EMAIL,
+        to: user.email,
         subject: `Congratulations ${user.first_name} 😍`,
         text: `Dear ${user.first_name} ${user.last_name},
 
@@ -155,4 +158,4 @@ async function updateTrainer(body) {
     // }
 };
 
-module.exports = { updateTrainer, deleteTrainer, createTrainer, getTrainer, getAllTrainers}
+module.exports = { updateTrainer, deleteTrainer, createTrainer, getTrainer, getAllTrainers }

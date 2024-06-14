@@ -15,11 +15,13 @@ const RegistrationStep1 = ({ handleChanged }) => {
     const day = (`0${d.getDate()}`).slice(-2);
     return `${year}-${month}-${day}`;
   };
+  
 
 
   const handleDateChange = (date) => {
     handleChanged({ target: { name: 'birth_date', value: formatDateToSQL(date) } });
   };
+  
 
   const handleGenderChange = (event) => {
     const { name, value } = event.target;

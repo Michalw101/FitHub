@@ -35,6 +35,8 @@ const TrainerStep3 = ({ setUserData }) => {
       });
 
   }
+
+  
   return (
     <div>
       <div className="registration-container">
