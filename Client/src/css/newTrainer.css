@@ -1,42 +1,157 @@
 
-.trainer-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    background-color: #f9f9f9;
+/* Card Styles */
+.card1 {
+  width: 300px;
+  height: 400px;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-color: rgba(113, 113, 113, 0.6);
+  backdrop-filter: blur(20px);
+  text-align: center;
+  border: 1px solid #fff;
+  /* Transform Propertys */
+  --rotate-animation: rotate(45deg);
+  --scale-animation: scale(0);
+  /* Backgrounds - Social Media Hover */
+  --bg-facebook: blue;
+  --bg-instagram: linear-gradient(to right, #8a2387, #e94057, #f27121);
+  --bg-twitter: rgb(25, 173, 206);
+  --bg-linkedin: rgb(30, 48, 131);
 }
 
-.trainer-container h1 {
-    font-size: 2em;
-    color: #333;
-    margin-bottom: 10px;
+.card1::before {
+  content: '';
+  height: 110%;
+  width: 110%;
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  z-index: -1;
+  background: linear-gradient(
+    to right,
+    #00837c,
+    #00818a,
+    #00c2b8
+  );
+  border-radius: 10px;
+  filter: blur(50px);
 }
 
-.trainer-container h2, .trainer-container h3 {
-    font-size: 1.2em;
-    color: #555;
-    margin: 5px 0;
+.card__hover {
+  color: #fff;
+  width: 100%;
+  margin: 0;
+  font-size: 40px;
+  font-weight: 600;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  text-align: center;
+  letter-spacing: 2px;
+  pointer-events: none;
+  transform: scale(1) translateY(-50%);
+  font-family: var(--font-mulish);
+  transition: transform 500ms;
 }
 
-.trainer-container h2 {
-    color: #007BFF;
+.card1:hover .card__hover {
+  transform: scale(0);
 }
 
-.trainer-container h3 {
-    color: #28A745;
+.card__figure {
+  width: 100%;
+  height: 65%;
+  border-radius: 10px;
+  overflow: hidden;
+  transform: var(--rotate-animation) var(--scale-animation);
+  transition: transform 600ms ease 100ms;
 }
 
-.clickable-email {
-    cursor: pointer;
-    text-decoration: underline;
+.card1:hover .card__figure {
+  --rotate-animation: rotate(0);
+  --scale-animation: scale(1);
 }
+
+.card__figure svg {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: drop-shadow(0 0 2px #0f0c29);
+}
+
+.card__info {
+  display: flex;
+  flex-direction: column;
+  transform: var(--scale-animation);
+  transition: transform 600ms ease 100ms;
+}
+
+.card1:hover .card__info {
+  --scale-animation: scale(1);
+}
+
+.card__name {
+  color: #fff;
+  font-size: 28px;
+  letter-spacing: 1px;
+  font-family: var(--font-AR-One-Sans);
+}
+
+.card__ocupation {
+  color: aliceblue;
+  font-family: var(--font-mulish);
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.card__links {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  --transform-animation: translateY(-10px);
+}
+
+.card__links svg {
+  height: 55px;
+  width: 55px;
+  padding: 10px;
+  background-color: rgba(128, 128, 128, 0.211);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background .3s ease, transform .2s ease;
+}
+
+
+.card__links svg:hover {
+  transform: var(--transform-animation);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
+}
+
+/* Hover Colors */
+.card__links svg:nth-child(1):hover {
+  background: var(--bg-facebook);
+}
+
+.card__links svg:nth-child(2):hover {
+  background: var(--bg-instagram);
+}
+
+.card__links svg:nth-child(3):hover {
+  background: var(--bg-twitter);
+}
+
+.card__links svg:nth-child(4):hover {
+  background: var(--bg-linkedin);
+}
+
 
 
 .button11 {

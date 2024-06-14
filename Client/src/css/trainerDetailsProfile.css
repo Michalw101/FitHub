@@ -35,7 +35,28 @@
     text-align: center;
     margin-bottom: 15px;
     font-weight: 900;
+    font-size: 26px;
+  }
+
+  .card__phone, .card__email {
+    color: var(--font-color);
+    text-align: left;
+    margin-bottom: 15px;
+    font-weight: 900;
     font-size: 16px;
+  }
+
+  .emailDiv {
+    display: flex;
+    gap: 5px;
+  }
+  .phoneDiv {
+    display: flex;
+    gap: 5px;
+  }
+  .nameDiv {
+    display: flex;
+    gap: 10px;
   }
   
   .card__descr {
@@ -50,7 +71,7 @@
     width: 100%;
     padding-top: 40px;
     font-family: "Poppins", sans-serif;
-    display: flex; /* Added */
+    display: flex;
     justify-content: center;
   }
   
@@ -59,9 +80,9 @@
     background: #fff;
     border-radius: 50%;
     margin: 10px;
-    width: 50px;
-    height: 50px;
-    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,6 +106,18 @@
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
   
+
+.wrapper .instagram {
+  color: #e4405f;
+}
+.wrapper .twitter {
+  color: #1da1f2;
+}
+.wrapper .facebook {
+  color: #1877f2;
+}
+
+
   .wrapper .tooltip::before {
     position: absolute;
     content: "";
