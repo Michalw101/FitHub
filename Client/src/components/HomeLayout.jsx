@@ -7,7 +7,7 @@ import AdminHeader from "./AdminHeader"
 export default function HomeLayout({ setUserData, userData }) {
     return (
         <div className="site-wrapper">
-            {userData.role_id == 1 ? <AdminHeader /> : <HomeHeader setUserData={setUserData} />}
+            {userData.role_id == 1 ? <AdminHeader setUserData={setUserData} userData={userData}/> : <HomeHeader setUserData={setUserData} userData={userData} />}
 
 
             <main>

@@ -19,7 +19,9 @@ export async function serverRequests(method, URL, body) {
         headers: {
             ...(body instanceof FormData ? {} : { 'Content-Type': 'application/json' }),
         },
-        body: body instanceof FormData ? body : JSON.stringify(body)
+        body: body instanceof FormData ? body : JSON.stringify(body),
+        credentials: 'include'
+
     };
     
 

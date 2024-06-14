@@ -65,6 +65,16 @@ const TrainerStep2 = ({ handleChanged }) => {
     return (
         <div className='details'>
             <p className='headerP'>Now, let's talk about your experience...</p><br></br><br></br>
+            <p className='topics'>What`s your ID number?</p>
+            <div className='inputGroup'>
+                <input
+                    type="text"
+                    required=""
+                    autoComplete="off"
+                    name="user_id"
+                    value={userData.user_id || ''}
+                    onChange={handleChanged} />
+            </div>
             <p className='topics'>Where was your last place of work?</p>
             <div className='inputGroup'>
                 <input
@@ -83,6 +93,16 @@ const TrainerStep2 = ({ handleChanged }) => {
                     autoComplete="off"
                     name="diploma"
                     value={userData.diploma || ''}
+                    onChange={handleChanged} />
+            </div>
+            <p className='topics'>What`s your specialization?</p>
+            <div className='inputGroup'>
+                <input
+                    type="text"
+                    required=""
+                    autoComplete="off"
+                    name="specialization"
+                    value={userData.specialization || ''}
                     onChange={handleChanged} />
             </div>
             <p className='topics'>Please upload a PDF file of your degree</p><br></br>

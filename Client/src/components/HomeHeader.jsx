@@ -1,9 +1,10 @@
 import React, { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from '../App'
+import { serverRequests } from "../Api"
 import '../css/TraineeHome.css'
 
-export default function HomeHeader({ setUserData }) {
+export default function HomeHeader({ setUserData, userData }) {
 
     const navigate = useNavigate();
 
@@ -17,6 +18,27 @@ export default function HomeHeader({ setUserData }) {
 
     const trainersHandleClick = () => {
         navigate('trainers')
+    }
+
+    const handleLogoutClicked = () => {
+        serverRequests('POST', `logout`, {...userData, credentials: 'include'})
+            .then(response => {
+                console.log(response);
+                if (!response.ok) {
+                    console.error('Logout failed');
+                    return;
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data) {
+                    setUserData(null);
+                    navigate('/');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     return (
@@ -85,7 +107,7 @@ export default function HomeHeader({ setUserData }) {
                 </button>
 
 
-                <button className="value" onClick={() => { setUserData(null); navigate('/') }}>
+                <button className="value" onClick={handleLogoutClicked}>
                     <svg
                         width="24"
                         height="24"

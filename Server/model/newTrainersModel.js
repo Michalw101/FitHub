@@ -2,9 +2,9 @@ const pool = require('../DB.js');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-async function getAllTrainers() {
+async function getAllNewTrainers() {
     try {
-        const sql = `SELECT * FROM trainers NATURAL JOIN users where trainers.trainer_id = users.user_id`;
+        const sql = `SELECT * FROM trainers_waiting_list`;
         const result = await pool.query(sql);
 
         console.log(result);
@@ -45,25 +45,25 @@ async function getTrainer() {
 };
 
 async function createTrainer(body) {
+   
+};
+
+async function deleteTrainer(id, sendMail) {
     try {
-        const { user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, specialization, experience,
-            instegram_link, facebook_link, twitter_link } = body;
+        console.log('delete trainer model');
+        const getSql = `SELECT * FROM trainers_waiting_list where user_id = ?`;
+        const user = await pool.query(getSql, id);
 
-        const userInsertQuery = `INSERT INTO users (user_id, first_name, last_name, email, phone, birth_date, gender, role_id) VALUES (?,?,?,?,?,?,?,?)`;
-        await pool.query(userInsertQuery, [user_id, first_name, last_name, email, phone, birth_date, gender, 2]);
+        const sql = `DELETE FROM trainers_waiting_list WHERE user_id = ?`;
+        await pool.query(sql, [id]);
 
-        const trainerInsertQuery = `INSERT INTO trainers (trainer_id, degree_link, specialization, experience, instegram_link, facebook_link, twitter_link) VALUES (?,?,?,?,?,?,?)`;
-        await pool.query(trainerInsertQuery, [user_id, degree_link, specialization, experience, instegram_link, facebook_link, twitter_link]);
-        const currentUser = body;
+        if (sendMail) sendEmailToUser(user[0][0]);
 
-        sendEmailToUser(currentUser);
-
-        console.log("User created successfully");
-        return { user: currentUser, ok: true };
-
-    } catch (error) {
-        console.error("Error creating user:", error);
-        throw error;
+        return { success: true, message: "delete successfuly" };
+    }
+    catch (err) {
+        console.error('Error deleting trainer:', err);
+        return { success: false, message: "An error occurred" };
     }
 };
 
@@ -93,39 +93,13 @@ const transporter = nodemailer.createTransport({
 
 const sendEmailToUser = (user) => {
     const mailOptions = {
-        from: SENDER_EMAIL, 
-        to: user.email, 
-        subject: `Congratulations ${user.first_name} 😍`,
-        text: `Dear ${user.first_name} ${user.last_name},
-
-           I hope you're doing well.
-
-           I'm excited to let you know that we'd love to have you join our team at FITHUB. Your skills and passion for fitness really stood out to us, and we think you'll be a great fit.
-
-           I've attached the job offer with all the details about the role, responsibilities, and pay. Please take a look and let us know if you're in.
-
-            If you have any questions or need more info, feel free to reach out. We're looking forward to having you with us!
-            
-            FitHub Teams`
+        from: SENDER_EMAIL, // sender address
+        to: user.email, // list of receivers
+        subject: `Hi ${user.first_name} 🤗`, // Subject line
+        text: `Sorry but you didnt recieved the Trainer job... See you again! FitHub`
     }
     sendMail(transporter, mailOptions)
 }
-
-
-
-
-async function deleteTrainer(id) {
-    // try {
-    //     console.log('delete todo model');
-    //     const sql = `DELETE FROM todos WHERE todo_id = ?`;
-    //     const result = await pool.query(sql, [id]);
-    //     return;
-    // }
-    // catch (err) {
-    //     console.error('Error deleting todo:', err);
-    //     return { success: false, message: "An error occurred" };
-    // }
-};
 
 async function updateTrainer(body) {
     // body = JSON.parse(body);
@@ -155,4 +129,4 @@ async function updateTrainer(body) {
     // }
 };
 
-module.exports = { updateTrainer, deleteTrainer, createTrainer, getTrainer, getAllTrainers}
+module.exports = { updateTrainer, deleteTrainer, createTrainer, getTrainer, getAllNewTrainers }

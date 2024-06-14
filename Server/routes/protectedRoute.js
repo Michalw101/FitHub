@@ -1,12 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const authenticateSession = require('../middleware/authenticateSession');
 
-router.get("/protected", (req, res) => {
-    if (req.session.user) {
-        res.json({ message: "This is protected data", user: req.session.user });
-    } else {
-        res.status(401).json({ message: "Unauthorized" });
-    }
+router.get('/protected', authenticateSession, (req, res) => {
+    console.log('User in protected route:', req.user);
+    res.json({ message: 'You are authorized', user: req.user });
 });
 
 module.exports = router;

@@ -11,12 +11,10 @@ async function postLogin(body) {
         const loginResult = await pool.query(loginSql, user_id);
 
         const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET;
-        console.log(JWT_SECRET)
+        console.log('JWT_SECRET:', JWT_SECRET);
 
 
         if (loginResult[0][0]) {
-
-
             if (password === loginResult[0][0].user_password) {
                 console.log("passwords equal");
 
@@ -30,11 +28,11 @@ async function postLogin(body) {
 
 
                 const user = roleResult[0][0];
-                console.log(user);
+                console.log('User:', user);
 
                 const accessToken = jwt.sign({ username: user.user_id }, JWT_SECRET, { expiresIn: '1h' });
 
-                console.log(accessToken);
+                console.log('Generated Access Token:', accessToken);
 
                 return { success: true, message: "Login successful", user: user, token: accessToken };
 

@@ -22,15 +22,14 @@ router.get("/", async (req, res) => {
 //     }
 // });
 
-// router.post("/", async (req, res) => {
-//     try {
-//         console.log("router todo req" + JSON.stringify(req.body));
-//         res.send(await controller.createTodo(JSON.stringify(req.body)));
-//     }
-//     catch (err) {
-//         res.status(404).send({ ok: false });
-//     }
-// });
+router.post("/", async (req, res) => {
+    try {
+        res.send(await controller.createTrainer(req.body));
+    }
+    catch (err) {
+        res.status(500).send({ ok: false });
+    }
+});
 
 // router.delete("/:id", async (req, res) => {
 //      const id = req.params.id;
