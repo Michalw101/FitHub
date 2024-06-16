@@ -12,15 +12,15 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.put("/", async (req, res) => {
-    console.log("req:", req.body);
-    try {
-        res.send(await controller.putSignup(req.body));
-    } catch (err) {
-        console.log(`router error ${err} `);
-        res.status(500).send({ ok: false,  error: err });
-    }
+// router.put("/", async (req, res) => {
+//     console.log("req:", req.body);
+//     try {
+//         res.send(await controller.putSignup(req.body));
+//     } catch (err) {
+//         console.log(`router error ${err} `);
+//         res.status(500).send({ ok: false,  error: err });
+//     }
 
-});
+// });
 
 module.exports = router;

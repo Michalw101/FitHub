@@ -57,7 +57,6 @@ async function uploadFileToDrive(fileName, filePath) {
   }
 }
 
-// נתיב להעלאת קבצים
 router.post('/', upload.single('file'), async (req, res) => {
   console.log('POST /upload route hit');
   const file = req.file;

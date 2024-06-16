@@ -69,7 +69,7 @@ CREATE TABLE trainers (
 );
 
 CREATE TABLE trainers_waiting_list (
-	user_id INT PRIMARY KEY auto_increment,
+	user_id INT PRIMARY KEY,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     email VARCHAR(255),
@@ -78,7 +78,9 @@ CREATE TABLE trainers_waiting_list (
     gender VARCHAR(255),
 	degree_link varchar(255),
     experience INT,
+    specialization varchar(255),
     last_work_place VARCHAR(255),
+    place_of_study varchar(255),
     instegram_link VARCHAR(255),
 	facebook_link VARCHAR(255),
     twitter_link VARCHAR(255)
@@ -112,16 +114,6 @@ CREATE TABLE trainees_in_class (
       ON DELETE CASCADE
 );
 
--- CREATE TABLE credit_cards (
---     trainee_id INT PRIMARY KEY,
---     card_number VARCHAR(16) NOT NULL,
---     card_expiry VARCHAR(7) NOT NULL,
---     card_CVV INT,
---     FOREIGN KEY (trainee_id) 
---       REFERENCES users (user_id) 
---       ON UPDATE RESTRICT 
---       ON DELETE CASCADE
--- );
 
 
 CREATE TABLE passwords (
@@ -134,122 +126,55 @@ CREATE TABLE passwords (
       ON DELETE CASCADE
 );
 
-
-
--- Create the permissions table
-CREATE TABLE permissions (
-    user_id INT,
-    role_id INT,
-    PRIMARY KEY (user_id, role_id),
-    FOREIGN KEY (user_id) 
-      REFERENCES users (user_id) 
-      ON UPDATE RESTRICT 
-      ON DELETE CASCADE,
-    FOREIGN KEY (role_id) 
-      REFERENCES roles (role_id) 
-      ON UPDATE RESTRICT 
-      ON DELETE CASCADE
-);
-
--- Insert data into the users table
-INSERT INTO users (user_id, first_name, last_name, email, phone, birth_date, gender) 
-VALUES 
-(1, 'John', 'Doe', 'john.doe@example.com', '123456789', '1990-05-15', 'Male'),
-(2, 'Jane', 'Smith', 'jane.smith@example.com', '987654321', '1985-10-20', 'Female'),
-(3, 'Alice', 'Johnson', 'alice.johnson@example.com', '456789123', '1988-03-25', 'Female'),
-(4, 'Bob', 'Brown', 'bob.brown@example.com', '654987321', '1992-07-08', 'Male'),
-(5, 'Charlie', 'Davis', 'charlie.davis@example.com', '789654123', '1995-12-12', 'Male'),
-(6, 'David', 'Wilson', 'david.wilson@example.com', '321456987', '1980-09-30', 'Male'),
-(7, 'Emma', 'Martinez', 'emma.martinez@example.com', '159753246', '1993-04-18', 'Female'),
-(8, 'Olivia', 'Taylor', 'olivia.taylor@example.com', '456123789', '1987-06-22', 'Female'),
-(9, 'Ethan', 'Anderson', 'ethan.anderson@example.com', '987321654', '1998-08-05', 'Male'),
-(10, 'Sophia', 'Thomas', 'sophia.thomas@example.com', '852369741', '1994-11-28', 'Female');
-
--- Insert data into the information table
-INSERT INTO information (information_id) 
-VALUES 
-(1),
-(2),
-(3),
-(4),
-(5);
-
--- Insert data into the trainees table
-INSERT INTO trainees (trainee_id, information_id) 
-VALUES 
-(8, 1),
-(9, 2),
-(10, 3);
-
-
-
--- Insert data into the trainers table
-INSERT INTO trainers (trainer_id, 	degree_link , experience, specialization) 
-VALUES 
-(3, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 5, 'Best At Pilatis'),
-(4, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 8, 'Best At Morning exc'),
-(5, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 3, 'Best At Gym'),
-(6, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 6, 'Best At KickBox'),
-(7, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 4, 'Best At Erobi');
-
-select *  from classes;
-
--- Insert data into the classes table
-INSERT INTO classes (class_id, trainer_id, date, hour, description, price, link) 
-VALUES 
-(1, 3, '2024-06-01', '08:00:00', 'Morning Workout', 20, 'https://example.com/class1'),
-(2, 4, '2024-06-02', '18:00:00', 'Evening Yoga', 15, 'https://example.com/class2'),
-(3, 5, '2024-06-03', '10:30:00', 'Pilates Session', 25, 'https://example.com/class3');
-
-SELECT * FROM trainees WHERE trainee_id IN (8, 9, 10);
-
-
--- Insert data into the trainees_in_class table
-INSERT INTO trainees_in_class (trainee_id, class_id) 
-VALUES 
-(8, 1),
-(9, 2),
-(10, 3);
-
-
--- Insert data into the passwords table
-INSERT INTO passwords (user_id, user_password) 
-VALUES 
-(1, '4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8'),
-(2, '4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8'),
-(3, '4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8'),
-(4, '4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8'),
-(5, '4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8'),
-(6, '4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8'),
-(7, '4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8'),
-(8, '4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8'),
-(9, '4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8'),
-(10, '4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8');
-
--- Insert data into the roles table
 INSERT INTO roles (role_name) 
 VALUES 
 ('Admin'),
 ('Trainer'),
 ('Trainee');
 
--- Insert data into the permissions table
-INSERT INTO permissions (user_id, role_id) 
+INSERT INTO users (user_id, first_name, last_name, email, phone, birth_date, gender , role_id) 
 VALUES 
-(1, 1),
-(2, 1),
-(3, 2),
-(4, 2),
-(5, 2),
-(6, 2),
-(7, 2),
-(8, 3),
-(9, 3),
-(10, 3);
+(214955064, 'Gru', 'Admin', 'michal0548429273@gmail.com', '0548429273', '2004-09-10', 'Female', 1),
+(214859415, 'Lussie', 'Admin', 'michal24263@gmail.com', '0548475867', '2004-11-23', 'Female', 1),
+(1, 'Kevin', 'The minion', 'micsharo@g.jct.ac.il', '456789123', '1988-03-25', 'Female', 2),
+(2, 'Bob', 'The minion', 'ylyyrwslmy25@gmail.com', '654987321', '1992-07-08', 'Male', 3);
 
-UPDATE users
-SET role_id = 1
-WHERE user_id = 214955064;
+
+INSERT INTO information (information_id, heart_disease,	chest_pain_at_rest, chest_pain_daily_activity, chest_pain_exercise,	dizziness_balance_loss, fainting,
+	asthma_medication,asthma_symptoms, family_heart_disease, family_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk) 
+VALUES 
+(1, false,false,false,false,false,false,false,false,false,false,false,false,false);
+
+
+INSERT INTO trainees (trainee_id, information_id) 
+VALUES 
+(2, 1);
+
+
+INSERT INTO trainers  (trainer_id, experience, degree_link, specialization, instegram_link, facebook_link, twitter_link)
+VALUES 
+(1, 5, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 'Eat BANANA', "https://www.instagram.com/Kevin_The_Minion_Official","https://www.facebook.com/KevinTheMinionPage","https://twitter.com/KevinTheMinion123");
+
+
+
+INSERT INTO classes (class_id, trainer_id, date, hour, description, price, link) 
+VALUES 
+(1, 1, '2024-06-01', '08:00:00', 'Morning Workout', 20, 'https://example.com/class1'),
+(2, 1, '2024-06-02', '18:00:00', 'Evening Yoga', 15, 'https://example.com/class2'),
+(3, 1, '2024-06-03', '10:30:00', 'Pilates Session', 25, 'https://example.com/class3');
+
+INSERT INTO trainees_in_class (trainee_id, class_id) 
+VALUES 
+(2, 1);
+
+
+INSERT INTO passwords (user_id, user_password, salt) 
+VALUES 
+(214955064, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', "2a0280e31556715cbef22eca1b36ef15"),
+(214859415, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', "2a0280e31556715cbef22eca1b36ef15"),
+(1, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', "2a0280e31556715cbef22eca1b36ef15"),
+(2, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', "2a0280e31556715cbef22eca1b36ef15");
+
 
 
 

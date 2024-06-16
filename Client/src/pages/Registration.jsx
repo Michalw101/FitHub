@@ -39,7 +39,6 @@ const Registration = ({ setUserData }) => {
                 }
                 return response.json();
             }).then((data) => {
-                localStorage.setItem("currentUser", JSON.stringify(data.user));
                 setUserData(data.user);
                 setUserData((prev) => ({
                     ...prev,

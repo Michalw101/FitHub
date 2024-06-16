@@ -10,8 +10,10 @@ const Trainers = ({ setUserData }) => {
   const navigate = useNavigate();
   //OH YEA I WOULD WANT MYSELF
 
+  //BABY PLEASE BELIEVE ME
 
-  // const userData = useContext(UserContext);
+
+  const userData = useContext(UserContext);
   const [trainers, setTrainers] = useState(null);
   const [addTrainer, setAddTrainer] = useState(false);
   // const [sortBy, setSortBy] = useState('sequential');
@@ -65,9 +67,11 @@ const Trainers = ({ setUserData }) => {
         phone: "",
         birth_date: "",
         gender: "",
-        certification_id: "",
+        degree_link: "",
         experience: "",
         last_work_place: "",
+        diploma: "",
+        specialization: "",
         instegram_link: "",
         facebook_link: "",
         twitter_link: ""
@@ -182,35 +186,7 @@ const Trainers = ({ setUserData }) => {
           </g>
         </svg>
       </div>
-
-
-
-
-      {/* <button
-        className="group cursor-pointer outline-none hover:rotate-90 duration-300"
-        title="Add Yourself"
-      >
-        <svg
-          className="stroke-teal-500 fill-none group-hover:fill-teal-800 group-active:stroke-teal-200 group-active:fill-teal-600 group-active:duration-0 duration-300"
-          viewBox="0 0 24 24"
-          height="50px"
-          width="50px"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeWidth="1.5"
-            d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-          ></path>
-          <path strokeWidth="1.5" d="M8 12H16"></path>
-          <path strokeWidth="1.5" d="M12 16V8"></path>
-        </svg>
-      </button> */}
-
-
     </div>
-
-
-
 
   );
 };

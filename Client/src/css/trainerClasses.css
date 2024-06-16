@@ -1,0 +1,21 @@
+.trainer-classes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.react-calendar {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border: 1px solid #a0a096;
+    border-radius: 8px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.react-calendar__tile--active {
+    background: #006edc;
+    color: white;
+}

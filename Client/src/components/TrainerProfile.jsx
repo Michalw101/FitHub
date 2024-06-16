@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { UserContext } from '../App';
 import '../css/trainerDetailsProfile.css';
 
-export default function TrainerProfile({ setUserData, userData }) {
+export default function TrainerProfile({ setUserData }) {
+    const userData = useContext(UserContext);
     return (
         <div>
 
@@ -65,8 +67,8 @@ export default function TrainerProfile({ setUserData, userData }) {
                         </div>
                     </div> */}
                     <div className="wrapper">
-                        <a className="icon facebook" href='https://www.facebook.com/BobTheMinionPage'>
-                            <span className="tooltip">https://www.facebook.com/BobTheMinionPage</span>
+                        <a className="icon facebook" href={userData.facebook_link}>
+                            <span className="tooltip">{userData.facebook_link}</span>
                             <svg
                                 viewBox="0 0 320 512"
                                 height="1.2em"
@@ -78,8 +80,8 @@ export default function TrainerProfile({ setUserData, userData }) {
                                 ></path>
                             </svg>
                         </a>
-                        <a className="icon twitter" href='https://twitter.com/BobTheMinion123'>
-                            <span className="tooltip">https://twitter.com/BobTheMinion123</span>
+                        <a className="icon twitter" href={userData.twitter_link}>
+                            <span className="tooltip">{userData.twitter_link}</span>
                             <svg
                                 height="1.8em"
                                 fill="currentColor"
@@ -92,8 +94,8 @@ export default function TrainerProfile({ setUserData, userData }) {
                                 ></path>
                             </svg>
                         </a>
-                        <a className="icon instagram" href='https://www.instagram.com/Bob_The_Minion_Official'>
-                            <span className="tooltip">https://www.instagram.com/Bob_The_Minion_Official</span>
+                        <a className="icon instagram" href={userData.instegram_link}>
+                            <span className="tooltip">{userData.instegram_link}</span>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 height="1.2em"
@@ -107,7 +109,10 @@ export default function TrainerProfile({ setUserData, userData }) {
                             </svg>
                         </a>
                     </div>
-
+                    <div className="profile-item">
+                    <label>specialization:</label>
+                    <span>{userData.specialization}</span>
+                </div>
                 </div>
             </div>
 
@@ -130,10 +135,7 @@ export default function TrainerProfile({ setUserData, userData }) {
                     <label>Instagram Link:</label>
                     <span>{userData.instagram_link}</span>
                 </div>
-                <div className="profile-item">
-                    <label>Facebook Link:</label>
-                    <span>{userData.facebook_link}</span>
-                </div>
+               
                 <div className="profile-item">
                     <label>Twitter Link:</label>
                     <span>{userData.twitter_link}</span>

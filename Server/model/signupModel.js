@@ -58,13 +58,9 @@ async function putSignup(body) {
         await pool.query(traineeInsertQuery, [user_id, lastInsertedId]);
 
 
-        // const paymentSql = `INSERT INTO credit_cards (trainee_id, card_number, card_expiry, card_CVV)
-        //     VALUES (?, ?, ?, ?)`;
-        // await pool.query(paymentSql, [user_id, card_number, card_expiry, card_CVV]);
-
-        const permissionSql = `INSERT INTO permissions (user_id, role_id)
-            VALUES (?, ?)`;
-        await pool.query(permissionSql, [user_id, 3]);
+        //    const permissionSql = `INSERT INTO permissions (user_id, role_id)
+        //     VALUES (?, ?)`;
+        // await pool.query(permissionSql, [user_id, 3]);
 
         const getUserQuery = `SELECT * FROM users WHERE user_id = ?`;
         const userResult = await pool.query(getUserQuery, user_id);
@@ -99,9 +95,9 @@ async function postSignup(body) {
                                  VALUES (?)`;
         await pool.query(userInsertQuery, user_id);
 
-        const getUserQuery = `SELECT * FROM users WHERE user_id = ?`;
-        const userResult = await pool.query(getUserQuery, user_id);
-        const currentUser = userResult[0][0];
+        // const getUserQuery = `SELECT * FROM users WHERE user_id = ?`;
+        // const userResult = await pool.query(getUserQuery, user_id);
+        // const currentUser = userResult[0][0];
 
         const passwordInsertQuery = `INSERT INTO passwords (user_id, user_password, salt)
                                      VALUES (?, ?, ?)`;
@@ -109,7 +105,7 @@ async function postSignup(body) {
         console.log('4');
 
         console.log("User created successfully");
-        return { user: currentUser, ok: true };
+        return { user: body, ok: true };
 
     } catch (error) {
         console.error("Error creating user:", error);

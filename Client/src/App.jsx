@@ -16,7 +16,7 @@ import TrainerRegistration from './pages/TrainerRegistration'
 import AdminHome from './pages/AdminHome'
 import NewTrainers from './pages/NewTrainers'
 import AdminProfile from './components/AdminProfile'
-import TrainerClasses from './components/TrainerClasses'
+import TrainerClasses from './pages/TrainerClasses'
 import TrainerProfile from './components/TrainerProfile'
 import TrainerHome from './pages/TrainerHome'
 
@@ -24,12 +24,6 @@ import TrainerHome from './pages/TrainerHome'
 export const UserContext = createContext();
 
 function App() {
-
-  useEffect(() => {
-    const dataFromLocalStorage = JSON.parse(localStorage.getItem('loggedInUser')) || {};
-    setUserData(dataFromLocalStorage)
-  }, []);
-
 
   const [userData, setUserData] = useState({});
 

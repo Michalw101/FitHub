@@ -46,9 +46,7 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
                 }).catch(error => {
                     console.error(error);
                 });
-        } else
-            return;
-    }
+        }}
 
     useEffect(() => {
 
@@ -208,8 +206,3 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
         </div>
     );
 }
-
-
-// instegram_link varchar(255)
-// facebook_link varchar(255)
-// twitter_link

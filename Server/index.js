@@ -51,9 +51,6 @@ app.use('/upload', uploadRouter);
 const trainerSignupRouter = require("./routes/trainerSignupRouter");
 app.use("/trainer-signup", trainerSignupRouter);
 
-const commentsRouter = require("./routes/commentsRouter");
-app.use("/comments", commentsRouter);
-
 app.listen(PORT, () => {
   console.log(`SERVER: http://localhost:${PORT}`);
 });
