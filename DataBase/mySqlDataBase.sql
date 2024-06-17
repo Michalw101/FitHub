@@ -161,7 +161,10 @@ INSERT INTO classes (class_id, trainer_id, date, hour, description, price, link)
 VALUES 
 (1, 1, '2024-06-01', '08:00:00', 'Morning Workout', 20, 'https://example.com/class1'),
 (2, 1, '2024-06-02', '18:00:00', 'Evening Yoga', 15, 'https://example.com/class2'),
-(3, 1, '2024-06-03', '10:30:00', 'Pilates Session', 25, 'https://example.com/class3');
+(3, 1, '2024-06-03', '10:30:00', 'Pilates Session', 25, 'https://example.com/class3'),
+(4, 1, '2024-06-01', '06:00:00', 'Morning Workout333', 20, 'https://example.com/class1'),
+(5, 1, '2024-06-01', '10:00:00', 'Morning Workout...', 20, 'https://example.com/class1'),
+(6, 1, '2024-06-03', '10:00:00', 'Morning Workout😎', 30, 'https://example.com/class1');
 
 INSERT INTO trainees_in_class (trainee_id, class_id) 
 VALUES 

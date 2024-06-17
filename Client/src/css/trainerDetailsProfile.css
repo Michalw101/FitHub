@@ -1,7 +1,6 @@
   .card {
     --font-color: #323232;
     --bg-color: #e0e0e0;
-    height: 500px;
     border-radius: 20px;
     background: var(--bg-color);
     box-shadow: -9px 9px 18px #5a5a5a,
@@ -32,7 +31,7 @@
   
   .card__title {
     color: var(--font-color);
-    text-align: center;
+    /* text-align: center; */
     margin-bottom: 15px;
     font-weight: 900;
     font-size: 26px;
@@ -40,7 +39,7 @@
 
   .card__phone, .card__email {
     color: var(--font-color);
-    text-align: left;
+    /* text-align: left; */
     margin-bottom: 15px;
     font-weight: 900;
     font-size: 16px;
@@ -59,6 +58,16 @@
     gap: 10px;
   }
   
+  .genderDiv {
+    display: flex;
+    gap: 10px;
+  }
+
+  .aboutDiv {
+    display: flex;
+    gap: 10px;
+  }
+
   .card__descr {
     color: var(--font-color);
   }
@@ -69,7 +78,7 @@
   .wrapper {
     list-style: none;
     width: 100%;
-    padding-top: 40px;
+    padding-top: 20px;
     font-family: "Poppins", sans-serif;
     display: flex;
     justify-content: center;
