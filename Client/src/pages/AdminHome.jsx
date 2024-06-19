@@ -6,7 +6,6 @@ const AdminHome = () => {
 
   const navigate = useNavigate();
 
-
   return (
     <div>
         Admin Home!

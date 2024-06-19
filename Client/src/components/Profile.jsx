@@ -5,7 +5,6 @@ import { serverRequests } from '../Api';
 
 const Profile = () => {
     
-
     return (
         <div>profile</div>
     )

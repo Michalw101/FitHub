@@ -3,7 +3,6 @@ const model = require('../model/classesModel');
 async function createClass(body) {
     try {
         console.log("controller body" + body);
-
         return model.createClass(body);
     }
     catch (err) {
@@ -28,8 +27,6 @@ async function getClassById(id) {
         throw err;
     }
 };
-
-
 
 async function updateClass(body) {
     try {

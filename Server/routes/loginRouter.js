@@ -1,4 +1,3 @@
-// loginRouter.js
 const express = require("express");
 const router = express.Router();
 const controller = require('../controllers/loginController.js');
@@ -6,7 +5,7 @@ const controller = require('../controllers/loginController.js');
 router.post("/", async (req, res) => {
     try {
         const result = await controller.postLogin(req.body);
-
+        console.log('result', result);
         if (result.success) {
             req.session.jwt = result.token;
             req.session.user = result.user;
@@ -16,6 +15,7 @@ router.post("/", async (req, res) => {
                     res.status(500).send({ message: 'Internal server error' });
                 } else {
                     console.log('Session after login:', req.session);
+                    res.cookie('token', result.token, req.session.cookie);
                     res.status(200).send({ message: 'Logged in', user: result.user });
                 }
             });

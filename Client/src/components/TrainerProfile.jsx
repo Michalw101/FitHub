@@ -3,7 +3,12 @@ import { UserContext } from '../App';
 import '../css/trainerDetailsProfile.css';
 
 export default function TrainerProfile({ setUserData }) {
+
     const userData = useContext(UserContext);
+
+    let birthDate = new Date(userData.birth_date);
+    let formattedDate = birthDate.toLocaleDateString('he-IL');
+
     return (
 
         <div className="card">
@@ -139,7 +144,7 @@ export default function TrainerProfile({ setUserData }) {
                     </svg>
 
                     <p className="card__descr">
-                        Bithday: {userData.birth_day}
+                        Bithday: {formattedDate}
                     </p>
                 </div>
                 <br /><div className='genderDiv'>

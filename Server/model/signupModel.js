@@ -57,11 +57,6 @@ async function putSignup(body) {
                                  VALUES (?, ?)`;
         await pool.query(traineeInsertQuery, [user_id, lastInsertedId]);
 
-
-        //    const permissionSql = `INSERT INTO permissions (user_id, role_id)
-        //     VALUES (?, ?)`;
-        // await pool.query(permissionSql, [user_id, 3]);
-
         const getUserQuery = `SELECT * FROM users WHERE user_id = ?`;
         const userResult = await pool.query(getUserQuery, user_id);
         const currentUser = userResult[0][0];
@@ -94,10 +89,6 @@ async function postSignup(body) {
         const userInsertQuery = `INSERT INTO users (user_id) 
                                  VALUES (?)`;
         await pool.query(userInsertQuery, user_id);
-
-        // const getUserQuery = `SELECT * FROM users WHERE user_id = ?`;
-        // const userResult = await pool.query(getUserQuery, user_id);
-        // const currentUser = userResult[0][0];
 
         const passwordInsertQuery = `INSERT INTO passwords (user_id, user_password, salt)
                                      VALUES (?, ?, ?)`;

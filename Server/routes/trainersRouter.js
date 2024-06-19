@@ -17,15 +17,6 @@ router.get("/", async (req, res) => {
     }
 });
 
-// router.get("/:id", async (req, res) => {
-//     const id = req.params.id;
-//     try {
-//         res.send(await controller.getTodosById(id));
-//     } catch (err) {
-//         res.status(404).send({ ok: false });
-//     }
-// });
-
 router.post("/", async (req, res) => {
     try {
         res.send(await controller.createTrainer(req.body));
@@ -34,27 +25,5 @@ router.post("/", async (req, res) => {
         res.status(500).send({ ok: false });
     }
 });
-
-// router.delete("/:id", async (req, res) => {
-//      const id = req.params.id;
-//      console.log('delete todo router');
-//     try {
-//         await controller.deleteTodo(id);
-//         res.send();
-//     } catch (err) {
-//         res.status(404).send({ ok: false });
-//     }
-// });
-
-
-// router.put("/:id", async (req, res) => {
-//     try {
-//         res.send(await controller.updateTodo(JSON.stringify(req.body)));
-//     }
-//     catch (err) {
-//         res.status(404).send({ ok: false });
-//     }
-// });
-
 
 module.exports = router

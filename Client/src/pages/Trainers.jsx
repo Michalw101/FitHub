@@ -80,94 +80,8 @@ const Trainers = ({ setUserData }) => {
     navigate('/trainer-registeration')
   }
 
-  // const handleSortChange = (event) => {
-  //   setSortBy(event.target.value);
-  // };
-
-  // const handleSearchChange = (event) => {
-  //   setSearchBy(event.target.value);
-  // };
-
-
-  // const sortedAndFilteredTodos = () => {
-  //   let filteredTodos;
-
-  //   if (searchBy != null) {
-  //     filteredTodos = todos.filter(todo =>
-  //       (searchBy == "completed" && !!todo.completed === searchCheckbox) ||
-  //       (searchBy != "completed" &&
-  //         todo.title.toLowerCase().includes(searchBy.toLowerCase()) ||
-  //         todo.todo_id.toString().includes(searchBy))
-  //     );
-  //   }
-
-
-  //   switch (sortBy) {
-  //     case 'completed':
-  //       return filteredTodos.sort((a, b) => a.completed - b.completed);
-  //     case 'sequential':
-  //       return filteredTodos.sort((a, b) => a.id - b.id);
-  //     case 'alphabetical':
-  //       return filteredTodos.sort((a, b) => a.title.localeCompare(b.title));
-  //     case 'random':
-  //       return filteredTodos.sort(() => Math.random() - 0.5);
-  //     default:
-  //       return filteredTodos;
-  //   }
-  // };
-
-
   return (
-    // <div className='todos'>
-    //   <h1>Todos</h1>
-    //   {returnMassege}
-    //   <div className='search'>
-    //     <label htmlFor="sort">Sort by: </label>
-    //     <select
-    //       id="sort"
-    //       value={sortBy}
-    //       onChange={handleSortChange}>
-    //       <option value="sequential">Sequential</option>
-    //       <option value="completed">Completed</option>
-    //       <option value="alphabetical">Alphabetical</option>
-    //       <option value="random">Random</option>
-    //     </select>
-    //     <br />
-    //     <br />
-    //     <label htmlFor="search">Search: </label>
-    //     <input
-    //       type="text"
-    //       id="search"
-    //       value={searchBy}
-    //       onChange={handleSearchChange}
-    //     />
-    //     <br />
-    //     <br />
-    //     <label htmlFor="searchCheckbox">
-    //       Completed
-    //       <input
-    //         id="checkbox"
-    //         type="checkbox"
-    //         checked={searchCheckbox}
-    //         name="searchCheckbox"
-    //         onChange={handleSearchCheckboxChange}
-    //       />
-    //     </label></div>
-    //   {addTodo ? (
-    //     <div className='addTodo'>
-    //       <input
-    //         className='todoInput'
-    //         type="text"
-    //         value={newTodo.title}
-    //         onChange={(e) => setNewTodo({ ...newTodo, title: e.target.value })}
-    //         placeholder="Todo title"
-    //       />
-    //       <button className="btn" onClick={addTodoClicked}>Save Todo</button>
-    //       <button className="btn" onClick={cancleAddTodo}>Cancel</button>
-    //     </div>
-    //   ) : (
-    //     
-    //   )}
+    
     <div>
       <div id='trainers'>
         {trainers.map((trainer) => (
@@ -177,7 +91,6 @@ const Trainers = ({ setUserData }) => {
           </div>
         ))}
       </div>
-  
 
       <div tabIndex="0" className="plusButton" onClick={handleAddTrainer}>
         <svg className="plusIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">

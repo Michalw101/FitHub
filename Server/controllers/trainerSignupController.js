@@ -11,14 +11,4 @@ async function postSignup(body) {
     }
 };
 
-
-// async function putSignup(body) {
-//     try {
-//         return model.putSignup(body);
-//     }
-//     catch (err) {
-//         throw err;
-//     }
-// };
-
 module.exports = { postSignup }

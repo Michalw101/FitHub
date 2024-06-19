@@ -9,13 +9,13 @@ const authenticateSession = (req, res, next) => {
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) {
                 console.error('JWT verification error:', err);
-                return res.sendStatus(403); // Forbidden
+                return res.sendStatus(403); 
             }
             req.user = user;
             next();
         });
     } else {
-        res.sendStatus(401); // Unauthorized
+        res.sendStatus(401);
     }
 };
 

@@ -22,15 +22,6 @@ async function getAllNewTrainers() {
     }
 };
 
-
-async function getTrainer() {
-   
-};
-
-async function createTrainer(body) {
-   
-};
-
 async function deleteTrainer(id, sendMail) {
     try {
         console.log('delete trainer model');
@@ -76,9 +67,9 @@ const transporter = nodemailer.createTransport({
 
 const sendEmailToUser = (user) => {
     const mailOptions = {
-        from: SENDER_EMAIL, // sender address
-        to: user.email, // list of receivers
-        subject: `Hi ${user.first_name} 🤗`, // Subject line
+        from: SENDER_EMAIL, 
+        to: user.email, 
+        subject: `Hi ${user.first_name} 🤗`, 
         text: `Sorry but you didnt recieved the Trainer job... See you again! FitHub`
     }
     sendMail(transporter, mailOptions)
@@ -88,4 +79,4 @@ async function updateTrainer(body) {
    
 };
 
-module.exports = { updateTrainer, deleteTrainer, createTrainer, getTrainer, getAllNewTrainers }
+module.exports = { updateTrainer, deleteTrainer, getAllNewTrainers }

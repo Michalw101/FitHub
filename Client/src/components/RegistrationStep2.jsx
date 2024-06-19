@@ -369,7 +369,6 @@ const RegistrationStep2 = ({ handleChanged }) => {
               </label>
             </div>
             <br /><br />
-
           </div>
         </div>
       </form>

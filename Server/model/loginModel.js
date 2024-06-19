@@ -13,7 +13,6 @@ async function postLogin(body) {
         const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET;
         console.log('JWT_SECRET:', JWT_SECRET);
 
-
         if (loginResult[0][0]) {
             if (password === loginResult[0][0].user_password) {
                 console.log("passwords equal");
@@ -22,7 +21,6 @@ async function postLogin(body) {
                 const roleResult = await pool.query(roleSql, user_id);
                 let fullUserSql;
                 let fullUserResult;
-
 
                 if (!roleResult[0][0].role_id) {
                     const setRole = `UPDATE users SET role_id = ? where user_id =?`
@@ -72,18 +70,15 @@ async function getSalt(id) {
         console.log(result[0][0]);
 
         if (result.length > 0) {
-
             return { success: true, salt: result[0][0].salt };
         }
         else {
             console.log("No Salt");
             throw new Error("No Salt");
-
         }
     } catch (err) {
         console.error("Error:", err);
         throw new Error(err);
-
     }
 }
 

@@ -3,7 +3,6 @@ import { UserContext } from '../App';
 import Step1 from '../components/RegistrationStep1';
 import Step2 from '../components/RegistrationStep2';
 import Step3 from '../components/RegistrationStep3';
-import Step4 from '../components/RegistrationStep4';
 import ProgressBar from '../components/RegistrationProgressBar';
 
 function UserDetails({ setUserData }) {

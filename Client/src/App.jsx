@@ -11,7 +11,6 @@ import Registration from './pages/Registration'
 import UserDetails from './pages/UserDetails'
 import TraineeHome from './pages/TraineeHome'
 import Profile from "./components/Profile"
-import Classes from './pages/Classes'
 import TrainerRegistration from './pages/TrainerRegistration'
 import AdminHome from './pages/AdminHome'
 import NewTrainers from './pages/NewTrainers'
@@ -19,7 +18,7 @@ import AdminProfile from './components/AdminProfile'
 import TrainerClasses from './pages/TrainerClasses'
 import TrainerProfile from './components/TrainerProfile'
 import TrainerHome from './pages/TrainerHome'
-
+import TraineeClasses from './pages/TraineeClasses'
 
 export const UserContext = createContext();
 
@@ -45,7 +44,7 @@ function App() {
           <Route path="/trainee-home" element={<HomeLayout setUserData={setUserData} userData={userData} role={3}/>} >
             <Route index element={<TraineeHome />} />
             <Route path="profile" element={<Profile />} />
-            <Route path="classes" element={<Classes />} />
+            <Route path="trainee-classes" element={<TraineeClasses />} />
             <Route path="trainers" element={<Trainers />} />
           </Route>
 
@@ -58,7 +57,7 @@ function App() {
           <Route path="/trainer-home" element={<HomeLayout setUserData={setUserData} userData={userData} role={2}/>} >
             <Route index element={<TrainerHome />} />
             <Route path="trainer-profile" element={<TrainerProfile setUserData={setUserData} userData={userData}/>} />
-            <Route path="trainer-classes" element={<TrainerClasses />} />
+            <Route path="trainer-classes" element={<TrainerClasses userData={userData}/>} />
           </Route>
 
         </Routes>

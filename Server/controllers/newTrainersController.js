@@ -1,11 +1,8 @@
 const model = require('../model/newTrainersModel');
 
 async function createTrainer(body) {
-
-    //
     try {
         console.log("controller body" + body);
-
         return model.createTrainer(body);
     }
     catch (err) {
@@ -14,7 +11,6 @@ async function createTrainer(body) {
 };
 
 async function getAllNewTrainers() {
-    //check sessions
     try {
         return model.getAllNewTrainers();
     }

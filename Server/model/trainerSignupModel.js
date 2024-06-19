@@ -63,7 +63,6 @@ const sendEmailToAdmin = (user) => {
         Degree link to your Google Drive ${user.degree_link} (degree from ${user.diploma})
         Email to connect ${user.first_name} ${user.last_name} :  ${user.email}
         Or by phone call : ${user.phone} `,
-        // html: "<b>Hello world?</b>", 
 
     }
     sendMail(transporter, mailOptions)

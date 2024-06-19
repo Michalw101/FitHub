@@ -21,9 +21,6 @@ const Registration = ({ setUserData }) => {
             return;
         }
 
-        // if (!CheckPassword(password))
-        //     return;
-
         const signupUser = {
             user_id: userId,
             password: password
