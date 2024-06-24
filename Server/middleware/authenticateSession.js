@@ -3,7 +3,6 @@ require('dotenv').config();
 
 const authenticateSession = (req, res, next) => {
     const token = req.cookies.token;
-    console.log(req.session);
     console.log('JWT in session:', token);
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {

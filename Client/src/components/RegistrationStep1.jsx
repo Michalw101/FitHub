@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { UserContext } from '../App';
-import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/step1.css'

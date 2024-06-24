@@ -6,11 +6,11 @@ export async function serverRequests(method, URL, body) {
             if (fetchResponse.ok) {
                   return fetchResponse;
             } else {
-                throw new Error("user not found");
+                throw new Error(fetchResponse.statusText);
 
             }
         } catch (error) {
-            return ({status: 404, ok: false, error: error });
+            return ({status: fetchResponse.status, ok: false, error: error });
         }
     }
 
@@ -31,9 +31,9 @@ export async function serverRequests(method, URL, body) {
             console.log('fetch response: ', fetchResponse);
             return fetchResponse;
         } else {
-            throw new Error("user not found");
+            throw new Error(fetchResponse.statusText);
         }
     } catch (error) {
-        return ({status: 404, ok: false, error: error });
+        return ({status: fetchResponse.status, ok: false, error: error });
     }
 }

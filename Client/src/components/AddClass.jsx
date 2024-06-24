@@ -3,8 +3,13 @@ import DatePicker from 'react-datepicker';
 import { serverRequests } from '../Api';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/addClass.css';
+import { useNavigate } from 'react-router-dom';
 
-const AddClass = ({ onClose, newClass, handleChanged, setClasses }) => {
+
+const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => {
+
+    const navigate = useNavigate();
+
     const formatDateToSQL = (date) => {
         const d = new Date(date);
         const year = d.getFullYear();
@@ -29,7 +34,9 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses }) => {
             })
             .then(data => {
                 if (data) {
-                    setClasses(data.classes);
+                    setClasses([...classes, data.class]);
+                    alert(`class added succesfuly on ${newClass.date} at ${newClass.hour}`);
+                    onClose();
                 }
             })
             .catch(error => {
@@ -60,12 +67,12 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses }) => {
                         onChange={handleDateChange}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="DD/MM/YYYY"
-                        minDate={new Date()} 
+                        minDate={new Date()}
                     /><br />
                     <p>Class hour</p>
                     <div className='inputGroup'>
                         <input
-                            type="time" 
+                            type="time"
                             required=""
                             autoComplete="off"
                             name="hour"
@@ -81,6 +88,17 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses }) => {
                             autoComplete="off"
                             name="price"
                             value={newClass.price}
+                            onChange={handleChanged}
+                        />
+                    </div>
+                    <p>Google Meet link</p>
+                    <div className='inputGroup'>
+                        <input
+                            type="url"
+                            required=""
+                            autoComplete="off"
+                            name="link"
+                            value={newClass.link}
                             onChange={handleChanged}
                         />
                     </div>
