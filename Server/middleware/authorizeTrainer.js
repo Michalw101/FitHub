@@ -3,6 +3,7 @@ const authenticateSession = require('./authenticateSession');
 const authorizeTrainer = (req, res, next) => {
     authenticateSession(req, res, () => {
         const user = req.user; 
+        console.log('user', user)
         if (user && (user.role_id === 1 || user.role_id === 2) ) {
             next(); 
         } else {

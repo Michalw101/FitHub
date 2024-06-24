@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import '../css/classes.css';
 import { serverRequests } from '../Api';
 import SingleClass from './SingleClass';
 
-export default function Classes( {setClasses, classes } ) {
+export default function Classes({ setClasses, classes, userData }) {
+
+    const navigate = useNavigate();
+
     const [date, setDate] = useState(new Date());
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedDayEvents, setSelectedDayEvents] = useState([]);
+    const [seeMoreBtn, setSeeMoreBtn] = useState(0);
+    const [registrationMassege, setRegistrationMassege] = useState(false);
+
 
     useEffect(() => {
         const url = `classes`;
@@ -65,9 +72,10 @@ export default function Classes( {setClasses, classes } ) {
                     title: classItem.description,
                     price: classItem.price,
                     trainer: {
-                        first_name: classItem.first_name, 
-                        last_name: classItem.last_name
-                    } 
+                        first_name: classItem.first_name,
+                        last_name: classItem.last_name,
+                        phone: classItem.phone
+                    }
                 };
             }).filter(event => event !== null);
             setEvents(newEvents);
@@ -118,6 +126,34 @@ export default function Classes( {setClasses, classes } ) {
         }
     };
 
+    const handleClassRegistration = (event) => {
+
+        const url = "waiting-trainee"
+        const body = {
+            user_id: userData.user_id,
+            class_id: event.id
+        }
+        serverRequests('POST', url, body)
+            .then(response => {
+                console.log(response);
+                if (!response.ok) {
+                    console.error("error");
+                    return;
+                }
+                return response.json();
+            }).then((data) => {
+                navigate('/trainee-home/trainee-classes');
+            }).catch(error => {
+                console.error(error);
+            });
+        alert(`Hey! To complete the registration process for the ${event.title} class, pay by Bit a $${event.price} payment to the Trainer ${event.trainer.first_name}. A link to the class will be sent to you when the payment is confirmed. ${event.trainer.first_name}'s phone number: ${event.trainer.phone} . Thank you very much!`)
+
+    }
+
+    const handleSeeMoreClick = (id) => {
+        setSeeMoreBtn(prev => (prev !== id ? id : 0));
+    };
+
     return (
         <div className="trainer-classes-container">
             <Calendar
@@ -139,8 +175,18 @@ export default function Classes( {setClasses, classes } ) {
                                 <p><strong>Time:</strong> {`${new Date(event.from).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.to).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p>
                                 <p><strong>Price:</strong> ${event.price}</p>
                                 <p><strong>Trainer:</strong> {event.trainer.first_name} {event.trainer.last_name}</p>
+                                {userData.role_id === 3 && (
+                                    <button onClick={() => handleSeeMoreClick(event.id)}>
+                                        {seeMoreBtn === event.id ? 'See less...' : 'See more...'}
+                                    </button>
+                                )}
+                                {seeMoreBtn === event.id && (<div>
+                                    <p><strong>Other details...</strong></p>
+                                    <button onClick={() => handleClassRegistration(event)}>Join class!</button>
+                                </div>)}
                             </div>
                         ))}
+
                     </div>
                 </div>
             )}

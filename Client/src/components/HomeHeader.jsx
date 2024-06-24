@@ -13,7 +13,7 @@ export default function HomeHeader({ setUserData, userData }) {
     }
 
     const handleClassesClick = () => {
-        navigate('trainer-classes')
+        navigate('trainee-classes')
     }
 
     const trainersHandleClick = () => {

@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Classes from '../components/Classes';
 
-const TraineeClasses = () => {
+const TraineeClasses = ( {userData} ) => {
+
+    const [classes, setClasses] = useState([]);
+
     return (
         <div>
-            <Classes />
-        </div>
+            <Classes setClasses={setClasses} classes={classes}  userData={userData}/>
+            </div>
     );
 };
 

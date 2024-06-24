@@ -19,6 +19,7 @@ import TrainerClasses from './pages/TrainerClasses'
 import TrainerProfile from './components/TrainerProfile'
 import TrainerHome from './pages/TrainerHome'
 import TraineeClasses from './pages/TraineeClasses'
+import MyClasses from './pages/MyClasses'
 
 export const UserContext = createContext();
 
@@ -42,9 +43,9 @@ function App() {
           </Route>
 
           <Route path="/trainee-home" element={<HomeLayout setUserData={setUserData} userData={userData} role={3}/>} >
-            <Route index element={<TraineeHome />} />
+            <Route index element={<TraineeHome userData={userData}/>} />
             <Route path="profile" element={<Profile />} />
-            <Route path="trainee-classes" element={<TraineeClasses />} />
+            <Route path="trainee-classes" element={<TraineeClasses userData={userData}/>} />
             <Route path="trainers" element={<Trainers />} />
           </Route>
 
@@ -58,6 +59,7 @@ function App() {
             <Route index element={<TrainerHome />} />
             <Route path="trainer-profile" element={<TrainerProfile setUserData={setUserData} userData={userData}/>} />
             <Route path="trainer-classes" element={<TrainerClasses userData={userData}/>} />
+            <Route path="my-classes" element={<MyClasses userData={userData}/>} />
           </Route>
 
         </Routes>

@@ -26,6 +26,25 @@ async function getClass() {
 
 };
 
+
+async function getMyClasses(query) {
+    try {
+        const sql = `SELECT * FROM classes where ?`;
+        const result = await pool.query(sql, query);
+
+        if (result.length > 0) {
+            return { success: true, message: "My Classes successful", classes: result[0] };
+        }
+        else {
+            console.log("Classes not found");
+            return { success: false, message: "Classes not found" };
+        }
+    } catch (err) {
+        console.error("Error:", err);
+        return { success: false, message: "An error occurred" };
+    }
+};
+
 async function createClass(body) {
     const { trainer_id, date, hour, description, price, link } = body;
     try {
@@ -60,6 +79,7 @@ async function createClass(body) {
     }
 }
 
+
 async function deleteClass(id) {
 
 };
@@ -68,4 +88,4 @@ async function updateClass(body) {
 
 };
 
-module.exports = { createClass, updateClass, getAllClasses, deleteClass, getClass }
+module.exports = { createClass, updateClass, getAllClasses, getMyClasses, deleteClass, getClass }

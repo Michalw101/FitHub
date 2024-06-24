@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { serverRequests } from '../Api';
-import HomeLayout from '../components/HomeLayout'
-import TrainerClasses from './TrainerClasses';
+import TraineeClasses from './TraineeClasses';
 
-const TraineeHome = () => {
+const TraineeHome = ( {userData}) => {
 
   const navigate = useNavigate();
 
 
   return (
     <div>
-      <TrainerClasses />
+      <TraineeClasses userData={userData}/>
     </div>
   );
 };

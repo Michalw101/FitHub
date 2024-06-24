@@ -39,6 +39,9 @@ app.use("/signup", signupRouter);
 const classesRouter = require("./routes/classesRouter");
 app.use("/classes", classesRouter);
 
+const waitingTraineeRouter = require("./routes/waitingTraineeRouter");
+app.use("/waiting-trainee", waitingTraineeRouter);
+
 const trainersRouter = require("./routes/trainersRouter");
 app.use("/trainers", trainersRouter);
 

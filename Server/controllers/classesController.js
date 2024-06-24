@@ -10,6 +10,7 @@ async function createClass(body) {
     }
 };
 
+
 async function getAllClasses() {
     try {
         return model.getAllClasses();
@@ -22,6 +23,16 @@ async function getAllClasses() {
 async function getClassById(id) {
     try {
         return model.getClass(id);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
+
+async function getMyClasses(query) {
+    try {
+        return model.getMyClasses(query);
     }
     catch (err) {
         throw err;
@@ -47,4 +58,4 @@ async function deleteClass(id) {
     }
 };
 
-module.exports = { createClass, getAllClasses, getClassById, updateClass, deleteClass}
+module.exports = { createClass, getAllClasses, getClassById,getMyClasses, updateClass, deleteClass}

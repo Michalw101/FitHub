@@ -41,7 +41,7 @@ export default function TrainerClasses({ userData }) {
                     })
                 }} newClass={newClass} handleChanged={handleChanged} setClasses={setClasses} classes={classes} />
             )}
-            <Classes setClasses={setClasses} classes={classes} />
+            <Classes setClasses={setClasses} classes={classes} userData={userData}/>
         </div>
     );
 }
