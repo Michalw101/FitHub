@@ -86,20 +86,6 @@ CREATE TABLE trainers_waiting_list (
     twitter_link VARCHAR(255)
 );
 
-CREATE TABLE trainees_waiting_list (
-    trainee_id INT,
-    class_id INT,
-    PRIMARY KEY (trainee_id, class_id),
-    FOREIGN KEY (trainee_id) 
-      REFERENCES trainees (trainee_id) 
-      ON UPDATE RESTRICT 
-      ON DELETE CASCADE,
-    FOREIGN KEY (class_id) 
-      REFERENCES classes (class_id) 
-      ON UPDATE RESTRICT 
-      ON DELETE CASCADE
-);
-
 
 CREATE TABLE classes (
     class_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -111,6 +97,20 @@ CREATE TABLE classes (
     link VARCHAR(255),
     FOREIGN KEY (trainer_id) 
       REFERENCES trainers (trainer_id) 
+      ON UPDATE RESTRICT 
+      ON DELETE CASCADE
+);
+
+CREATE TABLE trainees_waiting_list (
+    trainee_id INT,
+    class_id INT,
+    PRIMARY KEY (trainee_id, class_id),
+    FOREIGN KEY (trainee_id) 
+      REFERENCES trainees (trainee_id) 
+      ON UPDATE RESTRICT 
+      ON DELETE CASCADE,
+    FOREIGN KEY (class_id) 
+      REFERENCES classes (class_id) 
       ON UPDATE RESTRICT 
       ON DELETE CASCADE
 );
@@ -196,4 +196,9 @@ VALUES
 insert into trainers_waiting_list(user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, experience, specialization, last_work_place, place_of_study, instegram_link, facebook_link, twitter_link)
 values (4, "a", "a", "michal0548429273@gmail.com", "050", '2004-06-03', "Female", "aaaa", "12", "blablabla", "d", "f", "f","f", "f");
 
-            SELECT * FROM trainees_waiting_list join users where class_id = 3  and users.user_id = trainees_waiting_list.trainee_id
+insert into trainees_waiting_list(trainee_id, class_id) values (214955064, 4);
+
+insert into trainees(trainee_id, information_id) values (214955064, 1);
+
+
+SELECT * FROM trainees_waiting_list join users where class_id = 3  and users.user_id = trainees_waiting_list.trainee_id

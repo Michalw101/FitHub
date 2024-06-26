@@ -19,5 +19,24 @@ async function getWaitingTrainees(query) {
         throw err;
     }
 };
+async function addApprovedTrainees(body) {
+    console.log('Controller received data:', body);
+    try {
 
-module.exports = { getApprovedTrainees, getWaitingTrainees}
+        return model.addApprovedTrainees(body);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
+async function deleteWaitingTrainees(query) {
+    try {
+        return model.deleteWaitingTrainees(query);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
+module.exports = { getApprovedTrainees, getWaitingTrainees, addApprovedTrainees, deleteWaitingTrainees}

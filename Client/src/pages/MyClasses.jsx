@@ -43,6 +43,7 @@ export default function MyClasses({ userData }) {
 
     return (
         <div>
+            <h2>Your class...</h2>
             {myClasses.map((myClass) => (
                 <div key={myClass.class_id}>
                     <MyClass myClass={myClass} />
