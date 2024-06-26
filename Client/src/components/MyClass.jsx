@@ -9,17 +9,56 @@ export default function MyClass({ myClass }) {
 
     const handleSeeRegisteredUsers = async () => {
         setViewType(viewType === 'registered' ? null : 'registered');
+
+        const URL = `trainees/waiting?class_id=${myClass.class_id}`
+
         if (viewType !== 'registered') {
-            const users = await serverRequests.getRegisteredUsers(myClass.id);
-            setRegisteredUsers(users);
+            if (registeredUsers.length === 0) {
+
+                serverRequests('GET', URL, null)
+                    .then(response => {
+                        console.log(response);
+                        if (!response.ok) {
+                            return;
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+
+                        setRegisteredUsers(data.trainees);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
         }
     };
 
     const handleSeeApprovedUsers = async () => {
         setViewType(viewType === 'approved' ? null : 'approved');
+
+        const URL = `trainees/approved?class_id=${myClass.class_id}`
+
         if (viewType !== 'approved') {
-            const users = await serverRequests.getApprovedUsers(myClass.id);
-            setApprovedUsers(users);
+
+            if (approvedUsers.length === 0) {
+
+                serverRequests('GET', URL, null)
+                    .then(response => {
+                        console.log(response);
+                        if (!response.ok) {
+                            return;
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+
+                        setApprovedUsers(data.trainees);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
         }
     };
 
@@ -29,7 +68,7 @@ export default function MyClass({ myClass }) {
             <div key={myClass.id} className="class-details">
                 <p><strong>Description:</strong> {myClass.description}</p>
                 <p><strong>Price:</strong> ${myClass.price}</p>
-                
+
                 <button onClick={handleSeeRegisteredUsers}>
                     {viewType === 'registered' ? 'Hide Registered Users' : 'Show Registered Users'}
                 </button>
@@ -39,22 +78,22 @@ export default function MyClass({ myClass }) {
 
                 {viewType === 'registered' && (
                     <div>
-                        <p><strong>Registered Users:</strong></p>
+                        <p><strong>Registered Trainees:</strong></p>
                         <ul>
-                            {registeredUsers.map(user => (
-                                <li key={user.id}>{user.name}</li>
-                            ))}
+                            {registeredUsers ? (registeredUsers.map(user => (
+                                <li key={user.id}>{user.first_name}</li>
+                            ))): <div>No Registered Trainees</div> }
                         </ul>
                     </div>
                 )}
-                
+
                 {viewType === 'approved' && (
                     <div>
-                        <p><strong>Approved Users:</strong></p>
+                        <p><strong>Approved Trainees:</strong></p>
                         <ul>
-                            {approvedUsers.map(user => (
-                                <li key={user.id}>{user.name}</li>
-                            ))}
+                            {approvedUsers ? (approvedUsers.map(user => (
+                                <li key={user.id}>{user.first_name}</li>
+                            ))) : <div>No Approved Trainees</div>}
                         </ul>
                     </div>
                 )}

@@ -8,7 +8,7 @@ export default function MyClasses({ userData }) {
 
     useEffect(() => {
 
-        const url = `classes?trainer_id=${userData.user_id}`;
+        const url = `my-classes?trainer_id=${userData.user_id}`;
 
         serverRequests('GET', url, null)
             .then(response => {
@@ -45,10 +45,10 @@ export default function MyClasses({ userData }) {
         <div>
             {myClasses.map((myClass) => (
                 <div key={myClass.class_id}>
-                    {/* {myClass.class_id} */}
                     <MyClass myClass={myClass} />
                 </div>
             ))}
         </div>
+
     )
 }

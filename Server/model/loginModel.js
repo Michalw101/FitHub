@@ -43,7 +43,7 @@ async function postLogin(body) {
                 const user = fullUserResult[0][0];
                 console.log('User:', user);
 
-                const accessToken = jwt.sign({ username: user.user_id }, JWT_SECRET, { expiresIn: '1h' });
+                const accessToken = jwt.sign({ user_id: user.user_id, role_id: user.role_id }, JWT_SECRET, { expiresIn: '1h' });
 
                 console.log('Generated Access Token:', accessToken);
 

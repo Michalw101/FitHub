@@ -39,11 +39,17 @@ app.use("/signup", signupRouter);
 const classesRouter = require("./routes/classesRouter");
 app.use("/classes", classesRouter);
 
+const myClassesRouter = require("./routes/myClassesRouter");
+app.use("/my-classes", myClassesRouter);
+
 const waitingTraineeRouter = require("./routes/waitingTraineeRouter");
 app.use("/waiting-trainee", waitingTraineeRouter);
 
 const trainersRouter = require("./routes/trainersRouter");
 app.use("/trainers", trainersRouter);
+
+const traineesRouter = require("./routes/traineesRouter");
+app.use("/trainees", traineesRouter);
 
 const newTrainersRouter = require("./routes/newTrainersRouter");
 app.use("/new-trainers", newTrainersRouter);

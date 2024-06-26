@@ -1,0 +1,34 @@
+const express = require("express");
+const router = express.Router();
+const controller = require('../controllers/traineesController')
+router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
+
+
+router.get("/waiting", async (req, res) => {
+    console.log('waiting received:', req.query); 
+    try {
+
+        res.send(await controller.getWaitingTrainees(req.query));
+    } catch (err) {
+        console.error("Error in POST /:", err); 
+
+        res.status(500).send({ ok: false });
+    }
+});
+
+router.get("/approved", async (req, res) => {
+    console.log('approved received:', req.query); 
+    try {
+
+        res.send(await controller.getApprovedTrainees(req.query));
+    } catch (err) {
+        console.error("Error in POST /:", err); 
+
+        res.status(404).send({ ok: false });
+    }
+});
+
+
+
+module.exports = router
