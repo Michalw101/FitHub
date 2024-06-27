@@ -23,6 +23,7 @@ const Login = ({ setUserData }) => {
       .then(response => {
         console.log(response);
         if (!response.ok) {
+          setLoginError("Incorrect password or ID");
           return;
         }
         return response.json();
@@ -43,9 +44,10 @@ const Login = ({ setUserData }) => {
 
       serverRequests('POST', URL, { ...formData, salt })
         .then(response => {
-          console.log('response in react',response);
+          console.log(response);
           if (!response.ok) {
             setLoginError("Incorrect password or ID");
+            setSalt('')
             return;
           }
           return response.json();
@@ -71,7 +73,7 @@ const Login = ({ setUserData }) => {
           }
         })
         .catch(error => {
-          setLoginError('Error', error.massege);
+          setLoginError('Error', error);
         });
     }
   }, [salt]);

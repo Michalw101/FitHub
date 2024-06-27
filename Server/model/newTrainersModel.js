@@ -14,11 +14,11 @@ async function getAllNewTrainers() {
         }
         else {
             console.log("Trainers not found");
-            return { success: false, message: "Trainers not found" };
+            throw new Error("Trainers not found")
         }
     } catch (err) {
         console.error("Error:", err);
-        return { success: false, message: "An error occurred" };
+        throw new Error(err.message)
     }
 };
 
@@ -37,7 +37,7 @@ async function deleteTrainer(id, sendMail) {
     }
     catch (err) {
         console.error('Error deleting trainer:', err);
-        return { success: false, message: "An error occurred" };
+        throw new Error(err.message)
     }
 };
 

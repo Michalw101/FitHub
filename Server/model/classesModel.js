@@ -13,11 +13,11 @@ async function getAllClasses() {
         }
         else {
             console.log("Classes not found");
-            return { success: false, message: "Classes not found" };
+            throw new Error("Classes not found")
         }
     } catch (err) {
         console.error("Error:", err);
-        return { success: false, message: "An error occurred" };
+        throw new Error(err.message)
     }
 };
 
@@ -37,11 +37,11 @@ async function getMyClasses(query) {
         }
         else {
             console.log("Classes not found");
-            return { success: false, message: "Classes not found" };
+            throw new Error("Classes not found")
         }
     } catch (err) {
         console.error("Error:", err);
-        return { success: false, message: "An error occurred" };
+        throw new Error(err.message)
     }
 };
 
@@ -72,11 +72,11 @@ async function createClass(body) {
             return { success: true, message: "Class created successfully", class: response[0][0] };
         } else {
             console.log("Error creating class");
-            return { success: false, message: "Error creating class" };
+            throw new Error("error creating class")
         }
     } catch (err) {
         console.error("Error:", err);
-        return { success: false, message: "An error occurred" };
+        throw new Error(err.message)
     }
 }
 
@@ -98,7 +98,7 @@ async function deleteClass(id) {
     }
     catch (err) {
         console.error('Error deleting class:', err);
-        return { success: false, message: "An error occurred" };
+        throw new Error(err.message)
     }
 };
 
@@ -115,8 +115,8 @@ async function updateClass(body, id) {
 
     } catch (error) {
         console.error("Error updating class:", error);
-        throw error;
-    }
+        throw new Error(err.message)   
+ }
 
 };
 

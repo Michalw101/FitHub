@@ -2,13 +2,14 @@ export async function serverRequests(method, URL, body) {
     if (method === 'GET') {
         try {
             const fetchResponse = await fetch(`http://localhost:3000/${URL}`);
-            console.log(fetchResponse);
-            if (fetchResponse.ok) {
-                  return fetchResponse;
-            } else {
-                throw new Error(fetchResponse.statusText);
+            console.log('fetch response: ', fetchResponse);
+            // if (fetchResponse.ok) {
+            //       return fetchResponse;
+            // } else {
+            //     throw new Error(fetchResponse.statusText);
 
-            }
+            // }
+            return fetchResponse;
         } catch (error) {
             return ({status: fetchResponse.status, ok: false, error: error });
         }
@@ -23,17 +24,17 @@ export async function serverRequests(method, URL, body) {
         credentials: 'include'
 
     };
-    
 
     try {
         const fetchResponse = await fetch(`http://localhost:3000/${URL}`, requestOption);
-        if (fetchResponse.ok) {
+        // if (fetchResponse.ok) {
             console.log('fetch response: ', fetchResponse);
             return fetchResponse;
-        } else {
-            throw new Error(fetchResponse.statusText);
-        }
+        // } else {
+        //     console.log("statusText", fetchResponse.statusText);
+        //     throw new Error(fetchResponse.statusText);
+        // }
     } catch (error) {
-        return ({status: fetchResponse.status, ok: false, error: error });
+        return ({ ok: false, error: error });
     }
 }

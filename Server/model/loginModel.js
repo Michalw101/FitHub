@@ -6,18 +6,14 @@ require('dotenv').config();
 async function postLogin(body) {
     try {
         const { user_id, password } = body;
-console.log(1)
+
         const loginSql = `SELECT * FROM passwords where user_id =?`
         const loginResult = await pool.query(loginSql, user_id);
-        console.log(2)
 
         const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET;
         console.log('JWT_SECRET:', JWT_SECRET);
-        console.log(3)
 
         if (loginResult[0][0]) {
-            console.log(4)
-
             if (password === loginResult[0][0].user_password) {
                 console.log("passwords equal");
 
@@ -55,12 +51,12 @@ console.log(1)
 
 
             } else {
-                console.log("Incorrect password in Model");
+                console.log("Incorrect password");
                 throw new Error("Incorrect password");
             }
 
         } else {
-            throw new Error(err);
+            throw new Error("No Response From DB");
         }
     } catch (err) {
         throw err;
@@ -69,11 +65,12 @@ console.log(1)
 
 async function getSalt(id) {
     try {
+        console.log('salt model');
         const sql = "SELECT salt from passwords where user_id = ? "
         const result = await pool.query(sql, id);
-        console.log(result[0][0]);
+        console.log(result[0]);
 
-        if (result.length > 0) {
+        if (result[0].length > 0) {
             return { success: true, salt: result[0][0].salt };
         }
         else {
@@ -81,8 +78,7 @@ async function getSalt(id) {
             throw new Error("No Salt");
         }
     } catch (err) {
-        console.error("Error:", err);
-        throw new Error(err);
+        throw new Error(err.message);
     }
 }
 

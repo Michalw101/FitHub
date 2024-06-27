@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     try {
         res.send(await controller.createWaitingTrainee(req.body));
     } catch (err) {
-        res.status(500).send({ message: 'Internal server error' });
+        res.status(500).send({ ok: false, error: err.message });
     }
 })
 

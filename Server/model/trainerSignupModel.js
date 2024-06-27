@@ -22,7 +22,7 @@ async function postSignup(body) {
         return { user: body, ok: true };
 
     } catch (error) {
-        console.error("Error creating user:", error);
+        console.log("Error creating user:", error);
         throw error;
     }
 }
