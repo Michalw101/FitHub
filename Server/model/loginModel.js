@@ -6,14 +6,18 @@ require('dotenv').config();
 async function postLogin(body) {
     try {
         const { user_id, password } = body;
-
+console.log(1)
         const loginSql = `SELECT * FROM passwords where user_id =?`
         const loginResult = await pool.query(loginSql, user_id);
+        console.log(2)
 
         const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET;
         console.log('JWT_SECRET:', JWT_SECRET);
+        console.log(3)
 
         if (loginResult[0][0]) {
+            console.log(4)
+
             if (password === loginResult[0][0].user_password) {
                 console.log("passwords equal");
 
@@ -51,7 +55,7 @@ async function postLogin(body) {
 
 
             } else {
-                console.log("Incorrect password");
+                console.log("Incorrect password in Model");
                 throw new Error("Incorrect password");
             }
 

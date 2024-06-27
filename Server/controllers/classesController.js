@@ -39,9 +39,9 @@ async function getMyClasses(query) {
     }
 };
 
-async function updateClass(body) {
+async function updateClass(body, id) {
     try {
-        return model.updateClass(body);
+        return model.updateClass(body, id);
     }
     catch (err) {
         throw err;

@@ -67,7 +67,7 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
                         onChange={handleDateChange}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="DD/MM/YYYY"
-                        minDate={new Date()}
+                        minDate={new Date(Date.now() + 86400000)}
                     /><br />
                     <p>Class hour</p>
                     <div className='inputGroup'>

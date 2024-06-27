@@ -7,16 +7,13 @@ import { serverRequests } from '../Api';
 import SingleClass from './SingleClass';
 
 export default function Classes({ setClasses, classes, userData }) {
-
     const navigate = useNavigate();
-
     const [date, setDate] = useState(new Date());
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedDayEvents, setSelectedDayEvents] = useState([]);
     const [seeMoreBtn, setSeeMoreBtn] = useState(0);
     const [registrationMassege, setRegistrationMassege] = useState(false);
-
 
     useEffect(() => {
         const url = `classes`;
@@ -62,8 +59,6 @@ export default function Classes({ setClasses, classes, userData }) {
                 const toDate = new Date(fromDate);
                 toDate.setHours(fromDate.getHours() + 1);
 
-                console.log(`classItem: ${classItem}`);
-
                 return {
                     id: classItem.class_id,
                     color: randomColor,
@@ -84,7 +79,6 @@ export default function Classes({ setClasses, classes, userData }) {
 
     const handleDateChange = (date) => {
         setDate(date);
-        console.log("Selected date: ", date);
     };
 
     const handleEventClick = (event) => {
@@ -127,15 +121,13 @@ export default function Classes({ setClasses, classes, userData }) {
     };
 
     const handleClassRegistration = (event) => {
-
-        const url = "waiting-trainee"
+        const url = "waiting-trainee";
         const body = {
             user_id: userData.user_id,
             class_id: event.id
-        }
+        };
         serverRequests('POST', url, body)
             .then(response => {
-                console.log(response);
                 if (!response.ok) {
                     console.error("error");
                     return;
@@ -146,12 +138,16 @@ export default function Classes({ setClasses, classes, userData }) {
             }).catch(error => {
                 console.error(error);
             });
-        alert(`Hey! To complete the registration process for the ${event.title} class, pay by Bit a $${event.price} payment to the Trainer ${event.trainer.first_name}. A link to the class will be sent to you when the payment is confirmed. ${event.trainer.first_name}'s phone number: ${event.trainer.phone} . Thank you very much!`)
-
-    }
+        alert(`Hey! To complete the registration process for the ${event.title} class, pay by Bit a $${event.price} payment to the Trainer ${event.trainer.first_name}. A link to the class will be sent to you when the payment is confirmed. ${event.trainer.first_name}'s phone number: ${event.trainer.phone} . Thank you very much!`);
+    };
 
     const handleSeeMoreClick = (id) => {
         setSeeMoreBtn(prev => (prev !== id ? id : 0));
+    };
+
+    const isPastEvent = (event) => {
+        const now = new Date();
+        return event.to < now;
     };
 
     return (
@@ -162,7 +158,7 @@ export default function Classes({ setClasses, classes, userData }) {
                 tileContent={tileContent}
             />
             {selectedEvent && (
-                <SingleClass event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+                <SingleClass userData={userData} event={selectedEvent} onClose={() => setSelectedEvent(null)} seeMoreBtn={seeMoreBtn} handleSeeMoreClick={handleSeeMoreClick} handleClassRegistration={handleClassRegistration} />
             )}
             {selectedDayEvents.length > 0 && (
                 <div className="single-class-modal">
@@ -180,13 +176,18 @@ export default function Classes({ setClasses, classes, userData }) {
                                         {seeMoreBtn === event.id ? 'See less...' : 'See more...'}
                                     </button>
                                 )}
-                                {seeMoreBtn === event.id && (<div>
-                                    <p><strong>Other details...</strong></p>
-                                    <button onClick={() => handleClassRegistration(event)}>Join class!</button>
-                                </div>)}
+                                {seeMoreBtn === event.id && (
+                                    <div>
+                                        <p><strong>Other details...</strong></p>
+                                        {!isPastEvent(event) ? (
+                                            <button onClick={() => handleClassRegistration(event)}>Join class!</button>
+                                        ) : (
+                                            <p style={{ color: 'red' }}><strong>This class has already ended.</strong></p>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         ))}
-
                     </div>
                 </div>
             )}

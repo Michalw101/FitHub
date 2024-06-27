@@ -16,7 +16,6 @@ const auth = new google.auth.GoogleAuth({
 });
 
 
-
 const drive = google.drive({ version: 'v3', auth });
 
 const storage = multer.diskStorage({
@@ -39,7 +38,7 @@ async function uploadFileToDrive(fileName, filePath) {
   };
 
   const media = {
-    mimeType: 'application/octet-stream',
+    mimeType: 'application/pdf', 
     body: fs.createReadStream(filePath),
   };
 
@@ -74,13 +73,10 @@ router.post('/', upload.single('file'), async (req, res) => {
     const fileUrl = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
     console.log(`File URL: ${fileUrl}`);
 
- 
-    res.status(200).send(  { ok: true, message: `File uploaded successfully. File ID: ${fileId}` , url: fileUrl});
+    res.status(200).send({ ok: true, message: `File uploaded successfully. File ID: ${fileId}`, url: fileUrl });
   } catch (error) {
     res.status(500).send('Error uploading file.');
   }
 });
-
-
 
 module.exports = router;

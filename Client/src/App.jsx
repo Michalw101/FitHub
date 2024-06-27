@@ -24,7 +24,7 @@ import MyClasses from './pages/MyClasses'
 export const UserContext = createContext();
 
 function App() {
-
+  //livdkokie in yesh mishtamesh mechubar veim ken laasot setuserdata
   const [userData, setUserData] = useState({});
 
   return (

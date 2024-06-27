@@ -37,3 +37,22 @@
 .class-details strong {
     font-weight: 700; 
 }
+
+
+.badge {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 0.2em 0.4em;
+    margin-left: 0.5em;
+    font-size: 0.8em;
+}
+
+.past-badge {
+    background-color: rgb(66, 66, 66);
+    color: white;
+    border-radius: 50%;
+    padding: 0.2em 0.4em;
+    margin-left: 0.5em;
+    font-size: 0.8em;
+}

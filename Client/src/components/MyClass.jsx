@@ -1,14 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import '../css/myClass.css';
 import { serverRequests } from '../Api';
+import EditClassModal from './EditClassModal'
 
-export default function MyClass({ myClass }) {
+export default function MyClass({ myClass, myClasses, setMyClasses, pastClass }) {
     const [registeredUsers, setRegisteredUsers] = useState([]);
     const [approvedUsers, setApprovedUsers] = useState([]);
     const [viewType, setViewType] = useState(null);
     const [isApproved, setIsApproved] = useState(false);
-    const [registeredUsersLoaded, setRegisteredUsersLoaded] = useState(false);
-    const [approvedUsersLoaded, setApprovedUsersLoaded] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        const fetchRegisteredUsers = async () => {
+            const URL = `trainees/waiting?class_id=${myClass.class_id}`;
+            try {
+                const response = await serverRequests('GET', URL, null);
+                if (response.ok) {
+                    const data = await response.json();
+                    setRegisteredUsers(data.trainees);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        const fetchApprovedUsers = async () => {
+            const URL = `trainees/approved?class_id=${myClass.class_id}`;
+            try {
+                const response = await serverRequests('GET', URL, null);
+                if (response.ok) {
+                    const data = await response.json();
+                    setApprovedUsers(data.trainees);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchRegisteredUsers();
+        fetchApprovedUsers();
+    }, [myClass.class_id]);
 
     const handlePayedCheckboxChange = (user) => {
         const deleteUserUrl = `trainees/waiting?trainee_id=${user.user_id}&class_id=${myClass.class_id}`;
@@ -48,50 +79,25 @@ export default function MyClass({ myClass }) {
         }
     }, [isApproved]);
 
-    const handleSeeRegisteredUsers = async () => {
+    const handleSeeRegisteredUsers = () => {
         setViewType(viewType === 'registered' ? null : 'registered');
-
-        if (!registeredUsersLoaded) {
-            const URL = `trainees/waiting?class_id=${myClass.class_id}`;
-
-            serverRequests('GET', URL, null)
-                .then(response => {
-                    if (!response.ok) {
-                        return;
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    setRegisteredUsers(data.trainees);
-                    setRegisteredUsersLoaded(true);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
     };
 
-    const handleSeeApprovedUsers = async () => {
+    const handleSeeApprovedUsers = () => {
         setViewType(viewType === 'approved' ? null : 'approved');
+    };
 
-        if (!approvedUsersLoaded) {
-            const URL = `trainees/approved?class_id=${myClass.class_id}`;
+    function formatHourRange(startHour) {
+        const [hours, minutes] = startHour.split(':').map(Number);
+        const endHour = (hours + 1) % 24; 
+        const formattedStartHour = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+        const formattedEndHour = `${String(endHour).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+      
+        return `${formattedStartHour} - ${formattedEndHour}`;
+    }
 
-            serverRequests('GET', URL, null)
-                .then(response => {
-                    if (!response.ok) {
-                        return;
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    setApprovedUsers(data.trainees);
-                    setApprovedUsersLoaded(true);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
+    const handleEditClick = () => {
+        setIsEditing(true);
     };
 
     return (
@@ -99,13 +105,20 @@ export default function MyClass({ myClass }) {
             <div key={myClass.id} className="class-details">
                 <p><strong>Description:</strong> {myClass.description}</p>
                 <p><strong>Price:</strong> ${myClass.price}</p>
-                <p><strong>At:</strong> {`${new Date(myClass.date).toLocaleDateString('he-IL')}`}</p>
+                <p><strong>At:</strong> {`${new Date(myClass.date).toLocaleDateString('he-IL')}`} {formatHourRange(myClass.hour)}</p>
 
-                <button onClick={handleSeeRegisteredUsers}>
-                    {viewType === 'registered' ? 'Hide Registered Trainees' : 'Show Registered Trainees'}
-                </button>
+                {!pastClass && (
+                    <div>
+                        <button onClick={handleSeeRegisteredUsers}>
+                            {viewType === 'registered' ? 'Hide Registered Trainees' : 'Show Registered Trainees'}
+                            {registeredUsers.length > 0 && <span className="badge">{registeredUsers.length}</span>}
+                        </button>
+                        <button onClick={handleEditClick}>Edit Class</button>
+                    </div>
+                )}
                 <button onClick={handleSeeApprovedUsers}>
                     {viewType === 'approved' ? 'Hide Approved Trainees' : 'Show Approved Trainees'}
+                    {approvedUsers.length > 0 && <span className={pastClass ? "past-badge" : "badge"}>{approvedUsers.length}</span>}
                 </button>
 
                 {viewType === 'registered' && (
@@ -147,6 +160,15 @@ export default function MyClass({ myClass }) {
                             )}
                         </div>
                     </div>
+                )}
+
+                {isEditing && (
+                    <EditClassModal
+                        myClass={myClass}
+                        myClasses={myClasses}
+                        setMyClasses={setMyClasses}
+                        onClose={() => setIsEditing(false)}
+                    />
                 )}
             </div>
         </div>

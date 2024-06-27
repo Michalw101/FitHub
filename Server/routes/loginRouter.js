@@ -4,6 +4,7 @@ const controller = require('../controllers/loginController.js');
 
 router.post("/", async (req, res) => {
     try {
+        console.log('req', req.body);
         const result = await controller.postLogin(req.body);
         console.log('result', result);
         if (result.success) {
@@ -24,7 +25,7 @@ router.post("/", async (req, res) => {
         }
     } catch (err) {
         console.error('Login error:', err);
-        res.status(500).send({ message: 'Internal server error' });
+        res.status(500).send({ message: err.message, ok:false });
     }
 });
 
