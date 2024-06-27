@@ -31,7 +31,7 @@ export default function EditClassModal({ myClass,myClasses, setMyClasses, onClos
         <div className="modal-overlay">
             <div className="modal-content">
                 <button className="close-button" onClick={onClose}>❌</button>
-                <h2>Edit Class</h2>
+                <h2>Edit Class</h2><br/>
                 <label>
                     Description:
                     <input

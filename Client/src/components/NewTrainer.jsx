@@ -12,10 +12,6 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
             serverRequests('DELETE', url, { ...trainer, sendMail: true })
                 .then(response => {
                     console.log(response);
-                    // if (!response.ok) {
-                    //     console.error("error")
-                    //     return;
-                    // }
                     return response.json();
                 }).then(() => {
                     alert(`${trainer.first_name} is not here 😈`);

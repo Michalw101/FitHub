@@ -89,10 +89,10 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
 
     function formatHourRange(startHour) {
         const [hours, minutes] = startHour.split(':').map(Number);
-        const endHour = (hours + 1) % 24; 
+        const endHour = (hours + 1) % 24;
         const formattedStartHour = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
         const formattedEndHour = `${String(endHour).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-      
+
         return `${formattedStartHour} - ${formattedEndHour}`;
     }
 
@@ -100,9 +100,61 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
         setIsEditing(true);
     };
 
+
+    function isClassWithinNextHour() {
+        const now = new Date();
+        const classDateTime = new Date(myClass.date);
+        const [classHour, classMinute] = myClass.hour.split(':').map(Number);
+        classDateTime.setHours(classHour, classMinute, 0, 0);
+
+        const timeDifference = (classDateTime - now) / (1000 * 60); 
+        return timeDifference <= 60 && timeDifference >= 0;
+    }
+
+
+    const handleDeleteClick = () => {
+
+        if (isClassWithinNextHour()) {
+            alert("You cannot cancel the class as it is scheduled to start within the next hour.");
+            return;
+        }
+
+        if (confirm(`Are you sure you want to cancel the class you will hold on ${new Date(myClass.date).toLocaleDateString('he-IL')}? We recommend that you cancel a lesson only if you really have to!`)) {
+
+            console.log(1)
+            const deleteClassUrl = `classes/${myClass.class_id}`;
+            console.log(2)
+            serverRequests('DELETE', deleteClassUrl, myClass)
+                .then(response => {
+                    console.log(3)
+                    if (!response.ok) {
+                        console.error("error");
+                        return;
+                    }
+                    console.log(4)
+                    return response.json();
+                })
+                .then(() => { 
+                    setMyClasses(myClasses.filter(cls => cls.class_id !== myClass.class_id));
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        } else return;
+    };
+
+
+
     return (
         <div className="single-class-content">
             <div key={myClass.id} className="class-details">
+                {!pastClass && (
+                    <div>
+                        <button onClick={handleEditClick}>Edit Class</button>
+                        <button onClick={handleDeleteClick}>Delete Class</button>
+                    </div>
+                )}
+
                 <p><strong>Description:</strong> {myClass.description}</p>
                 <p><strong>Price:</strong> ${myClass.price}</p>
                 <p><strong>At:</strong> {`${new Date(myClass.date).toLocaleDateString('he-IL')}`} {formatHourRange(myClass.hour)}</p>
@@ -113,7 +165,6 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
                             {viewType === 'registered' ? 'Hide Registered Trainees' : 'Show Registered Trainees'}
                             {registeredUsers.length > 0 && <span className="badge">{registeredUsers.length}</span>}
                         </button>
-                        <button onClick={handleEditClick}>Edit Class</button>
                     </div>
                 )}
                 <button onClick={handleSeeApprovedUsers}>

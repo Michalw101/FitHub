@@ -82,7 +82,24 @@ async function createClass(body) {
 
 
 async function deleteClass(id) {
+    try {
+        console.log('delete class model');
 
+        const classSql = `DELETE FROM classes WHERE class_id = ?`;
+        await pool.query(classSql, [id]);
+
+        const traineeSql = `DELETE FROM trainees_in_class WHERE class_id = ?`;
+        await pool.query(traineeSql, [id]);
+
+        const waitingTraineeSql = `DELETE FROM trainees_waiting_list WHERE class_id = ?`;
+        await pool.query(waitingTraineeSql, [id]);
+        
+        return { success: true, message: "delete successfuly" };
+    }
+    catch (err) {
+        console.error('Error deleting class:', err);
+        return { success: false, message: "An error occurred" };
+    }
 };
 
 async function updateClass(body, id) {

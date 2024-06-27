@@ -30,4 +30,14 @@ router.put('/:id', async (req, res) => {
     }
 })
 
+router.delete("/:id", async (req, res) => {
+    const id = req.params.id;
+    console.log('delete class router');
+    try {
+        res.send(await controller.deleteClass(id));
+    } catch (err) {
+        res.status(500).send({ ok: false });
+    }
+});
+
 module.exports = router;

@@ -208,7 +208,15 @@ const RegistrationStep2 = ({ handleChanged }) => {
             </div>
             <br /><br />
 
-            <label htmlFor="asthma_symptoms">Do you experience asthma symptoms?</label>
+            <label htmlFor="asthma_symptoms">Do you experience asthma symptoms? <br/>
+              Asthma symptoms include shortness of breath, wheezing, persistent cough, and chest tightness.
+
+
+
+
+
+
+</label>
             <div className='radio-inputs'>
               <label className="radio">
                 <input

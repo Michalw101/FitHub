@@ -50,7 +50,7 @@ async function updateClass(body, id) {
 
 async function deleteClass(id) {
     try {
-        console.log('delete todo controller');
+        console.log('delete class controller');
         return model.deleteClass(id);
     }
     catch (err) {
