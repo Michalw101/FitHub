@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../css/editClassModal.css';
+import '../css/editModal.css';
 import { serverRequests } from '../Api';
 
 export default function EditClassModal({ myClass,myClasses, setMyClasses, onClose }) {

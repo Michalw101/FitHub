@@ -119,4 +119,24 @@ const sendEmailToUser = (user, password) => {
     sendMail(transporter, mailOptions);
 }
 
-module.exports = { createTrainer, getAllTrainers }
+
+async function updateTrainer(body, id) {
+    try {
+        const user_id = id; 
+        const { firstName, lastName, email, phone, specialization, experience, twitterLink, facebookLink, instegramLink } = body;
+
+        const userSql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE user_id = ?`;
+        await pool.query(userSql, [firstName, lastName, email, phone, user_id]);
+        
+        const trainerSql = `UPDATE trainers SET specialization = ?, experience = ?, twitter_link = ?, facebook_link = ?, instegram_link = ? WHERE trainer_id = ?`;
+        await pool.query(trainerSql, [specialization, experience, twitterLink, facebookLink, instegramLink, user_id]);
+
+        return { success: true, message: "Trainer updated successfully", userDetails: { ...body, user_id: user_id } };
+
+    } catch (error) {
+        console.error("Error updating trainer:", error);
+        throw error;
+    }
+};
+
+module.exports = { createTrainer, getAllTrainers, updateTrainer }

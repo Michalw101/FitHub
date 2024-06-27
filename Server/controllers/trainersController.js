@@ -32,9 +32,9 @@ async function getTrainerById(id) {
 
 
 
-async function updateTrainer(body) {
+async function updateTrainer(body, id) {
     try {
-        return model.updateTrainer(body);
+        return model.updateTrainer(body, id);
     }
     catch (err) {
         throw err;

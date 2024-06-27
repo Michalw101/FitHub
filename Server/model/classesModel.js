@@ -88,16 +88,19 @@ async function deleteClass(id) {
 async function updateClass(body, id) {
     try {
         const class_id = id;
+
         const { description, price } = body;
         console.log('cvbnm', description, price, class_id)
         const classSql = `UPDATE classes SET description = ?, price = ?  WHERE class_id = ?`;
         await pool.query(classSql, [description, price, class_id]);
+
         return { success: true, message: "Class updated successfully", myClass: { ...body, class_id: class_id } };
 
     } catch (error) {
         console.error("Error updating class:", error);
         throw error;
     }
+
 };
 
 module.exports = { createClass, updateClass, getAllClasses, getMyClasses, deleteClass, getClass }
