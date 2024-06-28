@@ -35,7 +35,7 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
             .then(data => {
                 if (data) {
                     setClasses([...classes, data.class]);
-                    alert(`class added succesfuly on ${newClass.date} at ${newClass.hour}`);
+                    alert(`Class added succesfuly on ${newClass.date} at ${newClass.hour}`);
                     onClose();
                 }
             })
@@ -43,6 +43,37 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
                 console.error('Error creating class', error);
             });
     };
+
+    const toggleHealthCondition = (condition) => {
+        handleChanged({
+            target: {
+                name: condition,
+                value: !newClass[condition]
+            }
+        });
+    };
+    
+
+    const genderOptions = [
+        { value: 'male', label: 'Only men' },
+        { value: 'female', label: 'Only women' },
+        { value: 'both', label: 'Both' }
+    ];
+
+    const classTypeOptions = [
+        'Strength training', 'Crossfit', 'Zumba', 'Aerobics', 'Pilates', 'Yoga', 'Other'
+    ];
+
+    const healthConditions = [
+        'heart_disease',
+        'chest_pain',
+        'fainted_or_dizziness',
+        'asthma',
+        'family_heart_disease_or_sudden_death',
+        'exercise_supervision',
+        'chronic_disease',
+        'pregnancy_risk'
+    ];
 
     return (
         <div className="modal-overlay">
@@ -102,9 +133,44 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
                             onChange={handleChanged}
                         />
                     </div>
-                    <p>You need to set limits on this class</p>
-                    <p>Choose the right opertunity</p>
-
+                    <p>You need to set limits on this class</p><br />
+                    <p>Select the appropriate option</p><br />
+                    <div className="radio-group inputGroup">
+                        {genderOptions.map((option) => (
+                            <button
+                                key={option.value}
+                                className={`gender-button ${newClass.gender_limit === option.value ? 'selected' : ''}`}
+                                onClick={() => handleChanged({ target: { name: 'gender_limit', value: option.value } })}
+                            >
+                                {option.label}
+                            </button>
+                        ))}
+                    </div>
+                    <p>Class Type</p><br />
+                    <div className="radio-group inputGroup">
+                        {classTypeOptions.map((option) => (
+                            <button
+                                key={option}
+                                className={`class-type-button ${newClass.class_type === option ? 'selected' : ''}`}
+                                onClick={() => handleChanged({ target: { name: 'class_type', value: option } })}
+                            >
+                                {option}
+                            </button>
+                        ))}
+                    </div>
+                    <p>Select which health limits your class has...</p><br />
+                    <p><strong>A mark means that a person with this limitation will not be able to participate in this class!</strong></p>
+                    <div className="checkbox-group inputGroup">
+                        {healthConditions.map((condition) => (
+                            <button
+                                key={condition}
+                                className={`health-button ${newClass[condition] ? 'selected' : ''}`}
+                                onClick={() => toggleHealthCondition(condition)}
+                            >
+                                {condition.replace(/_/g, ' ').charAt(0).toUpperCase() + condition.replace(/_/g, ' ').slice(1)}
+                            </button>
+                        ))}
+                    </div>
                     <button onClick={handleCreateClass}>Create Class</button>
                 </div>
             </div>

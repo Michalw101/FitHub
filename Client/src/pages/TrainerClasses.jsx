@@ -15,15 +15,16 @@ export default function TrainerClasses({ userData }) {
         hour: "",
         price: "",
         link: "",
-        gender: '',
-        heart_disease: '',
-        chest_pain: '',
-        fainted_or_dizziness: '',
-        asthma: '',
-        family_heart_disease_or_sudden_death: '',
-        exercise_supervision: '',
-        chronic_disease: '',
-        pregnancy_risk: ''
+        class_type: '',
+        gender_limit: '',
+        heart_disease: 0,
+        chest_pain: 0,
+        fainted_or_dizziness: 0,
+        asthma: 0,
+        family_heart_disease_or_sudden_death: 0,
+        exercise_supervision: 0,
+        chronic_disease: 0,
+        pregnancy_risk: 0
     })
 
     const handleChanged = (e) => {
@@ -36,7 +37,10 @@ export default function TrainerClasses({ userData }) {
 
     return (
         <div>
-            <button onClick={() => setAddClass(true)}>add class</button>
+            <button className="Btn1" onClick={() => setAddClass(true)}>
+                <div className="sign1">+</div>
+                <div className="text1">Create</div>
+            </button>
             {addClass && (
                 <AddClass onClose={() => {
                     setAddClass(false), setNewClass({
@@ -47,15 +51,16 @@ export default function TrainerClasses({ userData }) {
                         hour: "",
                         price: "",
                         link: "",
-                        gender: '',
-                        heart_disease: '',
-                        chest_pain: '',
-                        fainted_or_dizziness: '',
-                        asthma: '',
-                        family_heart_disease_or_sudden_death: '',
-                        exercise_supervision: '',
-                        chronic_disease: '',
-                        pregnancy_risk: ''
+                        class_type: '',
+                        gender_limit: '',
+                        heart_disease: 0,
+                        chest_pain: 0,
+                        fainted_or_dizziness: 0,
+                        asthma: 0,
+                        family_heart_disease_or_sudden_death: 0,
+                        exercise_supervision: 0,
+                        chronic_disease: 0,
+                        pregnancy_risk: 0
                     })
                 }} newClass={newClass} handleChanged={handleChanged} setClasses={setClasses} classes={classes} />
             )}

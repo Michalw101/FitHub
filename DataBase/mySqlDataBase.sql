@@ -87,7 +87,7 @@ CREATE TABLE trainers_waiting_list (
 CREATE TABLE limits_in_class (
     limits_id INT PRIMARY KEY AUTO_INCREMENT,
     trainer_id INT,
-    gender VARCHAR(10) CHECK (gender IN ('male', 'female', 'both')),
+    gender_limit VARCHAR(10) CHECK (gender_limit IN ('male', 'female', 'both')),
     heart_disease BOOLEAN,
     chest_pain BOOLEAN,
     fainted_or_dizziness BOOLEAN,
@@ -111,6 +111,7 @@ CREATE TABLE classes (
     price INT,
     link VARCHAR(255),
     limits_id INT,
+    class_type VARCHAR(20) CHECK (class_type IN ('Strength training', 'Crossfit', 'Zumba', 'Aerobics', 'Pilates', 'Yoga', 'Other')),
     FOREIGN KEY (trainer_id) 
       REFERENCES trainers (trainer_id) 
       ON UPDATE RESTRICT 
@@ -120,6 +121,7 @@ CREATE TABLE classes (
       ON UPDATE RESTRICT 
       ON DELETE CASCADE
 );
+
 
 CREATE TABLE trainees_waiting_list (
     trainee_id INT,
@@ -185,7 +187,7 @@ INSERT INTO trainees (trainee_id, information_id)
 VALUES 
 (2, 1);
 
-INSERT INTO limits_in_class (trainer_id, gender, heart_disease, chest_pain, fainted_or_dizziness, asthma, family_heart_disease_or_sudden_death,
+INSERT INTO limits_in_class (trainer_id, gender_limit, heart_disease, chest_pain, fainted_or_dizziness, asthma, family_heart_disease_or_sudden_death,
     exercise_supervision, chronic_disease, pregnancy_risk) 
 VALUES 
 (1, 'male', true, false, false, true, true, false, false, true),
@@ -195,14 +197,15 @@ VALUES
 (1, 'both', false, false, false, true, true, false, false, false),
 (1, 'female', false, true, true, false, false, false, true, true);
 
-INSERT INTO classes (trainer_id, date, hour, description, price, link, limits_id) 
+INSERT INTO classes (trainer_id, date, hour, description, price, link, limits_id, class_type) 
 VALUES 
-(1, '2024-06-27', '08:00:00', 'Morning Workout', 20, 'https://meet.google.com/sov-bfcd-uku', 1),
-(1, '2024-06-28', '18:00:00', 'Evening Yoga', 15, 'https://meet.google.com/sov-bfcd-uku', 2),
-(1, '2024-06-29', '10:30:00', 'Pilates Session', 25, 'https://meet.google.com/sov-bfcd-uku', 3),
-(1, '2024-06-30', '06:00:00', 'Morning Workout333', 20, 'https://meet.google.com/sov-bfcd-uku', 4),
-(1, '2024-06-27', '10:00:00', 'Morning Workout...', 20, 'https://meet.google.com/sov-bfcd-uku', 5),
-(1, '2024-06-18', '10:00:00', 'Morning Workout😎', 30, 'https://meet.google.com/sov-bfcd-uku', 6);
+(1, '2024-06-27', '08:00:00', 'Morning Workout', 20, 'https://meet.google.com/sov-bfcd-uku', 1, 'Strength training'),
+(1, '2024-06-28', '18:00:00', 'Evening Yoga', 15, 'https://meet.google.com/sov-bfcd-uku', 2, 'Yoga'),
+(1, '2024-06-29', '10:30:00', 'Pilates Session', 25, 'https://meet.google.com/sov-bfcd-uku', 3, 'Pilates'),
+(1, '2024-06-30', '06:00:00', 'Morning Workout333', 20, 'https://meet.google.com/sov-bfcd-uku', 4, 'Strength training'),
+(1, '2024-06-27', '10:00:00', 'Morning Workout...', 20, 'https://meet.google.com/sov-bfcd-uku', 5, 'Strength training'),
+(1, '2024-06-18', '10:00:00', 'Morning Workout😎', 30, 'https://meet.google.com/sov-bfcd-uku', 6, 'Strength training');
+
 
 INSERT INTO trainees_in_class (trainee_id, class_id) 
 VALUES 

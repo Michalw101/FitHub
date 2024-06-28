@@ -9,6 +9,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    overflow-y: auto;
 }
 
 .modal-content {
@@ -18,6 +19,8 @@
     max-width: 500px;
     width: 100%;
     position: relative;
+    max-height: 80%;
+    overflow-y: auto;
 }
 
 .close-button {
@@ -29,3 +32,128 @@
     font-size: 24px;
     cursor: pointer;
 }
+
+.inputGroup {
+    margin-bottom: 20px;
+}
+
+.radio-group, .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.gender-button, .class-type-button, .health-button {
+    font-size: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.gender-button.selected, .class-type-button.selected, .health-button.selected {
+    background-color: rgb(1, 168, 168);;
+    color: white;
+}
+
+.gender-button:not(.selected), .class-type-button:not(.selected), .health-button:not(.selected) {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+
+/* .toggler {
+    width: 72px;
+    margin: 40px auto;
+  }
+  
+  .toggler input {
+    display: none;
+  }
+  
+  .toggler label {
+    display: block;
+    position: relative;
+    width: 72px;
+    height: 36px;
+    border: 1px solid #d6d6d6;
+    border-radius: 36px;
+    background: #e4e8e8;
+    cursor: pointer;
+  }
+  
+  .toggler label::after {
+    display: block;
+    border-radius: 100%;
+    background-color: #d7062a;
+    content: '';
+    animation-name: toggler-size;
+    animation-duration: 0.15s;
+    animation-timing-function: ease-out;
+    animation-direction: forwards;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+  }
+  
+  .toggler label::after, .toggler label .toggler-on, .toggler label .toggler-off {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    width: 26px;
+    height: 26px;
+    transform: translateY(-50%) translateX(-50%);
+    transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out;
+  }
+  
+  .toggler input:checked + label::after, .toggler input:checked + label .toggler-on, .toggler input:checked + label .toggler-off {
+    left: 75%;
+  }
+  
+  .toggler input:checked + label::after {
+    background-color: #50ac5d;
+    animation-name: toggler-size2;
+  }
+  
+  .toggler .toggler-on, .toggler .toggler-off {
+    opacity: 1;
+    z-index: 2;
+  }
+  
+  .toggler input:checked + label .toggler-off, .toggler input:not(:checked) + label .toggler-on {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  
+  .toggler .path {
+    fill: none;
+    stroke: #fefefe;
+    stroke-width: 7px;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+  }
+  
+  @keyframes toggler-size {
+    0%, 100% {
+      width: 26px;
+      height: 26px;
+    }
+  
+    50% {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  @keyframes toggler-size2 {
+    0%, 100% {
+      width: 26px;
+      height: 26px;
+    }
+  
+    50% {
+      width: 20px;
+      height: 20px;
+    }
+  } */
+   

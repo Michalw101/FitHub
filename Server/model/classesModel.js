@@ -46,37 +46,46 @@ async function getMyClasses(query) {
 };
 
 async function createClass(body) {
-
     try {
-        const { trainer_id, date, hour, description, price, link } = body;
-        const sqlInsert = `
-            INSERT INTO classes (trainer_id, date, hour, description, price, link)
-            VALUES (?, ?, ?, ?, ?, ?)
-        `;
-        const result = await pool.query(sqlInsert, [trainer_id, date, hour, description, price, link]);
+        const { trainer_id, date, hour, description, price, link, class_type, gender_limit, heart_disease, chest_pain, fainted_or_dizziness, asthma, family_heart_disease_or_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk } = body;
 
-        console.log(result[0].insertId);
+        const limitsSql = `
+            INSERT INTO limits_in_class (trainer_id, gender_limit, heart_disease, chest_pain, fainted_or_dizziness, asthma, family_heart_disease_or_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        const [limitsResult] = await pool.query(limitsSql, [trainer_id, gender_limit, heart_disease, chest_pain, fainted_or_dizziness, asthma, family_heart_disease_or_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk]);
+
+        console.log(limitsResult.insertId);
+
+        const classSql = `
+            INSERT INTO classes (trainer_id, date, hour, description, price, link, limits_id, class_type)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        const [classResult] = await pool.query(classSql, [trainer_id, date, hour, description, price, link, limitsResult.insertId, class_type]);
+
+        console.log(classResult.insertId);
 
         const sqlSelect = `
-            SELECT classes.*, trainers.*, users.*
+            SELECT classes.*, trainers.*, users.*, limits_in_class.*
             FROM classes
             JOIN trainers ON classes.trainer_id = trainers.trainer_id
             JOIN users ON trainers.trainer_id = users.user_id
+            JOIN limits_in_class ON limits_in_class.limits_id = classes.limits_id
             WHERE classes.class_id = ?
         `;
-        const response = await pool.query(sqlSelect, [result[0].insertId]);
+        const [response] = await pool.query(sqlSelect, [classResult.insertId]);
 
-        console.log(response[0][0]);
+        console.log(response[0]);
 
         if (response.length > 0) {
-            return { success: true, message: "Class created successfully", class: response[0][0] };
+            return { success: true, message: "Class created successfully", class: response[0] };
         } else {
             console.log("Error creating class");
-            throw new Error("error creating class")
+            throw new Error("Error creating class");
         }
     } catch (err) {
         console.error("Error:", err);
-        throw new Error(err.message)
+        throw new Error(err.message);
     }
 }
 
@@ -96,7 +105,7 @@ async function deleteClass(id) {
 
         const waitingTraineeSql = `DELETE FROM trainees_waiting_list WHERE class_id = ?`;
         await pool.query(waitingTraineeSql, [id]);
-        
+
         return { success: true, message: "delete successfuly" };
     }
     catch (err) {
@@ -118,8 +127,8 @@ async function updateClass(body, id) {
 
     } catch (error) {
         console.error("Error updating class:", error);
-        throw new Error(err.message)   
- }
+        throw new Error(err.message)
+    }
 
 };
 
