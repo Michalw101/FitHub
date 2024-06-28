@@ -210,10 +210,10 @@ VALUES
 
 INSERT INTO passwords (user_id, user_password, salt) 
 VALUES 
-(214955064, 'hashed_password1', 'salt1'),
-(214859415, 'hashed_password2', 'salt2'),
-(1, 'hashed_password3', 'salt3'),
-(2, 'hashed_password4', 'salt4');
+(214955064, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(214859415, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(1, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(2, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15');
 
 -- insert into trainers_waiting_list(user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, experience, specialization, last_work_place, place_of_study, instegram_link, facebook_link, twitter_link)
 -- values (4, "a", "a", "michal0548429273@gmail.com", "050", '2004-06-03', "Female", "aaaa", "12", "blablabla", "d", "f", "f","f", "f");

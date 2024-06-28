@@ -3,7 +3,7 @@ const pool = require('../DB.js');
 
 async function getAllClasses() {
     try {
-        const sql = `SELECT * FROM classes NATURAL JOIN trainers JOIN users where user_id = trainer_id`;
+        const sql = `SELECT * FROM classes NATURAL JOIN limits_in_class NATURAL JOIN trainers JOIN users where user_id = trainer_id`;
         const result = await pool.query(sql);
 
         console.log('result class', result[0]);
@@ -29,7 +29,7 @@ async function getClass() {
 
 async function getMyClasses(query) {
     try {
-        const sql = `SELECT * FROM classes where ?`;
+        const sql = `SELECT * FROM classes NATURAL JOIN limits_in_class where ?`;
         const result = await pool.query(sql, query);
 
         if (result.length > 0) {
@@ -87,6 +87,9 @@ async function deleteClass(id) {
 
         const classSql = `DELETE FROM classes WHERE class_id = ?`;
         await pool.query(classSql, [id]);
+
+        const classLimitsSql = `DELETE FROM classes WHERE class_id = ?`;
+        await pool.query(classLimitsSql, [id]);
 
         const traineeSql = `DELETE FROM trainees_in_class WHERE class_id = ?`;
         await pool.query(traineeSql, [id]);

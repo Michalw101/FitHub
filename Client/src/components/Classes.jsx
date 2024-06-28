@@ -41,7 +41,6 @@ export default function Classes({ setClasses, classes, userData }) {
     useEffect(() => {
         if (classes && classes.length > 0) {
             const newEvents = classes.map((classItem) => {
-                const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
 
                 if (!classItem.date) {
                     console.error('Invalid date:', classItem);
@@ -66,7 +65,6 @@ export default function Classes({ setClasses, classes, userData }) {
 
                 return {
                     id: classItem.class_id,
-                    color: randomColor,
                     from: fromDate,
                     to: toDate,
                     title: classItem.description,

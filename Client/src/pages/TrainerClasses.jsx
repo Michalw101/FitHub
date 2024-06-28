@@ -14,7 +14,16 @@ export default function TrainerClasses({ userData }) {
         date: "",
         hour: "",
         price: "",
-        link: ""
+        link: "",
+        gender: '',
+        heart_disease: '',
+        chest_pain: '',
+        fainted_or_dizziness: '',
+        asthma: '',
+        family_heart_disease_or_sudden_death: '',
+        exercise_supervision: '',
+        chronic_disease: '',
+        pregnancy_risk: ''
     })
 
     const handleChanged = (e) => {
@@ -37,11 +46,20 @@ export default function TrainerClasses({ userData }) {
                         date: "",
                         hour: "",
                         price: "",
-                        link: ""
+                        link: "",
+                        gender: '',
+                        heart_disease: '',
+                        chest_pain: '',
+                        fainted_or_dizziness: '',
+                        asthma: '',
+                        family_heart_disease_or_sudden_death: '',
+                        exercise_supervision: '',
+                        chronic_disease: '',
+                        pregnancy_risk: ''
                     })
                 }} newClass={newClass} handleChanged={handleChanged} setClasses={setClasses} classes={classes} />
             )}
-            <Classes setClasses={setClasses} classes={classes} userData={userData}/>
+            <Classes setClasses={setClasses} classes={classes} userData={userData} />
         </div>
     );
 }

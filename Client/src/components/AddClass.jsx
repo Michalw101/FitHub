@@ -102,6 +102,9 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
                             onChange={handleChanged}
                         />
                     </div>
+                    <p>You need to set limits on this class</p>
+                    <p>Choose the right opertunity</p>
+
                     <button onClick={handleCreateClass}>Create Class</button>
                 </div>
             </div>
