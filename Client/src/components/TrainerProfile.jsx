@@ -3,9 +3,9 @@ import { UserContext } from '../App';
 import '../css/trainerDetailsProfile.css';
 import EditTrainerProfileModal from './EditTrainerProfileModal'
 
-export default function TrainerProfile({ setUserData }) {
+export default function TrainerProfile({ userData, setUserData }) {
 
-    const userData = useContext(UserContext);
+    // const userData = useContext(UserContext);
     const [isEditing, setIsEditing] = useState(false);
 
     let birthDate = new Date(userData.birth_date);

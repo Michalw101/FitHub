@@ -3,6 +3,7 @@ import '../css/editModal.css';
 import { serverRequests } from '../Api';
 
 export default function EditClassModal({ myClass,myClasses, setMyClasses, onClose }) {
+    
     const [description, setDescription] = useState(myClass.description);
     const [price, setPrice] = useState(myClass.price);
 

@@ -11,7 +11,7 @@ const SingleClass = ({ userData, event, onClose, seeMoreBtn, handleSeeMoreClick,
             <div className="single-class-content">
                 <button className="close-button" onClick={onClose}>❌</button>
                 <h2>What's on today? {new Date(event.from).toLocaleDateString()}</h2><br></br>
-                <p>{event.title} with {event.trainer.first_name} {event.trainer.last_name}</p><br/>
+                <h3>{event.title} with {event.trainer.first_name} {event.trainer.last_name}</h3><br/>
                 <p>{`${new Date(event.from).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.to).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p><br/>
                 <p><strong>Only ${event.price}</strong></p><br/>
                 {/* {userData.role_id === 3 && (
