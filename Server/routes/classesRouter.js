@@ -3,12 +3,24 @@ const router = express.Router();
 const controller = require('../controllers/classesController');
 
 router.get("/", async (req, res) => {
+    console.log('all');
     try {
         res.send(await controller.getAllClasses());
     } catch (err) {
         res.status(500).send({ ok: false });
     }
 });
+
+router.get("/by-query", async (req, res) => {
+    console.log('query');
+    try {
+        const query= req.query; // user_id = 1
+        res.send(await controller.getClassesByQuery(query));
+    } catch (err) {
+        res.status(500).send({ ok: false });
+    }
+});
+
 
 
 router.post('/', async (req, res) => {

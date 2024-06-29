@@ -19,7 +19,7 @@ export default function Classes({ setClasses, classes, userData }) {
 
 
     useEffect(() => {
-        const url = `classes`;
+        const url = `classes/by-query?user_id=${userData.user_id}`;
 
         serverRequests('GET', url, null)
             .then(response => {
