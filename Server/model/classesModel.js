@@ -94,11 +94,15 @@ async function deleteClass(id) {
     try {
         console.log('delete class model');
 
+        const limitSql = `select limits_id from classes where class_id = ?`;
+        const limitResult = await pool.query(limitSql, [id]);
+        const limit_id = limitResult[0][0].limits_id;
+        console.log(limit_id)
         const classSql = `DELETE FROM classes WHERE class_id = ?`;
         await pool.query(classSql, [id]);
 
-        const classLimitsSql = `DELETE FROM classes WHERE class_id = ?`;
-        await pool.query(classLimitsSql, [id]);
+        const classLimitsSql = `DELETE FROM limits_in_class WHERE limits_id = ?`;
+        await pool.query(classLimitsSql, [limit_id]);
 
         const traineeSql = `DELETE FROM trainees_in_class WHERE class_id = ?`;
         await pool.query(traineeSql, [id]);
@@ -117,11 +121,20 @@ async function deleteClass(id) {
 async function updateClass(body, id) {
     try {
         const class_id = id;
+        const { limits_id, description, price, class_type, gender_limit, heart_disease,
+            chest_pain,
+            fainted_or_dizziness,
+            asthma,
+            family_heart_disease_or_sudden_death,
+            exercise_supervision,
+            chronic_disease,
+            pregnancy_risk } = body;
 
-        const { description, price } = body;
-        console.log('cvbnm', description, price, class_id)
-        const classSql = `UPDATE classes SET description = ?, price = ?  WHERE class_id = ?`;
-        await pool.query(classSql, [description, price, class_id]);
+        const classSql = `UPDATE classes SET description = ?, price = ?, class_type = ?  WHERE class_id = ?`;
+        await pool.query(classSql, [description, price, class_type, class_id]);
+
+        const limitsSql = `UPDATE limits_in_class SET gender_limit = ?, heart_disease = ?, chest_pain = ?, fainted_or_dizziness = ?, asthma = ?, family_heart_disease_or_sudden_death = ?, exercise_supervision = ?, chronic_disease = ?, pregnancy_risk = ? WHERE limits_id = ?`;
+        await pool.query(limitsSql, [gender_limit, heart_disease, chest_pain, fainted_or_dizziness, asthma, family_heart_disease_or_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk, limits_id]);
 
         return { success: true, message: "Class updated successfully", myClass: { ...body, class_id: class_id } };
 
