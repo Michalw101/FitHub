@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { UserContext } from '../App';
 import '../css/trainerDetailsProfile.css';
 import EditTrainerProfileModal from './EditTrainerProfileModal'
 
-export default function TrainerProfile({ userData, setUserData }) {
+export default function TrainerProfile({ userData }) {
 
-    // const userData = useContext(UserContext);
     const [isEditing, setIsEditing] = useState(false);
+    const [formData, setFormData] = useState({ ...userData });
 
-    let birthDate = new Date(userData.birth_date);
+    let birthDate = new Date(formData.birth_date);
     let formattedDate = birthDate.toLocaleDateString('he-IL');
 
     const handleEditClick = () => {
@@ -16,7 +16,6 @@ export default function TrainerProfile({ userData, setUserData }) {
     };
 
     return (
-
         <div className="card">
             <div className="card__img"></div>
             <div className="card__descr-wrapper">
@@ -29,8 +28,8 @@ export default function TrainerProfile({ userData, setUserData }) {
                 </button><br/>
                 {isEditing && (
                     <EditTrainerProfileModal
-                        userData={userData}
-                        setUserData={setUserData}
+                        formData={formData}
+                        setFormData={setFormData}
                         onClose={() => setIsEditing(false)}
                     />
                 )}
@@ -44,7 +43,7 @@ export default function TrainerProfile({ userData, setUserData }) {
                         </g>
                     </svg>
                     <p className="card__title">
-                        {userData.first_name} {userData.last_name}
+                        {formData.first_name} {formData.last_name}
                     </p>
                 </div>
 
@@ -53,14 +52,14 @@ export default function TrainerProfile({ userData, setUserData }) {
                         <path d="M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12ZM16 12V13.5C16 14.8807 17.1193 16 18.5 16V16C19.8807 16 21 14.8807 21 13.5V12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21H16" stroke="#000000" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <p className="card__email">
-                        {userData.email}
+                        {formData.email}
                     </p>
                 </div>
 
                 <div className='phoneDiv'>
                     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M14.795 2h-5.59c-1.115 0-1.519.116-1.926.334a2.272 2.272 0 0 0-.945.945C6.116 3.686 6 4.09 6 5.205v13.59c0 1.114.116 1.519.334 1.926.218.407.538.727.945.945.407.218.811.334 1.926.334h5.59c1.114 0 1.519-.116 1.926-.334.407-.218.727-.538.945-.945.218-.407.334-.811.334-1.926V5.205c0-1.115-.116-1.519-.334-1.926a2.272 2.272 0 0 0-.945-.945C16.314 2.116 15.91 2 14.795 2zM8 17.995V6.005h8v11.99H8z" fill="#000000" /></svg>
                     <p className="card__phone">
-                        {userData.phone}
+                        {formData.phone}
                     </p>
                 </div>
                 <div className='aboutDiv'>
@@ -88,7 +87,7 @@ export default function TrainerProfile({ userData, setUserData }) {
                         The best about me:
                     </p>
                     <p className="card__descr">
-                        I {userData.specialization}
+                        I {formData.specialization}
                     </p>
                 </div>
                 <br />
@@ -102,7 +101,7 @@ export default function TrainerProfile({ userData, setUserData }) {
                     </svg>
 
                     <p className="card__descr">
-                        Gender: {userData.gender}
+                        Gender: {formData.gender}
                     </p>
                 </div>
                 <br />
@@ -174,15 +173,15 @@ export default function TrainerProfile({ userData, setUserData }) {
                     </svg>
 
                     <p className="card__descr">
-                        Experience: {userData.experience} years
+                        Experience: {formData.experience} years
                     </p>
                 </div>
                 <br />
 
 
                 <div className="wrapper">
-                    <a className="icon facebook" href={userData.facebook_link}>
-                        <span className="tooltip">{userData.facebook_link}</span>
+                    <a className="icon facebook" href={formData.facebook_link}>
+                        <span className="tooltip">{formData.facebook_link}</span>
                         <svg
                             viewBox="0 0 320 512"
                             height="1.2em"
@@ -194,8 +193,8 @@ export default function TrainerProfile({ userData, setUserData }) {
                             ></path>
                         </svg>
                     </a>
-                    <a className="icon twitter" href={userData.twitter_link}>
-                        <span className="tooltip">{userData.twitter_link}</span>
+                    <a className="icon twitter" href={formData.twitter_link}>
+                        <span className="tooltip">{formData.twitter_link}</span>
                         <svg
                             height="1.8em"
                             fill="currentColor"
@@ -208,8 +207,8 @@ export default function TrainerProfile({ userData, setUserData }) {
                             ></path>
                         </svg>
                     </a>
-                    <a className="icon instagram" href={userData.instegram_link}>
-                        <span className="tooltip">{userData.instegram_link}</span>
+                    <a className="icon instagram" href={formData.instegram_link}>
+                        <span className="tooltip">{formData.instegram_link}</span>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             height="1.2em"

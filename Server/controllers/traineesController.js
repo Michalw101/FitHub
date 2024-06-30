@@ -39,4 +39,12 @@ async function deleteWaitingTrainees(query) {
     }
 };
 
-module.exports = { getApprovedTrainees, getWaitingTrainees, addApprovedTrainees, deleteWaitingTrainees}
+async function updateTrainee(body, id) {
+    try {
+        return model.updateTrainee(body, id);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+module.exports = { getApprovedTrainees,updateTrainee, getWaitingTrainees, addApprovedTrainees, deleteWaitingTrainees}

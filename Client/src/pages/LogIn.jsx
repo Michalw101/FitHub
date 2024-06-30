@@ -18,7 +18,7 @@ const Login = ({ setUserData }) => {
   });
   const URL = 'login';
 
-  function handleLogin() {
+  const handleLogin= ()=> {
     serverRequests('GET', `${URL}/${formData.user_id}`, null)
       .then(response => {
         console.log(response);
@@ -86,6 +86,12 @@ const Login = ({ setUserData }) => {
     }));
   };
 
+  const forgotPasswordHandle= () => {
+    formData.user_id
+    //send mail with new password or let him decide?
+
+  }
+
   return (
     <div className='loginDiv'>
       <div className="form-container">
@@ -111,7 +117,7 @@ const Login = ({ setUserData }) => {
           {loginError &&
             <p className='error' style={{ color: "red" }}>{loginError}</p>}
           <p className="page-link">
-            <span className="page-link-label">Forgot Password?</span>
+            <span className="page-link-label" onClick={forgotPasswordHandle}>Forgot Password?</span>
           </p>
           <button className="form-btn" type="submit">Log in</button>
         </form>

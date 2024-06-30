@@ -1,26 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../css/editModal.css';
 import { serverRequests } from '../Api';
-import { useNavigate } from 'react-router-dom';
 
 
-export default function EditTrainerProfileModal({ userData, setUserData, onClose }) {
+export default function EditTrainerProfileModal({ formData, setFormData, onClose }) {
 
-    const navigate= useNavigate();
-    const [firstName, setFirstName] = useState(userData.first_name);
-    const [lastName, setLastName] = useState(userData.last_name);
-    const [email, setEmail] = useState(userData.email);
-    const [phone, setPhone] = useState(userData.phone);
-    const [specialization, setSpecialization] = useState(userData.specialization);
-    const [experience, setExperience] = useState(userData.experience);
-    const [twitterLink, setTwitterLink] = useState(userData.twitter_link);
-    const [facebookLink, setFacebookLink] = useState(userData.facebook_link);
-    const [instegramLink, setInstegramLink] = useState(userData.instegram_link);
+    const [editFormData, setEditFormData] = useState({ ...formData })
+
+    const handleChanged = (e) => {
+        const { name, value } = e.target;
+        setEditFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
 
     const handleSave = async () => {
-        const updatedUser = { ...userData, firstName, lastName, email, phone, specialization, experience, twitterLink, facebookLink, instegramLink };
-        const url = `trainers/${userData.user_id}`;
-        serverRequests('PUT', url, updatedUser)
+        const url = `trainers/${editFormData.user_id}`;
+        serverRequests('PUT', url, editFormData)
             .then(response => {
                 console.log(response);
                 if (!response.ok) {
@@ -29,10 +26,8 @@ export default function EditTrainerProfileModal({ userData, setUserData, onClose
                 return response.json();
             }).then(data => {
                 if (data) {
-                    setUserData(data.userDetails);
-                    navigate("/trainer-home/trainer-profile")
-                    onClose();
-                }
+                    setFormData(data.trainer);
+                    onClose();                }
             }).catch(error => {
                 console.error('Error', error);
             });
@@ -47,8 +42,9 @@ export default function EditTrainerProfileModal({ userData, setUserData, onClose
                     First name:
                     <input
                         type="text"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
+                        value={editFormData.first_name}
+                        name="first_name"
+                        onChange={handleChanged}
                     />
                 </label>
                 <br /><br />
@@ -56,8 +52,9 @@ export default function EditTrainerProfileModal({ userData, setUserData, onClose
                     Last name:
                     <input
                         type="text"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
+                        value={editFormData.last_name}
+                        name="last_name"
+                        onChange={handleChanged}
                     />
                 </label>
                 <br /><br />
@@ -65,8 +62,9 @@ export default function EditTrainerProfileModal({ userData, setUserData, onClose
                     Email:
                     <input
                         type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={editFormData.email}
+                        name="email"
+                        onChange={handleChanged}
                     />
                 </label>
                 <br /><br />
@@ -74,16 +72,18 @@ export default function EditTrainerProfileModal({ userData, setUserData, onClose
                     Phone:
                     <input
                         type="text"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        value={editFormData.phone}
+                        name="phone"
+                        onChange={handleChanged}
                     />
                 </label>
                 <br /><br /><label>
                     Specialization:
                     <input
                         type="text"
-                        value={specialization}
-                        onChange={(e) => setSpecialization(e.target.value)}
+                        value={editFormData.specialization}
+                        name="specialization"
+                        onChange={handleChanged}
                     />
                 </label>
                 <br /><br />
@@ -91,16 +91,18 @@ export default function EditTrainerProfileModal({ userData, setUserData, onClose
                     Experience:
                     <input
                         type="number"
-                        value={experience}
-                        onChange={(e) => setExperience(e.target.value)}
+                        value={editFormData.experience}
+                        name="experience"
+                        onChange={handleChanged}
                     />
                 </label>
                 <br /><br /><label>
                     Twitter Link:
                     <input
                         type="text"
-                        value={twitterLink}
-                        onChange={(e) => setTwitterLink(e.target.value)}
+                        value={editFormData.twitter_link}
+                        name="twitter_link"
+                        onChange={handleChanged}
                     />
                 </label>
                 <br /><br />
@@ -108,17 +110,18 @@ export default function EditTrainerProfileModal({ userData, setUserData, onClose
                     Facebook Link:
                     <input
                         type="text"
-                        value={facebookLink}
-                        onChange={(e) => setFacebookLink(e.target.value)}
-                    />
+                        value={editFormData.facebook_link}
+                        name="facebook_link"
+                        onChange={handleChanged}                    />
                 </label>
                 <br /><br />
                 <label>
                     Instegram Link:
                     <input
                         type="text"
-                        value={instegramLink}
-                        onChange={(e) => setInstegramLink(e.target.value)}
+                        value={editFormData.instegram_link}
+                        name="instegram_link"
+                        onChange={handleChanged}
                     />
                 </label>
                 <br /><br />

@@ -47,6 +47,15 @@ router.post("/approved", async (req, res) => {
     }
 });
 
+router.put('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        console.log('trainees router');
+        res.send(await controller.updateTrainee(req.body, id));
+    } catch (err) {
+        res.status(500).send({ ok: false });
+    }
+})
 
 
 module.exports = router

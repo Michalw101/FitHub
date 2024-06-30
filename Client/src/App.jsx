@@ -20,12 +20,30 @@ import TrainerProfile from './components/TrainerProfile'
 import TrainerHome from './pages/TrainerHome'
 import TraineeClasses from './pages/TraineeClasses'
 import MyClasses from './pages/MyClasses'
+import { serverRequests } from './Api'
 
 export const UserContext = createContext();
 
 function App() {
-  //livdkokie in yesh mishtamesh mechubar veim ken laasot setuserdata
+
   const [userData, setUserData] = useState({});
+
+  serverRequests('GET', `users/current-user`, null)
+  .then(response => {
+    console.log(response);
+    if (!response.ok) {
+      return;
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data) {
+      setUserData(data.user);
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });  
 
   return (
 
@@ -44,7 +62,7 @@ function App() {
 
           <Route path="/trainee-home" element={<HomeLayout setUserData={setUserData} userData={userData} role={3}/>} >
             <Route index element={<TraineeHome userData={userData}/>} />
-            <Route path="profile" element={<Profile />} />
+            <Route path="profile" element={<Profile userData={userData} />} />
             <Route path="trainee-classes" element={<TraineeClasses userData={userData}/>} />
             <Route path="trainers" element={<Trainers setUserData={setUserData} userData={userData}/>} />
           </Route>

@@ -27,6 +27,9 @@ const PORT = process.env.PORT || 3000;
 const protectedRoute = require('./routes/protectedRoute');
 app.use("/", protectedRoute);
 
+const usersRouter = require('./routes/usersRouter');
+app.use("/users", usersRouter);
+
 const loginRouter = require("./routes/loginRouter");
 app.use("/login", loginRouter);
 

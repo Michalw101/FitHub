@@ -64,4 +64,33 @@ async function deleteWaitingTrainees(query) {
     }
 }
 
-module.exports = { getApprovedTrainees, getWaitingTrainees, addApprovedTrainees, deleteWaitingTrainees }
+async function updateTrainee(body, id) {
+    try {
+        const user_id = id;
+        const { firstName, lastName, email, phone, heart_disease, chest_pain_at_rest, chest_pain_daily_activity, chest_pain_exercise,
+            dizziness_balance_loss, fainting, asthma_medication, asthma_symptoms, family_heart_disease, family_sudden_death,
+            exercise_supervision, chronic_disease, pregnancy_risk } = body;
+
+        const userSql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE user_id = ?`;
+        await pool.query(userSql, [firstName, lastName, email, phone, user_id]);
+
+        const getInfoIdSql = 'select information_id from trainees where trainee_id =?';
+        const infoIdResult = await pool.query(getInfoIdSql, user_id);
+        const info_id = infoIdResult.information_id;
+
+        const infoSql = `update information set heart_disease=?, chest_pain_at_rest=?, chest_pain_daily_activity=?, chest_pain_exercise=?,
+            dizziness_balance_loss=?, fainting=?, asthma_medication=?, asthma_symptoms=?, family_heart_disease=?, family_sudden_death=?, 
+            exercise_supervision=?, chronic_disease=?, pregnancy_risk=? where information_id =?`;
+        await pool.query(infoSql, [heart_disease, chest_pain_at_rest, chest_pain_daily_activity, chest_pain_exercise,
+            dizziness_balance_loss, fainting, asthma_medication, asthma_symptoms, family_heart_disease, family_sudden_death,
+            exercise_supervision, chronic_disease, pregnancy_risk, info_id]);
+
+        return { success: true, message: "Trainer updated successfully", trainee: body };
+
+    } catch (error) {
+        console.error("Error updating trainer:", error);
+        throw error;
+    }
+};
+
+module.exports = { getApprovedTrainees, getWaitingTrainees, addApprovedTrainees, deleteWaitingTrainees, updateTrainee }

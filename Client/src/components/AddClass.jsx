@@ -3,12 +3,10 @@ import DatePicker from 'react-datepicker';
 import { serverRequests } from '../Api';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/addClass.css';
-import { useNavigate } from 'react-router-dom';
 
 
 const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => {
 
-    const navigate = useNavigate();
 
     const formatDateToSQL = (date) => {
         const d = new Date(date);

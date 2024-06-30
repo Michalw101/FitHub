@@ -8,7 +8,7 @@ async function putSignup(body) {
             chest_pain_exercise, dizziness_balance_loss, fainting, asthma_medication, asthma_symptoms, family_heart_disease, family_sudden_death,
             exercise_supervision, chronic_disease, pregnancy_risk } = body;
 
-        const userSql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, birth_date = ?,gender = ?  WHERE user_id = ?`;
+        const userSql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, birth_date = ?,gender = ?, role_id =3  WHERE user_id = ?`;
         await pool.query(userSql, [first_name, last_name, email, phone, birth_date, gender, user_id]);
 
         const infoSql = `insert into information (heart_disease, chest_pain_at_rest, chest_pain_daily_activity, chest_pain_exercise, dizziness_balance_loss,

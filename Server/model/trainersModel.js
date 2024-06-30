@@ -8,7 +8,6 @@ async function getAllTrainers() {
         const sql = `SELECT * FROM trainers NATURAL JOIN users where trainers.trainer_id = users.user_id`;
         const result = await pool.query(sql);
 
-        console.log(result);
 
         if (result.length > 0) {
             return { success: true, message: "Trainers successful", trainers: result[0] };
@@ -131,7 +130,7 @@ async function updateTrainer(body, id) {
         const trainerSql = `UPDATE trainers SET specialization = ?, experience = ?, twitter_link = ?, facebook_link = ?, instegram_link = ? WHERE trainer_id = ?`;
         await pool.query(trainerSql, [specialization, experience, twitterLink, facebookLink, instegramLink, user_id]);
 
-        return { success: true, message: "Trainer updated successfully", userDetails: { ...body, user_id: user_id } };
+        return { success: true, message: "Trainer updated successfully", trainer: body };
 
     } catch (error) {
         console.error("Error updating trainer:", error);

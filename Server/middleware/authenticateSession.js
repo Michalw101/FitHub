@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const authenticateSession = (req, res, next) => {
+    console.log('in authenticateSession');
+    console.log(req.cookies);
     const token = req.cookies.token;
     console.log('JWT in session:', token);
     if (token) {
