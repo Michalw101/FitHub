@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../App';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
-import TrainerProfile from '../components/TrainerSmallProfile'
+import TrainerSmallProfile from '../components/TrainerSmallProfile'
 import '../css/trainers.css'
 
-const Trainers = ({ setUserData }) => {
+const Trainers = ({ userData, setUserData }) => {
 
   const navigate = useNavigate();
   //OH YEA I WOULD WANT MYSELF
@@ -13,7 +13,6 @@ const Trainers = ({ setUserData }) => {
   //BABY PLEASE BELIEVE ME
 
 
-  const userData = useContext(UserContext);
   const [trainers, setTrainers] = useState(null);
   const [addTrainer, setAddTrainer] = useState(false);
   // const [sortBy, setSortBy] = useState('sequential');
@@ -87,7 +86,7 @@ const Trainers = ({ setUserData }) => {
         {trainers.map((trainer) => (
           <div key={trainer.trainer_id}>
             {console.log('trainer: ', trainer)}
-            <TrainerProfile trainer={trainer} />
+            <TrainerSmallProfile trainer={trainer} setTrainers={setTrainers} />
           </div>
         ))}
       </div>

@@ -19,7 +19,11 @@ export default function Classes({ setClasses, classes, userData }) {
 
 
     useEffect(() => {
-        const url = `classes/by-query?user_id=${userData.user_id}`;
+        let url;
+        if (userData.role_id == 2)
+            url = "classes";
+        else
+            url = `classes/by-query?user_id=${userData.user_id}`;
 
         serverRequests('GET', url, null)
             .then(response => {
@@ -72,7 +76,7 @@ export default function Classes({ setClasses, classes, userData }) {
                     trainer: {
                         first_name: classItem.first_name,
                         last_name: classItem.last_name,
-                        phone: classItem.phone, 
+                        phone: classItem.phone,
                         email: classItem.email,
                         twitter_link: classItem.twitter_link,
                         facebook_link: classItem.facebook_link,
