@@ -91,3 +91,70 @@
     transition-duration: 0.3s;
   }
   
+
+  
+  /*------ Settings ------*/
+.container {
+  --color: #a5a5b0;
+  --size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: var(--color);
+}
+
+.container .chevron-right {
+  position: absolute;
+  animation: keyframes-return .5s;
+}
+
+.container .chevron-down {
+  position: absolute;
+  display: none;
+  animation: keyframes-fill .5s;
+}
+
+/* ------ On check event ------ */
+.container input:checked ~ .chevron-right {
+  display: none;
+}
+
+.container input:checked ~ .chevron-down {
+  display: block;
+}
+
+/* ------ Hide the default checkbox ------ */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* ------ Animation ------ */
+@keyframes keyframes-fill {
+  0% {
+    transform: rotate(-90deg) scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: rotate(0deg) scale(1.2);
+  }
+}
+
+@keyframes keyframes-return {
+  0% {
+    transform: rotate(90deg) scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: rotate(0deg) scale(1.2);
+  }
+}

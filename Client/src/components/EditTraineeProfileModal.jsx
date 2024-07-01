@@ -442,16 +442,11 @@ export default function EditTrainerProfileModal({ formData, setFormData, onClose
                 </div>)}
 
                 <br /><br />
-                <button className="bookmarkBtn" onClick={() => { SetShowMore((prev) => !prev) }}>
-                    <span className="IconContainer">
-                        <svg viewBox="0 0 384 512" height="0.9em" className="icon">
-                            <path
-                                d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z"
-                            ></path>
-                        </svg>
-                    </span>
-                    <p className="text">{showMore ? "show Less" : "show More"}</p>
-                </button>
+                <label className="container" onClick={() => { SetShowMore((prev) => !prev) }}>
+                    <input type="checkbox" defaultChecked={true} onChange={() => { SetShowMore((prev) => !prev) }} />
+                    <svg className="chevron-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path></svg>
+                    <svg className="chevron-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+                </label>
 
                 <br /><br />
 

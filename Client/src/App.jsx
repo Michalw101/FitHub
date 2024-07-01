@@ -6,7 +6,7 @@ import HomeLayout from "./components/HomeLayout"
 import Enter from "./pages/Enter"
 import Login from './pages/LogIn'
 import Blogs from './pages/Blogs'
-import Trainers from './pages/Trainers'
+import Trainers from './components/Trainers'
 import Registration from './pages/Registration'
 import UserDetails from './pages/UserDetails'
 import TraineeHome from './pages/TraineeHome'
@@ -20,6 +20,8 @@ import TrainerProfile from './components/TrainerProfile'
 import TrainerHome from './pages/TrainerHome'
 import TraineeClasses from './pages/TraineeClasses'
 import MyClasses from './pages/MyClasses'
+import TrainersInHome from './pages/TrainersInHome'
+import TrainersInTraineesHome from './pages/TrainersInTraineesHome'
 import { serverRequests } from './Api'
 
 export const UserContext = createContext();
@@ -56,7 +58,7 @@ function App() {
             <Route path="register" element={<Registration setUserData={setUserData} />} />
             <Route path="user-details" element={<UserDetails setUserData={setUserData} />} />
             <Route path="blog" element={<Blogs />} />
-            <Route path="trainers" element={<Trainers setUserData={setUserData} />} />
+            <Route path="trainers" element={<TrainersInHome userData={userData} setUserData={setUserData} />} />
             <Route path="trainer-registeration" element={<TrainerRegistration setUserData={setUserData} />} />
           </Route>
 
@@ -64,7 +66,7 @@ function App() {
             <Route index element={<TraineeHome userData={userData}/>} />
             <Route path="profile" element={<Profile userData={userData} />} />
             <Route path="trainee-classes" element={<TraineeClasses userData={userData}/>} />
-            <Route path="trainers" element={<Trainers setUserData={setUserData} userData={userData}/>} />
+            <Route path="trainers" element={<TrainersInTraineesHome setUserData={setUserData} userData={userData}/>} />
           </Route>
 
           <Route path="/admin-home" element={<HomeLayout setUserData={setUserData} userData={userData} role={1}/>} >

@@ -169,42 +169,72 @@ VALUES
 
 INSERT INTO users (user_id, first_name, last_name, email, phone, birth_date, gender, role_id) 
 VALUES 
-(214955064, 'Gru', 'Admin', 'michal0548429273@gmail.com', '0548429273', '2004-09-10', 'Female', 1),
+(214955064, 'Gru', 'Admin', 'michal0548429273@gmail.com', '0548429273', '2004-09-10', 'Male', 1),
 (214859415, 'Lussie', 'Admin', 'michal24263@gmail.com', '0548475867', '2004-11-23', 'Female', 1),
-(1, 'Kevin', 'The minion', 'micsharo@g.jct.ac.il', '456789123', '1988-03-25', 'Female', 2),
-(2, 'Bob', 'The minion', 'ylyyrwslmy25@gmail.com', '654987321', '1992-07-08', 'Male', 3);
+(1, 'Kevin', 'The minion', 'micsharo@g.jct.ac.il', '0548429273', '1988-03-25', 'Female', 2),
+(2, 'Bob', 'The minion', 'ylyyrwslmy25@gmail.com', '0548429273', '2004-07-08', 'Male', 3),
+(3, 'Ariel ', 'Seashell', 'micsharo@g.jct.ac.il', '0548429273', '2020-03-25', 'Female', 2),
+(4, 'Simba', 'Roark', 'micsharo@g.jct.ac.il', '0548429273', '2000-03-25', 'Male', 2),
+(5, 'Belle', 'Beaumont', 'micsharo@g.jct.ac.il', '0548429273', '2001-03-25', 'Female', 2),
+(6, 'Elsa', 'Snow', 'micsharo@g.jct.ac.il', '0548429273', '2003-03-25', 'Female', 2),
+(7, 'Aladdin', 'Desertwind', 'micsharo@g.jct.ac.il', '0548429273', '2002-03-25', 'Male', 2),
+(8, 'Hercules', 'Titan', 'micsharo@g.jct.ac.il', '0548429273', '1999-03-25', 'Male', 2);
 
 INSERT INTO trainers (trainer_id, experience, degree_link, specialization, instegram_link, facebook_link, twitter_link)
 VALUES 
-(1, 5, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 'Eat BANANA', 'https://www.instagram.com/Kevin_The_Minion_Official', 'https://www.facebook.com/KevinTheMinionPage', 'https://twitter.com/KevinTheMinion123');
+(1, 5, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 'Eat BANANA', 'https://www.instagram.com/Kevin_The_Minion_Official', 'https://www.facebook.com/KevinTheMinionPage', 'https://twitter.com/KevinTheMinion123'),
+(3, 5, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 'Underwater Yoga', 'https://www.instagram.com/Ariel_Seashell_Official', 'https://www.facebook.com/ArielSeashellPage', 'https://twitter.com/ArielSeashell123'),
+(4, 5, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 'Savannah Running', 'https://www.instagram.com/Simba_Roark_Official', 'https://www.facebook.com/SimbaRoarkPage', 'https://twitter.com/SimbaRoark123'),
+(5, 5, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 'Enchanted Dance', 'https://www.instagram.com/Belle_Beaumont_Official', 'https://www.facebook.com/BelleBeaumontPage', 'https://twitter.com/BelleBeaumont123'),
+(6, 5, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 'Ice Sculpting', 'https://www.instagram.com/Elsa_Snow_Official', 'https://www.facebook.com/ElsaSnowPage', 'https://twitter.com/ElsaSnow123'),
+(7, 5, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 'Desert Survival Skills', 'https://www.instagram.com/Aladdin_Desertwind_Official', 'https://www.facebook.com/AladdinDesertwindPage', 'https://twitter.com/AladdinDesertwind123'),
+(8, 5, 'https://drive.google.com/file/d/1P6Ebxvp8s3_R1_kMcFVgDaUI2kjY2HpK/view', 'Olympic Weightlifting', 'https://www.instagram.com/Hercules_Titan_Official', 'https://www.facebook.com/HerculesTitanPage', 'https://twitter.com/HerculesTitan123');
 
-INSERT INTO information (information_id, heart_disease, chest_pain_at_rest, chest_pain_daily_activity, chest_pain_exercise, dizziness_balance_loss, fainting,
-    asthma_medication, asthma_symptoms, family_heart_disease, family_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk) 
+
+INSERT INTO information (information_id, heart_disease, chest_pain_at_rest, chest_pain_daily_activity, chest_pain_exercise, dizziness_balance_loss, fainting, asthma_medication, asthma_symptoms, family_heart_disease, family_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk) 
 VALUES 
 (1, false, false, false, false, false, false, false, false, false, false, false, false, false);
+
 
 INSERT INTO trainees (trainee_id, information_id) 
 VALUES 
 (2, 1);
 
-INSERT INTO limits_in_class (trainer_id, gender_limit, heart_disease, chest_pain, fainted_or_dizziness, asthma, family_heart_disease_or_sudden_death,
-    exercise_supervision, chronic_disease, pregnancy_risk) 
+INSERT INTO limits_in_class (trainer_id, gender_limit, heart_disease, chest_pain, fainted_or_dizziness, asthma, family_heart_disease_or_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk) 
 VALUES 
-(1, 'male', true, false, false, true, true, false, false, true),
-(1, 'female', false, false, true, false, false, false, true, false),
-(1, 'male', true, true, false, false, false, false, true, false),
-(1, 'both', true, true, true, true, false, true, false, true),
-(1, 'both', false, false, false, true, true, false, false, false),
-(1, 'female', false, true, true, false, false, false, true, true);
+(1, 'both', true, false, false, true, true, false, false, true), 
+(1, 'female', false, false, true, false, false, false, true, false), 
+(3, 'male', true, true, false, false, false, false, true, false), 
+(3, 'both', true, true, true, true, false, true, false, true), 
+(4, 'female', false, false, false, true, true, false, false, false),  
+(4, 'female', false, true, true, false, false, false, true, true), 
+(5, 'both', true, false, false, true, true, false, false, true),  
+(5, 'female', false, false, true, false, false, false, true, false),  
+(6, 'male', true, true, false, false, false, false, true, false),  
+(6, 'both', true, true, true, true, false, true, false, true),
+(7, 'male', false, false, false, true, true, false, false, false), 
+(7, 'male', false, true, true, false, false, false, true, true),
+(8, 'male', false, false, false, true, true, false, false, false), 
+(8, 'male', false, true, true, false, false, false, true, true); 
+
 
 INSERT INTO classes (trainer_id, date, hour, description, price, link, limits_id, class_type) 
 VALUES 
-(1, '2024-06-27', '08:00:00', 'Morning Workout', 20, 'https://meet.google.com/sov-bfcd-uku', 1, 'Strength training'),
-(1, '2024-06-28', '18:00:00', 'Evening Yoga', 15, 'https://meet.google.com/sov-bfcd-uku', 2, 'Yoga'),
-(1, '2024-06-29', '10:30:00', 'Pilates Session', 25, 'https://meet.google.com/sov-bfcd-uku', 3, 'Pilates'),
-(1, '2024-06-30', '06:00:00', 'Morning Workout333', 20, 'https://meet.google.com/sov-bfcd-uku', 4, 'Strength training'),
-(1, '2024-06-27', '10:00:00', 'Morning Workout...', 20, 'https://meet.google.com/sov-bfcd-uku', 5, 'Strength training'),
-(1, '2024-06-18', '10:00:00', 'Morning Workout😎', 30, 'https://meet.google.com/sov-bfcd-uku', 6, 'Strength training');
+(1, '2024-07-01', '08:00:00', 'Morning Workout with Kevin', 20, 'https://meet.google.com/sov-bfcd-uku', 1, 'Strength training'),
+(1, '2024-07-05', '18:00:00', 'Evening Workout with Kevin', 15, 'https://meet.google.com/sov-bfcd-uku', 2, 'Strength training'),
+(3, '2024-07-01', '08:00:00', 'Dive deep into underwater yoga with Ariel!', 20, 'https://meet.google.com/sov-bfcd-uku', 3, 'Yoga'),
+(3, '2024-07-05', '18:00:00', 'Relax and stretch with Ariel’s underwater yoga.', 15, 'https://meet.google.com/sov-bfcd-uku', 4, 'Yoga'),
+(4, '2024-07-01', '10:30:00', 'Experience the thrill of running in the savannah with Simba!', 25, 'https://meet.google.com/sov-bfcd-uku', 5, 'Crossfit'),
+(4, '2024-07-03', '06:00:00', 'Join Simba for a high-energy crossfit session.', 20, 'https://meet.google.com/sov-bfcd-uku', 6, 'Crossfit'),
+(5, '2024-07-02', '10:00:00', 'Dance your way to fitness with Belle’s enchanted dance class.', 20, 'https://meet.google.com/sov-bfcd-uku', 7, 'Zumba'),
+(5, '2024-07-04', '10:00:00', 'Join Belle for a magical Zumba session.', 30, 'https://meet.google.com/sov-bfcd-uku', 8, 'Zumba'),
+(6, '2024-07-02', '08:00:00', 'Craft ice sculptures and stay fit with Elsa’s unique workout.', 20, 'https://meet.google.com/sov-bfcd-uku', 9, 'Strength training'),
+(6, '2024-07-06', '18:00:00', 'Strength training with Elsa - cool and powerful!', 15, 'https://meet.google.com/sov-bfcd-uku', 10, 'Strength training'),
+(7, '2024-07-03', '10:30:00', 'Master desert survival skills with Aladdin.', 25, 'https://meet.google.com/sov-bfcd-uku', 11, 'Other'),
+(7, '2024-07-05', '06:00:00', 'Join Aladdin for a session on desert survival techniques.', 20, 'https://meet.google.com/sov-bfcd-uku', 12, 'Other'),
+(8, '2024-07-04', '10:00:00', 'Train like a hero with Hercules in Olympic weightlifting.', 20, 'https://meet.google.com/sov-bfcd-uku', 13, 'Strength training'),
+(8, '2024-07-06', '10:00:00', 'Build your strength with Hercules’ Olympic weightlifting class.', 30, 'https://meet.google.com/sov-bfcd-uku', 14, 'Strength training');
+
 
 
 INSERT INTO trainees_in_class (trainee_id, class_id) 
@@ -216,12 +246,17 @@ VALUES
 (214955064, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
 (214859415, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
 (1, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
-(2, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15');
+(2, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(3, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(4, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(5, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(6, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(7, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(8, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15');
 
+-- SELECT * FROM classes NATURAL JOIN limits_in_class NATURAL JOIN trainers JOIN users where user_id = trainer_id;
 
-SELECT * FROM classes NATURAL JOIN limits_in_class NATURAL JOIN trainers JOIN users where user_id = trainer_id;
-
-delete from limits_in_class where limits_id > 8;
+-- delete from limits_in_class where limits_id > 8;
 -- insert into trainers_waiting_list(user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, experience, specialization, last_work_place, place_of_study, instegram_link, facebook_link, twitter_link)
 -- values (4, "a", "a", "michal0548429273@gmail.com", "050", '2004-06-03', "Female", "aaaa", "12", "blablabla", "d", "f", "f","f", "f");
 

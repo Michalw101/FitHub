@@ -7,23 +7,23 @@ import { serverRequests } from '../Api';
 import SingleClass from './SingleClass';
 
 export default function Classes({ setClasses, classes, userData }) {
-
     const navigate = useNavigate();
-
     const [date, setDate] = useState(new Date());
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedDayEvents, setSelectedDayEvents] = useState([]);
     const [seeMoreBtn, setSeeMoreBtn] = useState(0);
-    const [registrationMassege, setRegistrationMassege] = useState(false);
-
+    const [registrationMessage, setRegistrationMessage] = useState(false);
+    const [priceFilter, setPriceFilter] = useState(null);
+    const [classTypeFilter, setClassTypeFilter] = useState(null);
 
     useEffect(() => {
         let url;
-        if (userData.role_id == 2)
-            url = "classes";
-        else
-            url = `classes/by-query?user_id=${userData.user_id}`;
+        url = "classes"
+        // if (userData.role_id === 2)
+        //     url = "classes";
+        // else
+        //     url = `classes/by-query?user_id=${userData.user_id}`;
 
         serverRequests('GET', url, null)
             .then(response => {
@@ -44,8 +44,7 @@ export default function Classes({ setClasses, classes, userData }) {
 
     useEffect(() => {
         if (classes && classes.length > 0) {
-            const newEvents = classes.map((classItem) => {
-
+            let newEvents = classes.map((classItem) => {
                 if (!classItem.date) {
                     console.error('Invalid date:', classItem);
                     return null;
@@ -65,13 +64,12 @@ export default function Classes({ setClasses, classes, userData }) {
                 const toDate = new Date(fromDate);
                 toDate.setHours(fromDate.getHours() + 1);
 
-                console.log(`classItem: ${classItem}`);
-
                 return {
                     id: classItem.class_id,
                     from: fromDate,
                     to: toDate,
                     title: classItem.description,
+                    classType: classItem.class_type, 
                     price: classItem.price,
                     trainer: {
                         first_name: classItem.first_name,
@@ -84,9 +82,29 @@ export default function Classes({ setClasses, classes, userData }) {
                     }
                 };
             }).filter(event => event !== null);
+            
+            if (priceFilter !== null) {
+                newEvents = newEvents.filter(event => {
+                    switch (priceFilter) {
+                        case 'below30':
+                            return event.price < 30;
+                        case 'between30and70':
+                            return event.price >= 30 && event.price <= 70;
+                        case 'above70':
+                            return event.price > 70;
+                        default:
+                            return true; 
+                    }
+                });
+            }
+
+            if (classTypeFilter !== null) {
+                newEvents = newEvents.filter(event => event.classType === classTypeFilter);
+            }
+
             setEvents(newEvents);
         }
-    }, [classes]);
+    }, [classes, priceFilter, classTypeFilter]);
 
     const handleDateChange = (date) => {
         setDate(date);
@@ -124,7 +142,7 @@ export default function Classes({ setClasses, classes, userData }) {
                             className="event"
                             onClick={() => handleEventClick(event)}
                         >
-                            {event.title}
+                            {event.classType} 
                         </div>
                     ))}
                 </div>
@@ -133,38 +151,122 @@ export default function Classes({ setClasses, classes, userData }) {
     };
 
     const handleClassRegistration = (event) => {
-
-        const url = "waiting-trainee"
+        const url = "waiting-trainee";
         const body = {
             user_id: userData.user_id,
             class_id: event.id
-        }
+        };
         serverRequests('POST', url, body)
             .then(response => {
-                console.log(response);
                 if (!response.ok) {
-                    alert("you already registered to this class");
-                    console.error("you already registered to this class");
+                    alert("You already registered for this class");
+                    console.error("You already registered for this class");
                     return;
                 }
                 return response.json();
             }).then((data) => {
                 if (data) {
-                    alert(`Hey! To complete the registration process for the ${event.title} class, pay by Bit a $${event.price} payment to the Trainer ${event.trainer.first_name}. A link to the class will be sent to you when the payment is confirmed. ${event.trainer.first_name}'s phone number: ${event.trainer.phone} . Thank you very much!`)
+                    alert(`Hey! To complete the registration process for the ${event.title} class, pay by Bit a $${event.price} payment to the Trainer ${event.trainer.first_name}. A link to the class will be sent to you when the payment is confirmed. ${event.trainer.first_name}'s phone number: ${event.trainer.phone}. Thank you very much!`);
                     navigate('/trainee-home/trainee-classes');
                 }
             }).catch(error => {
                 console.error(error);
             });
-
-    }
+    };
 
     const handleSeeMoreClick = (id) => {
         setSeeMoreBtn(prev => (prev !== id ? id : 0));
     };
 
+    const handlePriceFilter = (filter) => {
+        setPriceFilter(filter);
+    };
+
+    const handleClassTypeFilter = (type) => {
+        setClassTypeFilter(type);
+    };
+    
     return (
         <div className="trainer-classes-container">
+            <br />
+            <div className="filter-buttons">
+                <div className="price-filter">
+                    <button
+                        className={`filter-button ${priceFilter === 'below30' ? 'active' : ''}`}
+                        onClick={() => handlePriceFilter('below30')}
+                    >
+                        Below $30
+                    </button>
+                    <button
+                        className={`filter-button ${priceFilter === 'between30and70' ? 'active' : ''}`}
+                        onClick={() => handlePriceFilter('between30and70')}
+                    >
+                        Between $30 and $70
+                    </button>
+                    <button
+                        className={`filter-button ${priceFilter === 'above70' ? 'active' : ''}`}
+                        onClick={() => handlePriceFilter('above70')}
+                    >
+                        Above $70
+                    </button>
+                    <button
+                        className={`filter-button ${priceFilter === null ? 'active' : ''}`}
+                        onClick={() => handlePriceFilter(null)}
+                    >
+                        Clear Price Filter
+                    </button>
+                </div>
+                <div className="class-type-filter">
+                    <button
+                        className={`filter-button ${classTypeFilter === 'Strength training' ? 'active' : ''}`}
+                        onClick={() => handleClassTypeFilter('Strength training')}
+                    >
+                        Strength training
+                    </button>
+                    <button
+                        className={`filter-button ${classTypeFilter === 'Crossfit' ? 'active' : ''}`}
+                        onClick={() => handleClassTypeFilter('Crossfit')}
+                    >
+                        Crossfit
+                    </button>
+                    <button
+                        className={`filter-button ${classTypeFilter === 'Zumba' ? 'active' : ''}`}
+                        onClick={() => handleClassTypeFilter('Zumba')}
+                    >
+                        Zumba
+                    </button>
+                    <button
+                        className={`filter-button ${classTypeFilter === 'Aerobics' ? 'active' : ''}`}
+                        onClick={() => handleClassTypeFilter('Aerobics')}
+                    >
+                        Aerobics
+                    </button>
+                    <button
+                        className={`filter-button ${classTypeFilter === 'Pilates' ? 'active' : ''}`}
+                        onClick={() => handleClassTypeFilter('Pilates')}
+                    >
+                        Pilates
+                    </button>
+                    <button
+                        className={`filter-button ${classTypeFilter === 'Yoga' ? 'active' : ''}`}
+                        onClick={() => handleClassTypeFilter('Yoga')}
+                    >
+                        Yoga
+                    </button>
+                    <button
+                        className={`filter-button ${classTypeFilter === 'Other' ? 'active' : ''}`}
+                        onClick={() => handleClassTypeFilter('Other')}
+                    >
+                        Other
+                    </button>
+                    <button
+                        className={`filter-button ${classTypeFilter === null ? 'active' : ''}`}
+                        onClick={() => handleClassTypeFilter(null)}
+                    >
+                        Clear Class Type Filter
+                    </button>
+                </div>
+            </div>
             <Calendar
                 onChange={handleDateChange}
                 value={date}
@@ -189,13 +291,14 @@ export default function Classes({ setClasses, classes, userData }) {
                                         {seeMoreBtn === event.id ? 'See less...' : 'See more...'}
                                     </button>
                                 )}
-                                {seeMoreBtn === event.id && (<div>
-                                    <p><strong>Other details...</strong></p>
-                                    <button onClick={() => handleClassRegistration(event)}>Join class!</button>
-                                </div>)}
+                                {seeMoreBtn === event.id && (
+                                    <div>
+                                        <p><strong>Other details...</strong></p>
+                                        <button onClick={() => handleClassRegistration(event)}>Join class!</button>
+                                    </div>
+                                )}
                             </div>
                         ))}
-
                     </div>
                 </div>
             )}

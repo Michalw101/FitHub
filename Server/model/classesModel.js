@@ -30,22 +30,46 @@ async function getClassesByQuery(query) {
         }  
 
 
-        const sql = `SELECT c.class_id, c.trainer_id, c.date, c.hour, c.description, c.price, c.link, c.class_type
-                    FROM classes c
-                    JOIN limits_in_class l ON c.limits_id = l.limits_id
-                    JOIN trainees t ON t.trainee_id = ?
-                    JOIN information i ON t.information_id = i.information_id
-                    JOIN users u ON t.trainee_id = u.user_id
-                    WHERE 
-                    (l.gender_limit = 'both' OR l.gender_limit = u.gender) AND
-                    (l.heart_disease = FALSE OR l.heart_disease = i.heart_disease) AND
-                    (l.chest_pain = FALSE OR l.chest_pain = i.chest_pain_at_rest OR l.chest_pain = i.chest_pain_daily_activity OR l.chest_pain = i.chest_pain_exercise) AND
-                    (l.fainted_or_dizziness = FALSE OR l.fainted_or_dizziness = i.dizziness_balance_loss OR l.fainted_or_dizziness = i.fainting) AND
-                    (l.asthma = FALSE OR l.asthma = i.asthma_medication OR l.asthma = i.asthma_symptoms) AND
-                    (l.family_heart_disease_or_sudden_death = FALSE OR l.family_heart_disease_or_sudden_death = i.family_heart_disease OR l.family_heart_disease_or_sudden_death = i.family_sudden_death) AND
-                    (l.exercise_supervision = FALSE OR l.exercise_supervision = i.exercise_supervision) AND
-                    (l.chronic_disease = FALSE OR l.chronic_disease = i.chronic_disease) AND
-                    (l.pregnancy_risk = FALSE OR l.pregnancy_risk = i.pregnancy_risk);
+        const sql = `SELECT 
+    c.class_id, 
+    c.trainer_id, 
+    c.date, 
+    c.hour, 
+    c.description, 
+    c.price, 
+    c.link, 
+    c.class_type, 
+    u.first_name AS trainer_first_name, 
+    u.last_name AS trainer_last_name, 
+    u.email AS trainer_email, 
+    u.phone AS trainer_phone, 
+    trainer.instegram_link, 
+    trainer.facebook_link, 
+    trainer.twitter_link
+FROM 
+    classes c
+JOIN 
+    limits_in_class l ON c.limits_id = l.limits_id
+JOIN 
+    trainees t ON t.trainee_id = ?
+JOIN 
+    information i ON t.information_id = i.information_id
+JOIN 
+    users u ON c.trainer_id = u.user_id
+JOIN 
+    trainers trainer ON c.trainer_id = trainer.trainer_id
+WHERE 
+    (l.gender_limit = 'both' OR l.gender_limit = u.gender) AND
+    (l.heart_disease = FALSE OR l.heart_disease = i.heart_disease) AND
+    (l.chest_pain = FALSE OR l.chest_pain = i.chest_pain_at_rest OR l.chest_pain = i.chest_pain_daily_activity OR l.chest_pain = i.chest_pain_exercise) AND
+    (l.fainted_or_dizziness = FALSE OR l.fainted_or_dizziness = i.dizziness_balance_loss OR l.fainted_or_dizziness = i.fainting) AND
+    (l.asthma = FALSE OR l.asthma = i.asthma_medication OR l.asthma = i.asthma_symptoms) AND
+    (l.family_heart_disease_or_sudden_death = FALSE OR l.family_heart_disease_or_sudden_death = i.family_heart_disease OR l.family_heart_disease_or_sudden_death = i.family_sudden_death) AND
+    (l.exercise_supervision = FALSE OR l.exercise_supervision = i.exercise_supervision) AND
+    (l.chronic_disease = FALSE OR l.chronic_disease = i.chronic_disease) AND
+    (l.pregnancy_risk = FALSE OR l.pregnancy_risk = i.pregnancy_risk);
+
+
 `;
         const result = await pool.query(sql, user_id);
 

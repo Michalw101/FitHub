@@ -119,13 +119,10 @@
     }
   }
 
-  /* Note that you only needs to edit the config to customize the button! */
 
 .plusButton {
-  /* Config start */
   --plus_sideLength: 2.5rem;
   --plus_topRightTriangleSideLength: 0.9rem;
-  /* Config end */
   position: relative;
   display: flex;
   justify-content: center;
@@ -181,5 +178,4 @@
   fill: black;
   transform: rotate(180deg);
 }
-
 

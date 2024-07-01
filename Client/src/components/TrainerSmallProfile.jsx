@@ -20,6 +20,8 @@ const TrainerSmallProfile = ({ trainer, setTrainers }) => {
       <p className="name-client">
         {`${trainer.first_name} ${trainer.last_name}`}
         <span>{trainer.specialization}</span>
+        <span>{trainer.email}</span>
+        <span>{trainer.phone}</span>
       </p>
       <div className="social-media">
         <a href={trainer.twitter_link}>

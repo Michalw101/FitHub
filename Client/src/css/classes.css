@@ -116,3 +116,34 @@
     margin-top: 5px;
     font-size: 0.8rem;
 }
+
+.filter-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.price-filter, .class-type-filter {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.filter-button {
+    background-color: #59cfb6;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-button.active {
+    background-color: #007a64;
+}
+
+.filter-button:hover {
+    background-color: #45b59d;
+}
