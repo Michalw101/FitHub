@@ -22,7 +22,9 @@ import TraineeClasses from './pages/TraineeClasses'
 import MyClasses from './pages/MyClasses'
 import TrainersInHome from './pages/TrainersInHome'
 import TrainersInTraineesHome from './pages/TrainersInTraineesHome'
+import MyTraineeClasses from './pages/MyTraineeClasses'
 import { serverRequests } from './Api'
+
 
 export const UserContext = createContext();
 
@@ -30,22 +32,22 @@ function App() {
 
   const [userData, setUserData] = useState({});
 
-  serverRequests('GET', `users/current-user`, null)
-  .then(response => {
-    console.log(response);
-    if (!response.ok) {
-      return;
-    }
-    return response.json();
-  })
-  .then(data => {
-    if (data) {
-      setUserData(data.user);
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });  
+  // serverRequests('GET', `users/current-user`, null)
+  // .then(response => {
+  //   console.log(response);
+  //   if (!response.ok) {
+  //     return;
+  //   }
+  //   return response.json();
+  // })
+  // .then(data => {
+  //   if (data) {
+  //     setUserData(data.user);
+  //   }
+  // })
+  // .catch(error => {
+  //   console.error('Error:', error);
+  // });  
 
   return (
 
@@ -67,6 +69,8 @@ function App() {
             <Route path="profile" element={<Profile userData={userData} />} />
             <Route path="trainee-classes" element={<TraineeClasses userData={userData}/>} />
             <Route path="trainers" element={<TrainersInTraineesHome setUserData={setUserData} userData={userData}/>} />
+            <Route path="trainee-my-classes" element={<MyTraineeClasses userData={userData}/>} />
+
           </Route>
 
           <Route path="/admin-home" element={<HomeLayout setUserData={setUserData} userData={userData} role={1}/>} >
@@ -77,7 +81,7 @@ function App() {
 
           <Route path="/trainer-home" element={<HomeLayout setUserData={setUserData} userData={userData} role={2}/>} >
             <Route index element={<TrainerHome />} />
-            <Route path="trainer-profile" element={<TrainerProfile setUserData={setUserData} userData={userData}/>} />
+            <Route path="trainer-profile" element={<TrainerProfile userData={userData}/>} />
             <Route path="trainer-classes" element={<TrainerClasses userData={userData}/>} />
             <Route path="my-classes" element={<MyClasses userData={userData}/>} />
           </Route>

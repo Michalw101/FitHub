@@ -28,14 +28,19 @@ router.delete("/waiting", async (req, res) => {
 
 
 router.get("/approved", async (req, res) => {
-    console.log('approved received:', req.query); 
+    console.log('approved received:', req.query);
     try {
-        res.send(await controller.getApprovedTrainees(req.query));
+        if (req.query.user_id && req.query.class_id) {
+            res.send(await controller.checkIfApproved(req.query));
+        } else {
+            res.send(await controller.getApprovedTrainees());
+        }
     } catch (err) {
-        console.error("Error in POST /:", err); 
+        console.error("Error in GET /approved:", err);
         res.status(404).send({ ok: false });
     }
 });
+
 
 router.post("/approved", async (req, res) => {
     console.log('approved received:', req.query); 

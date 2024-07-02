@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import Trainers from '../components/Trainers';
 import '../css/trainersInTraineesHome.css'
 
@@ -25,7 +24,7 @@ const TrainersInHome = ({ userData, setUserData }) => {
                 </svg>
             </div>
             <br />
-            <Trainers userData={userData} setUserData={setUserData} searchTerm={searchTerm} />
+            <Trainers />
         </div>
     );
 };

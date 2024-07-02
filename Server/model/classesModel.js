@@ -94,9 +94,45 @@ async function getClass() {
 };
 
 
-async function getMyClasses(query) {
+async function getTrainerClasses(query) {
     try {
         const sql = `SELECT * FROM classes NATURAL JOIN limits_in_class where ?`;
+        const result = await pool.query(sql, query);
+
+        if (result.length > 0) {
+            return { success: true, message: "My Classes successful", classes: result[0] };
+        }
+        else {
+            console.log("Classes not found");
+            throw new Error("Classes not found")
+        }
+    } catch (err) {
+        console.error("Error:", err);
+        throw new Error(err.message)
+    }
+};
+
+async function getTraineeRegisteredClasses(query) {
+    try {
+        const sql = `select * from classes natural join trainees_waiting_list natural join limits_in_class where ?`;
+        const result = await pool.query(sql, query);
+
+        if (result.length > 0) {
+            return { success: true, message: "My Classes successful", classes: result[0] };
+        }
+        else {
+            console.log("Classes not found");
+            throw new Error("Classes not found")
+        }
+    } catch (err) {
+        console.error("Error:", err);
+        throw new Error(err.message)
+    }
+};
+
+async function getTraineeApprovedClasses(query) {
+    try {
+        const sql = `select * from classes natural join trainees_in_class natural join limits_in_class where ?`;
         const result = await pool.query(sql, query);
 
         if (result.length > 0) {
@@ -212,4 +248,4 @@ async function updateClass(body, id) {
 
 };
 
-module.exports = { createClass, updateClass, getAllClasses, getClassesByQuery, getMyClasses, deleteClass, getClass }
+module.exports = { createClass, getTraineeApprovedClasses, updateClass, getAllClasses, getClassesByQuery, getTrainerClasses,getTraineeRegisteredClasses, deleteClass, getClass }

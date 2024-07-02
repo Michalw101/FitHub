@@ -6,7 +6,25 @@ const controller = require('../controllers/classesController');
 router.get("/", async (req, res) => {
     console.log("query", req.query);
     try {
-        res.send(await controller.getMyClasses(req.query));
+        res.send(await controller.getTrainerClasses(req.query));
+    } catch (err) {
+        res.status(500).send({ ok: false });
+    }
+});
+
+router.get("/trainee/registered", async (req, res) => {
+    console.log("query", req.query);
+    try {
+        res.send(await controller.getTraineeRegisteredClasses(req.query));
+    } catch (err) {
+        res.status(500).send({ ok: false });
+    }
+});
+
+router.get("/trainee/approved", async (req, res) => {
+    console.log("query", req.query);
+    try {
+        res.send(await controller.getTraineeApprovedClasses(req.query));
     } catch (err) {
         res.status(500).send({ ok: false });
     }

@@ -67,16 +67,17 @@ async function deleteWaitingTrainees(query) {
 async function updateTrainee(body, id) {
     try {
         const user_id = id;
-        const { firstName, lastName, email, phone, heart_disease, chest_pain_at_rest, chest_pain_daily_activity, chest_pain_exercise,
+        const { first_name, last_name, email, phone, heart_disease, chest_pain_at_rest, chest_pain_daily_activity, chest_pain_exercise,
             dizziness_balance_loss, fainting, asthma_medication, asthma_symptoms, family_heart_disease, family_sudden_death,
             exercise_supervision, chronic_disease, pregnancy_risk } = body;
 
         const userSql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE user_id = ?`;
-        await pool.query(userSql, [firstName, lastName, email, phone, user_id]);
+        await pool.query(userSql, [first_name, last_name, email, phone, user_id]);
 
         const getInfoIdSql = 'select information_id from trainees where trainee_id =?';
         const infoIdResult = await pool.query(getInfoIdSql, user_id);
-        const info_id = infoIdResult.information_id;
+        const info_id = infoIdResult[0][0].information_id;
+        console.log("info_id", info_id);
 
         const infoSql = `update information set heart_disease=?, chest_pain_at_rest=?, chest_pain_daily_activity=?, chest_pain_exercise=?,
             dizziness_balance_loss=?, fainting=?, asthma_medication=?, asthma_symptoms=?, family_heart_disease=?, family_sudden_death=?, 
@@ -93,4 +94,26 @@ async function updateTrainee(body, id) {
     }
 };
 
-module.exports = { getApprovedTrainees, getWaitingTrainees, addApprovedTrainees, deleteWaitingTrainees, updateTrainee }
+
+
+async function checkIfApproved(query) {
+    try {
+        const { user_id, class_id } = query;
+        const sql = `select * from trainees_in_class where trainee_id = ? and class_id =?`;
+        const result = await pool.query(sql, [user_id, class_id]);
+        console.log(result);
+        if (result[0].length > 0)
+            return { success: true, message: "trainees successful", isApproved: true };
+        else
+            return { success: true, message: "trainees successful", isApproved: false };
+
+        retrun
+    } catch (err) {
+        console.error("Error:", err);
+        throw new Error(err.message, err);
+    }
+}
+
+
+
+module.exports = { getApprovedTrainees, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees, updateTrainee }

@@ -122,10 +122,10 @@ const sendEmailToUser = (user, password) => {
 async function updateTrainer(body, id) {
     try {
         const user_id = id; 
-        const { firstName, lastName, email, phone, specialization, experience, twitterLink, facebookLink, instegramLink } = body;
+        const { first_name, last_name, email, phone, specialization, experience, twitterLink, facebookLink, instegramLink } = body;
 
         const userSql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE user_id = ?`;
-        await pool.query(userSql, [firstName, lastName, email, phone, user_id]);
+        await pool.query(userSql, [first_name, last_name, email, phone, user_id]);
         
         const trainerSql = `UPDATE trainers SET specialization = ?, experience = ?, twitter_link = ?, facebook_link = ?, instegram_link = ? WHERE trainer_id = ?`;
         await pool.query(trainerSql, [specialization, experience, twitterLink, facebookLink, instegramLink, user_id]);

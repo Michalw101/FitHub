@@ -13,9 +13,10 @@ export default function Classes({ setClasses, classes, userData }) {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedDayEvents, setSelectedDayEvents] = useState([]);
     const [seeMoreBtn, setSeeMoreBtn] = useState(0);
-    const [registrationMessage, setRegistrationMessage] = useState(false);
     const [priceFilter, setPriceFilter] = useState(null);
     const [classTypeFilter, setClassTypeFilter] = useState(null);
+    const [registrationError, setRegistrationError] = useState('');
+
 
     useEffect(() => {
         let url;
@@ -69,7 +70,7 @@ export default function Classes({ setClasses, classes, userData }) {
                     from: fromDate,
                     to: toDate,
                     title: classItem.description,
-                    classType: classItem.class_type, 
+                    classType: classItem.class_type,
                     price: classItem.price,
                     trainer: {
                         first_name: classItem.first_name,
@@ -82,7 +83,7 @@ export default function Classes({ setClasses, classes, userData }) {
                     }
                 };
             }).filter(event => event !== null);
-            
+
             if (priceFilter !== null) {
                 newEvents = newEvents.filter(event => {
                     switch (priceFilter) {
@@ -93,7 +94,7 @@ export default function Classes({ setClasses, classes, userData }) {
                         case 'above70':
                             return event.price > 70;
                         default:
-                            return true; 
+                            return true;
                     }
                 });
             }
@@ -142,7 +143,7 @@ export default function Classes({ setClasses, classes, userData }) {
                             className="event"
                             onClick={() => handleEventClick(event)}
                         >
-                            {event.classType} 
+                            {event.classType}
                         </div>
                     ))}
                 </div>
@@ -151,30 +152,54 @@ export default function Classes({ setClasses, classes, userData }) {
     };
 
     const handleClassRegistration = (event) => {
-        const url = "waiting-trainee";
-        const body = {
-            user_id: userData.user_id,
-            class_id: event.id
-        };
-        serverRequests('POST', url, body)
+        const checkUrl = `trainees/approved?user_id=${userData.user_id}&class_id=${event.id}`;
+    
+        serverRequests('GET', checkUrl, null)
             .then(response => {
                 if (!response.ok) {
-                    alert("You already registered for this class");
-                    console.error("You already registered for this class");
+                    setRegistrationError("Error checking registration status");
                     return;
                 }
                 return response.json();
-            }).then((data) => {
-                if (data) {
-                    alert(`Hey! To complete the registration process for the ${event.title} class, pay by Bit a $${event.price} payment to the Trainer ${event.trainer.first_name}. A link to the class will be sent to you when the payment is confirmed. ${event.trainer.first_name}'s phone number: ${event.trainer.phone}. Thank you very much!`);
-                    navigate('/trainee-home/trainee-classes');
+            })
+            .then(data => {
+                if (data && data.isApproved) {
+                    setRegistrationError("You are already registered and approved for this class");
+                } else {
+                    const url = "waiting-trainee";
+                    const body = {
+                        trainee_id: userData.user_id,
+                        class_id: event.id
+                    };
+                    serverRequests('POST', url, body)
+                        .then(response => {
+                            if (!response.ok) {
+                                setRegistrationError("You already registered for this class");
+                                console.error("You already registered for this class");
+                                return;
+                            }
+                            return response.json();
+                        }).then((data) => {
+                            if (data) {
+                                alert(`Hey! To complete the registration process for the ${event.title} class, pay by Bit a $${event.price} payment to the Trainer ${event.trainer.first_name}. A link to the class will be sent to you when the payment is confirmed. ${event.trainer.first_name}'s phone number: ${event.trainer.phone}. Thank you very much!`);
+                                navigate('/trainee-home/trainee-classes');
+                                setSelectedDayEvents([]);
+                                setRegistrationError(null);  // Clear error message
+                            }
+                        }).catch(error => {
+                            console.error(error);
+                            setRegistrationError("An error occurred while registering for the class");
+                        });
                 }
-            }).catch(error => {
+            })
+            .catch(error => {
                 console.error(error);
+                setRegistrationError("An error occurred while checking registration status");
             });
     };
-
+    
     const handleSeeMoreClick = (id) => {
+        setRegistrationError('');
         setSeeMoreBtn(prev => (prev !== id ? id : 0));
     };
 
@@ -185,7 +210,7 @@ export default function Classes({ setClasses, classes, userData }) {
     const handleClassTypeFilter = (type) => {
         setClassTypeFilter(type);
     };
-    
+
     return (
         <div className="trainer-classes-container">
             <br />
@@ -295,6 +320,9 @@ export default function Classes({ setClasses, classes, userData }) {
                                     <div>
                                         <p><strong>Other details...</strong></p>
                                         <button onClick={() => handleClassRegistration(event)}>Join class!</button>
+                                        {registrationError && (
+                                            <p style={{ color: 'red' }}>You already registered for this class</p>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -304,4 +332,5 @@ export default function Classes({ setClasses, classes, userData }) {
             )}
         </div>
     );
+    
 }

@@ -39,14 +39,33 @@ async function getClassById(id) {
 };
 
 
-async function getMyClasses(query) {
+async function getTrainerClasses(query) {
     try {
-        return model.getMyClasses(query);
+        return model.getTrainerClasses(query);
     }
     catch (err) {
         throw err;
     }
 };
+
+async function getTraineeRegisteredClasses(query) {
+    try {
+        return model.getTraineeRegisteredClasses(query);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
+async function getTraineeApprovedClasses(query) {
+    try {
+        return model.getTraineeApprovedClasses(query);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
 
 async function updateClass(body, id) {
     try {
@@ -67,4 +86,4 @@ async function deleteClass(id) {
     }
 };
 
-module.exports = { createClass, getAllClasses,getClassesByQuery, getClassById,getMyClasses, updateClass, deleteClass}
+module.exports = { createClass, getAllClasses,getClassesByQuery, getClassById,getTrainerClasses, getTraineeApprovedClasses,getTraineeRegisteredClasses, updateClass, deleteClass}

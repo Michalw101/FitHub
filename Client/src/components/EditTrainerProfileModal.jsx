@@ -27,7 +27,8 @@ export default function EditTrainerProfileModal({ formData, setFormData, onClose
             }).then(data => {
                 if (data) {
                     setFormData(data.trainer);
-                    onClose();                }
+                    onClose();
+                }
             }).catch(error => {
                 console.error('Error', error);
             });
@@ -112,7 +113,7 @@ export default function EditTrainerProfileModal({ formData, setFormData, onClose
                         type="text"
                         value={editFormData.facebook_link}
                         name="facebook_link"
-                        onChange={handleChanged}                    />
+                        onChange={handleChanged} />
                 </label>
                 <br /><br />
                 <label>

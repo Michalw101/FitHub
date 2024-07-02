@@ -1,7 +1,6 @@
 const model = require('../model/traineesModel');
 
 async function getApprovedTrainees(query) {
-    console.log('Controller received data:', query);
     try {
 
         return model.getApprovedTrainees(query);
@@ -20,7 +19,6 @@ async function getWaitingTrainees(query) {
     }
 };
 async function addApprovedTrainees(body) {
-    console.log('Controller received data:', body);
     try {
 
         return model.addApprovedTrainees(body);
@@ -47,4 +45,13 @@ async function updateTrainee(body, id) {
         throw err;
     }
 };
-module.exports = { getApprovedTrainees,updateTrainee, getWaitingTrainees, addApprovedTrainees, deleteWaitingTrainees}
+
+async function checkIfApproved(query) {
+    try {
+        return model.checkIfApproved(query);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+module.exports = { getApprovedTrainees, updateTrainee, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees }

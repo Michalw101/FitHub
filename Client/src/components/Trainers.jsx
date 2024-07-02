@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../App';
-import { useNavigate, NavLink } from 'react-router-dom';
 import { serverRequests } from '../Api';
 import TrainerSmallProfile from './TrainerSmallProfile';
 import '../css/trainers.css';
 
-const Trainers = ({ userData, setUserData, searchTerm }) => {
-  const navigate = useNavigate();
+
+const Trainers = () => {
   const [allTrainers, setAllTrainers] = useState(null);
   const [filteredTrainers, setFilteredTrainers] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [specialty, setSpecialty] = useState('');
+  const [gender, setGender] = useState('');
 
   useEffect(() => {
     const url = 'trainers';
@@ -33,15 +34,30 @@ const Trainers = ({ userData, setUserData, searchTerm }) => {
   }, []);
 
   useEffect(() => {
-    if (allTrainers && searchTerm && searchTerm.trim() !== '') {
-      const filtered = allTrainers.filter(trainer =>
-        trainer.trainer_name.toLowerCase().includes(searchTerm.toLowerCase())
+    let filtered = allTrainers;
+
+    if (filtered && searchTerm && searchTerm.trim() !== '') {
+      filtered = filtered.filter(trainer =>
+        trainer.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        trainer.last_name.toLowerCase().includes(searchTerm.toLowerCase())
+
       );
-      setFilteredTrainers(filtered);
-    } else {
-      setFilteredTrainers(allTrainers);
     }
-  }, [searchTerm, allTrainers]);
+
+    if (filtered && specialty && specialty.trim() !== '') {
+      filtered = filtered.filter(trainer =>
+        trainer.specialization.toLowerCase().includes(specialty.toLowerCase())
+      );
+    }
+
+    if (filtered && gender && gender !== '') {
+      filtered = filtered.filter(trainer =>
+        trainer.gender.toLowerCase() === gender.toLowerCase()
+      );
+    }
+
+    setFilteredTrainers(filtered);
+  }, [searchTerm, specialty, gender, allTrainers]);
 
   if (!allTrainers)
     return (
@@ -59,6 +75,46 @@ const Trainers = ({ userData, setUserData, searchTerm }) => {
   return (
     <div>
       <div id='trainers'>
+        <div className="filters">
+
+          {/* <div className="input-container">
+            <input
+              type="text"
+              name="text"
+              className="input1"
+              placeholder="Search by trainer name..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)} />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24" className="icon1">
+              <g strokeWidth="0" id="SVGRepo_bgCarrier"></g>
+              <g strokeLinejoin="round" strokeLinecap="round" id="SVGRepo_tracerCarrier"></g>
+              <g id="SVGRepo_iconCarrier">
+                <rect fill="white" height="24" width="24"></rect>
+                <path fill="" d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM9 11.5C9 10.1193 10.1193 9 11.5 9C12.8807 9 14 10.1193 14 11.5C14 12.8807 12.8807 14 11.5 14C10.1193 14 9 12.8807 9 11.5ZM11.5 7C9.01472 7 7 9.01472 7 11.5C7 13.9853 9.01472 16 11.5 16C12.3805 16 13.202 15.7471 13.8957 15.31L15.2929 16.7071C15.6834 17.0976 16.3166 17.0976 16.7071 16.7071C17.0976 16.3166 17.0976 15.6834 16.7071 15.2929L15.31 13.8957C15.7471 13.202 16 12.3805 16 11.5C16 9.01472 13.9853 7 11.5 7Z" clipRule="evenodd" fillRule="evenodd"></path>
+              </g>
+            </svg>
+          </div> */}
+          <input
+            type="text"
+            placeholder="Search by name"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Search by specialty"
+            value={specialty}
+            onChange={e => setSpecialty(e.target.value)}
+          />
+          <select
+            value={gender}
+            onChange={e => setGender(e.target.value)}
+          >
+            <option value="">All Genders</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
         {filteredTrainers && filteredTrainers.length === 0 ? (
           <h1>No trainers found.</h1>
         ) : (
