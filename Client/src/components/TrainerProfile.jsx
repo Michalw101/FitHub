@@ -86,7 +86,7 @@ export default function TrainerProfile({ userData }) {
                         The best about me:
                     </p>
                     <p className="card__descr">
-                        I {formData.specialization}
+                        {formData.specialization}
                     </p>
                 </div>
                 <br />
@@ -176,7 +176,9 @@ export default function TrainerProfile({ userData }) {
                     </p>
                 </div>
                 <br />
-
+                <h3 className="card__descr">
+                        My social Trainer's Life
+                    </h3>
 
                 <div className="wrapper">
                     <a className="icon facebook" href={formData.facebook_link}>

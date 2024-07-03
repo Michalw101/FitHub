@@ -47,9 +47,9 @@ async function deleteWaitingTrainees(query) {
     }
 };
 
-async function deleteTrainee(id) {
+async function deleteTrainee(id, sendMail) {
     try {
-        return model.deleteTrainee(id);
+        return model.deleteTrainee(id, sendMail);
     }
     catch (err) {
         throw err;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import TrainerProfile from '../components/TrainerSmallProfile';
 import NewTrainer from '../components/NewTrainer';
 import { serverRequests } from '../Api';
+import '../css/newTrainers.css'
 
 export default function NewTrainers() {
   const [trainers, setTrainers] = useState(null);
@@ -42,12 +42,15 @@ export default function NewTrainers() {
 
   return (
     <div>
-      {trainers.map((trainer) => (
-        <div key={trainer.user_id}>
-          {console.log('trainer: ', trainer)}
-          <NewTrainer trainer={trainer} setTrainers={setTrainers} trainers={trainers}/>
-        </div>
-      ))}
+      <h1>New Trainers To FitHub's Trainers Team</h1>
+      <div className="trainers-container">
+        {trainers.map((trainer) => (
+          <div key={trainer.user_id}>
+            {console.log('trainer: ', trainer)}
+            <NewTrainer trainer={trainer} setTrainers={setTrainers} trainers={trainers}/>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

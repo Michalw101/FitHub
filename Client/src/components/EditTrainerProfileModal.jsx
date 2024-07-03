@@ -38,94 +38,99 @@ export default function EditTrainerProfileModal({ formData, setFormData, onClose
         <div className="modal-overlay">
             <div className="modal-content">
                 <button className="close-button" onClick={onClose}>❌</button>
-                <h2>Edit your profile...</h2>
+                <h1>Edit your profile...</h1>
+                <br />
                 <label>
-                    First name:
-                    <input
-                        type="text"
-                        value={editFormData.first_name}
-                        name="first_name"
-                        onChange={handleChanged}
-                    />
+                    <h4>First name</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.first_name}
+                            name="first_name"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br />
                 <label>
-                    Last name:
-                    <input
-                        type="text"
-                        value={editFormData.last_name}
-                        name="last_name"
-                        onChange={handleChanged}
-                    />
+                    <h4>Last name</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.last_name}
+                            name="last_name"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br />
                 <label>
-                    Email:
-                    <input
-                        type="text"
-                        value={editFormData.email}
-                        name="email"
-                        onChange={handleChanged}
-                    />
+                    <h4>Email</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.email}
+                            name="email"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br />
                 <label>
-                    Phone:
-                    <input
-                        type="text"
-                        value={editFormData.phone}
-                        name="phone"
-                        onChange={handleChanged}
-                    />
+                    <h4>Phone</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.phone}
+                            name="phone"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br /><label>
-                    Specialization:
-                    <input
-                        type="text"
-                        value={editFormData.specialization}
-                        name="specialization"
-                        onChange={handleChanged}
-                    />
-                </label>
-                <br /><br />
                 <label>
-                    Experience:
-                    <input
-                        type="number"
-                        value={editFormData.experience}
-                        name="experience"
-                        onChange={handleChanged}
-                    />
+                    <h4>Specialization</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.specialization}
+                            name="specialization"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br /><label>
-                    Twitter Link:
-                    <input
-                        type="text"
-                        value={editFormData.twitter_link}
-                        name="twitter_link"
-                        onChange={handleChanged}
-                    />
-                </label>
-                <br /><br />
                 <label>
-                    Facebook Link:
-                    <input
-                        type="text"
-                        value={editFormData.facebook_link}
-                        name="facebook_link"
-                        onChange={handleChanged} />
+                    <h4>Experience</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="number"
+                            value={editFormData.experience}
+                            name="experience"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br />
                 <label>
-                    Instegram Link:
-                    <input
-                        type="text"
-                        value={editFormData.instegram_link}
-                        name="instegram_link"
-                        onChange={handleChanged}
-                    />
+                    <h4>Twitter Link</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.twitter_link}
+                            name="twitter_link"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br />
+                <label>
+                    <h4>Facebook Link</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.facebook_link}
+                            name="facebook_link"
+                            onChange={handleChanged}
+                        /></div>
+                </label>
+                <label>
+                    <h4>Instegram Link</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.instegram_link}
+                            name="instegram_link"
+                            onChange={handleChanged}
+                        /></div>
+                </label>
+                <br />
                 <button className="bookmarkBtn" onClick={handleSave}>
                     <span className="IconContainer">
                         <svg viewBox="0 0 384 512" height="0.9em" className="icon">
@@ -136,7 +141,7 @@ export default function EditTrainerProfileModal({ formData, setFormData, onClose
                     </span>
                     <p className="text">Save</p>
                 </button>
-
+                <br />
             </div>
         </div>
     );

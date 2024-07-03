@@ -7,16 +7,14 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
 
     const handleDeleteClick = () => {
 
-        if (confirm(`Are you sure you want to delete ${trainer.first_name} forever 🥺?`)) {
+        if (confirm(`Are you sure you want to delete ${trainer.first_name} from here?`)) {
             const url = `new-trainers/${trainer.user_id}`;
             serverRequests('DELETE', url, { ...trainer, sendMail: true })
                 .then(response => {
                     console.log(response);
                     return response.json();
                 }).then(() => {
-                    alert(`${trainer.first_name} is not here 😈`);
                     setTrainers(trainers.filter(currentTrainer => currentTrainer.user_id !== trainer.user_id));
-
                 }).catch(error => {
                     console.error(error);
                 });
@@ -26,7 +24,7 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
     }
 
     const handleAcceptClick = () => {
-        if (confirm(`Are you sure you want to accept ${trainer.first_name}?`)) {
+        if (confirm(`Are you sure you want to accept ${trainer.first_name} to FitHub Trainers Team?`)) {
             const url = `new-trainers/${trainer.user_id}`;
             serverRequests('DELETE', url, { ...trainer, sendMail: false })
                 .then(response => {
@@ -37,17 +35,17 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
                     }
                     return response.json();
                 }).then(() => {
-                    alert(`${trainer.first_name} is here 😈`);
                     setAcceptingTrainer(true);
                 }).catch(error => {
                     console.error(error);
                 });
-        }}
+        }
+    }
 
     useEffect(() => {
 
         if (acceptingTrainer) {
-            console.log('Sending POST request for trainer:', trainer); 
+            console.log('Sending POST request for trainer:', trainer);
 
             serverRequests('POST', "trainers", trainer)
                 .then(response => {
@@ -72,118 +70,140 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
 
     return (
         <div>
-
-
+            <br/>
             <div className="card1">
-                <span className="card__hover">{trainer.first_name} {trainer.last_name}</span>
-
-                <figure className="card__figure">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        style={{ fill: 'rgba(255, 255, 255, 1)' }}
-                    >
-                        <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8 0-1.168.258-2.275.709-3.276.154.09.308.182.456.276.396.25.791.5 1.286.688.494.187 1.088.312 1.879.312.792 0 1.386-.125 1.881-.313s.891-.437 1.287-.687.792-.5 1.287-.688c.494-.187 1.088-.312 1.88-.312s1.386.125 1.88.313c.495.187.891.437 1.287.687s.792.5 1.287.688c.178.067.374.122.581.171.191.682.3 1.398.3 2.141 0 4.411-3.589 8-8 8z"></path>
-                        <circle cx="8.5" cy="12.5" r="1.5"></circle>
-                        <circle cx="15.5" cy="12.5" r="1.5"></circle>
+                <div className="card__img">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%">
+                        <rect fill="#ffffff" width="540" height="450"></rect>
+                        <defs>
+                            <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="0" y2="100%" gradientTransform="rotate(222,648,379)">
+                                <stop offset="0" stopColor="#ffffff"></stop>
+                                <stop offset="1" stopColor="#2adac2"></stop>
+                            </linearGradient>
+                            <pattern patternUnits="userSpaceOnUse" id="b" width="300" height="250" x="0" y="0" viewBox="0 0 1080 900">
+                                <g fillOpacity="0.5">
+                                    <polygon fill="#22b19e" points="90 150 0 300 180 300"></polygon>
+                                    <polygon points="90 150 180 0 0 0"></polygon>
+                                    <polygon fill="#2adac2" points="270 150 360 0 180 0"></polygon>
+                                    <polygon fill="#22b19e" points="450 150 360 300 540 300"></polygon>
+                                    <polygon fill="#2adac2" points="450 150 540 0 360 0"></polygon>
+                                    <polygon points="630 150 540 300 720 300"></polygon>
+                                    <polygon fill="#2adac2" points="630 150 720 0 540 0"></polygon>
+                                    <polygon fill="#22b19e" points="810 150 720 300 900 300"></polygon>
+                                    <polygon fill="#2adac2" points="810 150 900 0 720 0"></polygon>
+                                    <polygon fill="#22b19e" points="990 150 900 300 1080 300"></polygon>
+                                    <polygon fill="#2adac2" points="990 150 1080 0 900 0"></polygon>
+                                    <polygon fill="#22b19e" points="90 450 0 600 180 600"></polygon>
+                                    <polygon points="90 450 180 300 0 300"></polygon>
+                                    <polygon fill="#2adac2" points="270 450 180 600 360 600"></polygon>
+                                    <polygon fill="#22b19e" points="270 450 360 300 180 300"></polygon>
+                                    <polygon fill="#2adac2" points="450 450 360 600 540 600"></polygon>
+                                    <polygon fill="#22b19e" points="450 450 540 300 360 300"></polygon>
+                                    <polygon fill="#2adac2" points="630 450 540 600 720 600"></polygon>
+                                    <polygon fill="#22b19e" points="630 450 720 300 540 300"></polygon>
+                                    <polygon points="810 450 720 600 900 600"></polygon>
+                                    <polygon fill="#2adac2" points="810 450 900 300 720 300"></polygon>
+                                    <polygon fill="#22b19e" points="990 450 900 600 1080 600"></polygon>
+                                    <polygon fill="#2adac2" points="990 450 1080 300 900 300"></polygon>
+                                    <polygon fill="#22b19e" points="90 750 0 900 180 900"></polygon>
+                                    <polygon points="270 750 180 900 360 900"></polygon>
+                                    <polygon fill="#2adac2" points="270 750 360 600 180 600"></polygon>
+                                    <polygon points="450 750 540 600 360 600"></polygon>
+                                    <polygon points="630 750 540 900 720 900"></polygon>
+                                    <polygon fill="#22b19e" points="630 750 720 600 540 600"></polygon>
+                                    <polygon fill="#2adac2" points="810 750 720 900 900 900"></polygon>
+                                    <polygon fill="#22b19e" points="810 750 900 600 720 600"></polygon>
+                                    <polygon fill="#2adac2" points="990 750 900 900 1080 900"></polygon>
+                                    <polygon fill="#2adac2" points="180 0 90 150 270 150"></polygon>
+                                    <polygon fill="#22b19e" points="360 0 270 150 450 150"></polygon>
+                                    <polygon fill="#2adac2" points="540 0 450 150 630 150"></polygon>
+                                    <polygon points="900 0 810 150 990 150"></polygon>
+                                    <polygon fill="#2adac2" points="0 300 -90 450 90 450"></polygon>
+                                    <polygon fill="#2adac2" points="0 300 90 150 -90 150"></polygon>
+                                    <polygon fill="#2adac2" points="180 300 90 450 270 450"></polygon>
+                                    <polygon fill="#22b19e" points="180 300 270 150 90 150"></polygon>
+                                    <polygon fill="#2adac2" points="360 300 270 450 450 450"></polygon>
+                                    <polygon fill="#22b19e" points="360 300 450 150 270 150"></polygon>
+                                    <polygon fill="#2adac2" points="540 300 450 450 630 450"></polygon>
+                                    <polygon fill="#22b19e" points="540 300 630 150 450 150"></polygon>
+                                    <polygon fill="#2adac2" points="720 300 630 450 810 450"></polygon>
+                                    <polygon fill="#22b19e" points="720 300 810 150 630 150"></polygon>
+                                    <polygon fill="#2adac2" points="900 300 810 450 990 450"></polygon>
+                                    <polygon fill="#22b19e" points="900 300 990 150 810 150"></polygon>
+                                    <polygon points="0 600 -90 750 90 750"></polygon>
+                                    <polygon fill="#22b19e" points="0 600 90 450 -90 450"></polygon>
+                                    <polygon fill="#2adac2" points="180 600 90 750 270 750"></polygon>
+                                    <polygon fill="#22b19e" points="180 600 270 450 90 450"></polygon>
+                                    <polygon fill="#2adac2" points="360 600 270 750 450 750"></polygon>
+                                    <polygon fill="#22b19e" points="360 600 450 450 270 450"></polygon>
+                                    <polygon fill="#22b19e" points="540 600 630 450 450 450"></polygon>
+                                    <polygon fill="#2adac2" points="720 600 630 750 810 750"></polygon>
+                                    <polygon fill="#2adac2" points="900 600 810 750 990 750"></polygon>
+                                    <polygon fill="#22b19e" points="900 600 990 450 810 450"></polygon>
+                                    <polygon fill="#2adac2" points="0 900 90 750 -90 750"></polygon>
+                                    <polygon fill="#22b19e" points="180 900 270 750 90 750"></polygon>
+                                    <polygon fill="#2adac2" points="360 900 450 750 270 750"></polygon>
+                                    <polygon fill="#22b19e" points="540 900 630 750 450 750"></polygon>
+                                    <polygon fill="#2adac2" points="720 900 810 750 630 750"></polygon>
+                                    <polygon fill="#22b19e" points="900 900 990 750 810 750"></polygon>
+                                    <polygon fill="#22b19e" points="1080 300 990 450 1170 450"></polygon>
+                                    <polygon fill="#2adac2" points="1080 300 1170 150 990 150"></polygon>
+                                    <polygon points="1080 600 990 750 1170 750"></polygon>
+                                    <polygon fill="#22b19e" points="1080 600 1170 450 990 450"></polygon>
+                                    <polygon fill="#2adac2" points="1080 900 1170 750 990 750"></polygon>
+                                </g>
+                            </pattern>
+                        </defs>
+                        <rect x="0" y="0" fill="url(#a)" width="100%" height="100%"></rect>
+                        <rect x="0" y="0" fill="url(#b)" width="100%" height="100%"></rect>
                     </svg>
-                </figure>
-
-                <div className="card__info">
-                    <span className="card__name">{trainer.first_name} {trainer.last_name}</span>
-                    <span className="card__ocupation">{trainer.email}</span>
-                    <span className="card__ocupation">{trainer.phone}</span>
-
-                    <div className="card__links">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            style={{ fill: 'rgba(255, 255, 255, 1)' }}
-                        >
-                            <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"></path>
-                        </svg>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            style={{ fill: 'rgba(255, 255, 255, 1)' }}
-                        >
-                            <path d="M11.999 7.377a4.623 4.623 0 1 0 0 9.248 4.623 4.623 0 0 0 0-9.248zm0 7.627a3.004 3.004 0 1 1 0-6.008 3.004 3.004 0 0 1 0 6.008z"></path>
-                            <circle cx="16.806" cy="7.207" r="1.078"></circle>
-                            <path d="M20.533 6.111A4.605 4.605 0 0 0 17.9 3.479a6.606 6.606 0 0 0-2.186-.42c-.963-.042-1.268-.054-3.71-.054s-2.755 0-3.71.054a6.554 6.554 0 0 0-2.184.42 4.6 4.6 0 0 0-2.633 2.632 6.585 6.585 0 0 0-.419 2.186c-.043.962-.056 1.267-.056 3.71 0 2.442 0 2.753.056 3.71.015.748.156 1.486.419 2.187a4.61 4.61 0 0 0 2.634 2.632 6.584 6.584 0 0 0 2.185.45c.963.042 1.268.055 3.71.055s2.755 0 3.71-.055a6.615 6.615 0 0 0 2.186-.419 4.613 4.613 0 0 0 2.633-2.633c.263-.7.404-1.438.419-2.186.043-.962.056-1.267.056-3.71s0-2.753-.056-3.71a6.581 6.581 0 0 0-.421-2.217zm-1.218 9.532a5.043 5.043 0 0 1-.311 1.688 2.987 2.987 0 0 1-1.712 1.711 4.985 4.985 0 0 1-1.67.311c-.95.044-1.218.055-3.654.055-2.438 0-2.687 0-3.655-.055a4.96 4.96 0 0 1-1.669-.311 2.985 2.985 0 0 1-1.719-1.711 5.08 5.08 0 0 1-.311-1.669c-.043-.95-.053-1.218-.053-3.654 0-2.437 0-2.686.053-3.655a5.038 5.038 0 0 1 .311-1.687c.305-.789.93-1.41 1.719-1.712a5.01 5.01 0 0 1 1.669-.311c.951-.043 1.218-.055 3.655-.055s2.687 0 3.654.055a4.96 4.96 0 0 1 1.67.311 2.991 2.991 0 0 1 1.712 1.712 5.08 5.08 0 0 1 .311 1.669c.043.951.054 1.218.054 3.655 0 2.436 0 2.698-.043 3.654h-.011z"></path>
-                        </svg>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            style={{ fill: 'rgba(255, 255, 255, 1)' }}
-                        >
-                            <path d="M19.633 7.997c.013.175.013.349.013.523 0 5.325-4.053 11.461-11.46 11.461-2.282 0-4.402-.661-6.186-1.809.324.037.636.05.973.05a8.07 8.07 0 0 0 5.001-1.721 4.036 4.036 0 0 1-3.767-2.793c.249.037.499.062.761.062.361 0 .724-.05 1.061-.137a4.027 4.027 0 0 1-3.23-3.953v-.05c.537.299 1.16.486 1.82.511a4.022 4.022 0 0 1-1.796-3.354c0-.748.199-1.434.548-2.032a11.457 11.457 0 0 0 8.306 4.215c-.062-.3-.1-.611-.1-.923a4.026 4.026 0 0 1 4.028-4.028c1.16 0 2.207.486 2.943 1.272a7.957 7.957 0 0 0 2.556-.973 4.02 4.02 0 0 1-1.771 2.22 8.073 8.073 0 0 0 2.319-.624 8.645 8.645 0 0 1-2.019 2.083z"></path>
-                        </svg>
+                </div>
+                <div className="card__body">
+                    <div className="card__title">{trainer.first_name} {trainer.last_name}</div>
+                    <div className="card__subtitle">{trainer.specialization}</div>
+                    <div className="card__description">{trainer.first_name} {trainer.last_name} ({trainer.gender}) with {trainer.experience} years of experience of {trainer.specialization}. Received a professional certificate at {trainer.place_of_study}. Recently worked at {trainer.last_work_place}.</div>
+                    <button className="card__btn" onClick={handleAcceptClick}>ACCEPT</button>
+                    <button className="card__btn" onClick={handleDeleteClick}>DON'T ACCEPT</button>
+                    <div className="social-media">
+                        <a href={trainer.twitter_link}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
+                            </svg>
+                            <span className="tooltip-social">Twitter</span>
+                        </a>
+                        <a href={trainer.instegram_link}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path>
+                            </svg>
+                            <span className="tooltip-social">Instagram</span>
+                        </a>
+                        <a href={trainer.instegram_link}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path>
+                            </svg>
+                            <span className="tooltip-social">Facebook</span>
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <h1>{trainer.first_name} {trainer.last_name}</h1>
-            <h2>
-                <a href={`mailto:${trainer.email}`} className="clickable-email">{trainer.email}</a>
-            </h2>
-            <h2>{trainer.phone}</h2>
-            <h3>{trainer.gender}</h3>
-            <h3>{trainer.degree_link}</h3>
-            <h3>{trainer.experience}</h3>
-            <h3>{trainer.last_work_place}</h3>
-            <button className='button11' onClick={handleAcceptClick}>
-                <div className="svg-wrapper-1">
-                    <div className="svg-wrapper">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            width="24"
-                            height="24"
-                        >
-                            <path fill="none" d="M0 0h24v24H0z"></path>
-                            <path
-                                fill="currentColor"
-                                d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                            ></path>
-                        </svg>
-                    </div>
-                </div>
-                <span>We want you</span>
-            </button>
-            <button className="deleteButton" onClick={handleDeleteClick}>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 50 59"
-                    className="bin"
-                >
-                    <path
-                        fill="#B5BAC1"
-                        d="M0 7.5C0 5.01472 2.01472 3 4.5 3H45.5C47.9853 3 50 5.01472 50 7.5V7.5C50 8.32843 49.3284 9 48.5 9H1.5C0.671571 9 0 8.32843 0 7.5V7.5Z"
-                    ></path>
-                    <path
-                        fill="#B5BAC1"
-                        d="M17 3C17 1.34315 18.3431 0 20 0H29.3125C30.9694 0 32.3125 1.34315 32.3125 3V3H17V3Z"
-                    ></path>
-                    <path
-                        fill="#B5BAC1"
-                        d="M2.18565 18.0974C2.08466 15.821 3.903 13.9202 6.18172 13.9202H43.8189C46.0976 13.9202 47.916 15.821 47.815 18.0975L46.1699 55.1775C46.0751 57.3155 44.314 59.0002 42.1739 59.0002H7.8268C5.68661 59.0002 3.92559 57.3155 3.83073 55.1775L2.18565 18.0974ZM18.0003 49.5402C16.6196 49.5402 15.5003 48.4209 15.5003 47.0402V24.9602C15.5003 23.5795 16.6196 22.4602 18.0003 22.4602C19.381 22.4602 20.5003 23.5795 20.5003 24.9602V47.0402C20.5003 48.4209 19.381 49.5402 18.0003 49.5402ZM29.5003 47.0402C29.5003 48.4209 30.6196 49.5402 32.0003 49.5402C33.381 49.5402 34.5003 48.4209 34.5003 47.0402V24.9602C34.5003 23.5795 33.381 22.4602 32.0003 22.4602C30.6196 22.4602 29.5003 23.5795 29.5003 24.9602V47.0402Z"
-                        clipRule="evenodd"
-                        fillRule="evenodd"
-                    ></path>
-                    <path fill="#B5BAC1" d="M2 13H48L47.6742 21.28H2.32031L2 13Z"></path>
-                </svg>
-                <span className="tooltip">Delete</span>
-            </button>
 
+
+            {/* <div className="card__footer">
+      <div className="card__stat">
+        <div className="card__value">523</div>
+        <div className="card__key">Posts</div>
+      </div>
+      <div className="card__stat">
+        <div className="card__value">1387</div>
+        <div className="card__key">Likes</div>
+      </div>
+      <div className="card__stat">
+        <div className="card__value">146</div>
+        <div className="card__key">Following</div>
+      </div>
+    </div> */}
         </div>
+
     );
 }

@@ -1,272 +1,133 @@
-
-/* Card Styles */
 .card1 {
-  width: 300px;
-  height: 400px;
-  padding: 15px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  background-color: rgba(113, 113, 113, 0.6);
-  backdrop-filter: blur(20px);
-  text-align: center;
-  border: 1px solid #fff;
-  /* Transform Propertys */
-  --rotate-animation: rotate(45deg);
-  --scale-animation: scale(0);
-  /* Backgrounds - Social Media Hover */
-  --bg-facebook: blue;
-  --bg-instagram: linear-gradient(to right, #8a2387, #e94057, #f27121);
-  --bg-twitter: rgb(25, 173, 206);
-  --bg-linkedin: rgb(30, 48, 131);
-}
-
-.card1::before {
-  content: '';
-  height: 110%;
-  width: 110%;
-  position: absolute;
-  top: -5%;
-  left: -5%;
-  z-index: -1;
-  background: linear-gradient(
-    to right,
-    #00837c,
-    #00818a,
-    #00c2b8
-  );
-  border-radius: 10px;
-  filter: blur(50px);
-}
-
-.card__hover {
-  color: #fff;
-  width: 100%;
-  margin: 0;
-  font-size: 40px;
-  font-weight: 600;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  text-align: center;
-  letter-spacing: 2px;
-  pointer-events: none;
-  transform: scale(1) translateY(-50%);
-  font-family: var(--font-mulish);
-  transition: transform 500ms;
-}
-
-.card1:hover .card__hover {
-  transform: scale(0);
-}
-
-.card__figure {
-  width: 100%;
-  height: 65%;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   border-radius: 10px;
   overflow: hidden;
-  transform: var(--rotate-animation) var(--scale-animation);
-  transition: transform 600ms ease 100ms;
+  width: 300px;
+  margin: 0 auto;
 }
 
-.card1:hover .card__figure {
-  --rotate-animation: rotate(0);
-  --scale-animation: scale(1);
-}
-
-.card__figure svg {
-  height: 100%;
+.card__img svg {
   width: 100%;
-  object-fit: cover;
-  filter: drop-shadow(0 0 2px #0f0c29);
+  height: 150px;
 }
 
-.card__info {
-  display: flex;
-  flex-direction: column;
-  transform: var(--scale-animation);
-  transition: transform 600ms ease 100ms;
+.card__body {
+  padding: 20px;
+  text-align: center;
 }
 
-.card1:hover .card__info {
-  --scale-animation: scale(1);
+.card__title {
+  font-size: 22px;
+  margin: 10px 0;
 }
 
-.card__name {
+.card__subtitle {
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.card__description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.card__btn {
+  margin: 2px;
+  background: #2adac2;
+  border: none;
   color: #fff;
-  font-size: 28px;
-  letter-spacing: 1px;
-  font-family: var(--font-AR-One-Sans);
-}
-
-.card__ocupation {
-  color: aliceblue;
-  font-family: var(--font-mulish);
-  text-transform: uppercase;
-  font-size: 18px;
-  letter-spacing: 2px;
-}
-
-.card__links {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
-  --transform-animation: translateY(-10px);
-}
-
-.card__links svg {
-  height: 55px;
-  width: 55px;
-  padding: 10px;
-  background-color: rgba(128, 128, 128, 0.211);
-  border-radius: 15px;
+  padding: 10px 20px;
+  border-radius: 20px;
   cursor: pointer;
-  transition: background .3s ease, transform .2s ease;
+  transition: background 0.3s;
 }
 
-
-.card__links svg:hover {
-  transform: var(--transform-animation);
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
+.card__btn:hover {
+  background: #22b19e;
 }
 
-/* Hover Colors */
-.card__links svg:nth-child(1):hover {
-  background: var(--bg-facebook);
+.card__footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+  background: #f9f9f9;
+  border-top: 1px solid #eee;
 }
 
-.card__links svg:nth-child(2):hover {
-  background: var(--bg-instagram);
+.card__stat {
+  text-align: center;
 }
 
-.card__links svg:nth-child(3):hover {
-  background: var(--bg-twitter);
+.card__value {
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.card__links svg:nth-child(4):hover {
-  background: var(--bg-linkedin);
+.card__key {
+  font-size: 12px;
+  color: #888;
+}
+.social-media:before {
+  content: " ";
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin: 20px 0;
+  background: #ffffff;
 }
 
+.social-media a {
+  position: relative;
+  margin-right: 15px;
+  text-decoration: none;
+  color: inherit;
+}
 
+.social-media a:last-child {
+  margin-right: 0;
+}
 
-.button11 {
-    font-size: 20px;
-    background: royalblue;
-    color: white;
-    padding: 0.7em 1em;
-    padding-left: 0.9em;
-    display: flex;
-    align-items: center;
-    border: none;
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-  
-  .button11 span {
-    display: block;
-    margin-left: 0.3em;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .button11 svg {
-    display: block;
-    transform-origin: center center;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .button11:hover .svg-wrapper {
-    animation: fly-1 0.6s ease-in-out infinite alternate;
-  }
-  
-  .button11:hover svg {
-    transform: translateX(1.2em) rotate(45deg) scale(1.1);
-  }
-  
-  .button11:hover span {
-    transform: translateX(5em);
-  }
-  
-  .button11:active {
-    transform: scale(0.95);
-  }
-  
-  @keyframes fly-1 {
-    from {
-      transform: translateY(0.1em);
-    }
-  
-    to {
-      transform: translateY(-0.1em);
-    }
-  }
-  
+.social-media a svg {
+  width: 1.1rem;
+  fill: currentColor;
+}
 
-  .deleteButton {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    background-color: transparent;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .deleteButton svg {
-    width: 44%;
-  }
-  .deleteButton:hover {
-    background-color: rgb(237, 56, 56);
-    overflow: visible;
-  }
-  .bin path {
-    transition: all 0.2s;
-  }
-  .deleteButton:hover .bin path {
-    fill: #fff;
-  }
-  .deleteButton:active {
-    transform: scale(0.98);
-  }
-  .tooltip {
-    --tooltip-color: rgb(41, 41, 41);
-    position: absolute;
-    top: -40px;
-    background-color: var(--tooltip-color);
-    color: white;
-    border-radius: 5px;
-    font-size: 12px;
-    padding: 8px 12px;
-    font-weight: 600;
-    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.105);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: all 0.5s;
-  }
-  .tooltip::before {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    transform: rotate(45deg);
-    content: "";
-    background-color: var(--tooltip-color);
-    bottom: -10%;
-  }
-  .deleteButton:hover .tooltip {
-    opacity: 1;
-  }
-  
+/*-- Tooltip Social Media --*/
+.tooltip-social {
+  background: #262626;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  padding: 0.5rem 0.4rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -90%);
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.tooltip-social:after {
+  content: " ";
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  border: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: transparent;
+  transform: translate(-50%, 100%);
+}
+
+.social-media a .tooltip-social:after {
+  border-top-color: #262626;
+}
+
+.social-media a:hover .tooltip-social {
+  opacity: 1;
+  transform: translate(-50%, -130%);
+} 

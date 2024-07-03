@@ -145,20 +145,25 @@ async function deleteTrainer(id) {
     // try {
     //     await connection.beginTransaction();
 
-    //     const traineeInClassSql = `delete from trainees_in_class where trainee_id = ?`;
-    //     await connection.query(traineeInClassSql, [id]);
+    //     const classIdSql = `select class_id from classes where trainee_id= ?`;
+    //     const [classIdResult] = await connection.query(classIdSql, [id]);
+    //     if (classIdResult.length === 0) {
+    //         throw new Error('Trainee not found');
+    //     }
+    //     const class_id = classIdResult[0].class_id;
 
-    //     const traineeWaitingSql = `delete from trainees_waiting_list where trainee_id = ?`;
-    //     await connection.query(traineeWaitingSql, [id]);
+
+
+
+
+    //     const classSql = `delete from classes where trainer_id = ?`;
+    //     await connection.query(classSql, [id]);
 
     //     const passSql = `delete from passwords where user_id = ?`;
     //     await connection.query(passSql, [id]);
 
-    //     const infoSql = `delete from information where information_id = ?`;
-    //     await connection.query(infoSql, [info_id]);
-
-    //     const traineeSql = `delete from trainees where trainee_id = ?`;
-    //     await connection.query(traineeSql, [id]);
+    //     const trainerSql = `delete from trainers where trainer_id = ?`;
+    //     await connection.query(trainerSql, [id]);
 
     //     const userSql = `delete from users where user_id = ?`;
     //     await connection.query(userSql, [id]);

@@ -3,7 +3,7 @@ import '../css/trainerProfile.css';
 import { serverRequests } from '../Api';
 
 const TrainerSmallProfileAdmin = ({ trainer, setTrainers, allTrainers }) => {
-    const colors = ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1', '#955251', '#B565A7', '#009B77'];
+    const colors = ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1', '#00a18c', '#B565A7', '#009B77'];
     const [backgroundColor, setBackgroundColor] = useState('');
     const [showMore, setShowMore] = useState(false);
     const [trainerClasses, setTrainerClasses] = useState([]);
@@ -15,7 +15,7 @@ const TrainerSmallProfileAdmin = ({ trainer, setTrainers, allTrainers }) => {
 
     useEffect(() => {
         const urlClass = `my-classes?trainer_id=${trainer.user_id}`;
-        
+
         if (trainerClasses.length === 0) {
             serverRequests('GET', urlClass, null)
                 .then(response => {
@@ -29,7 +29,6 @@ const TrainerSmallProfileAdmin = ({ trainer, setTrainers, allTrainers }) => {
                     const pastClasses = data.classes.filter(myClass => new Date(myClass.date) < currentDate);
                     const futureClasses = data.classes.filter(myClass => new Date(myClass.date) >= currentDate);
 
-                    // Sort classes by date
                     pastClasses.sort((a, b) => new Date(b.date) - new Date(a.date));
                     futureClasses.sort((a, b) => new Date(a.date) - new Date(b.date));
 
@@ -69,27 +68,24 @@ const TrainerSmallProfileAdmin = ({ trainer, setTrainers, allTrainers }) => {
 
     const renderClasses = (classes) => (
         <ul>
-            {classes.map(myClass => (
-                <li key={myClass.class_id} style={{ color: 'black' }}>
-                    <p><strong>Type:</strong> {myClass.class_type}</p>
-                    <p><strong>Price:</strong> ${myClass.price}</p>
-                    <p><strong>Trainer:</strong> {myClass.trainer_first_name} {myClass.trainer_last_name} </p>
-                    <p><strong>At:</strong> {new Date(myClass.date).toLocaleDateString('he-IL')} {formatHourRange(myClass.hour)}</p>
-                </li>
-            ))}
+            {classes.length > 0 ? (
+                classes.map(myClass => (
+                    <li key={myClass.class_id} style={{ color: 'black' }}>
+                        <p><strong>Type:</strong> {myClass.class_type}</p>
+                        <p><strong>Price:</strong> ${myClass.price}</p>
+                        <p><strong>At:</strong> {new Date(myClass.date).toLocaleDateString('he-IL')} {formatHourRange(myClass.hour)}</p>
+                    </li>
+                ))
+            ) : (
+                <li style={{ color: 'black' }}>No classes yet</li>
+            )}
         </ul>
     );
 
     return (
         <div className="card-client" style={{ backgroundColor }}>
-            <button className="deleteButton" onClick={handleDeleteClick}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 50 59" className="bin">
-                    <path fill="#B5BAC1" d="M0 7.5C0 5.01472 2.01472 3 4.5 3H45.5C47.9853 3 50 5.01472 50 7.5V7.5C50 8.32843 49.3284 9 48.5 9H1.5C0.671571 9 0 8.32843 0 7.5V7.5Z"></path>
-                    <path fill="#B5BAC1" d="M17 3C17 1.34315 18.3431 0 20 0H29.3125C30.9694 0 32.3125 1.34315 32.3125 3V3H17V3Z"></path>
-                    <path fill="#B5BAC1" d="M2.18565 18.0974C2.08466 15.821 3.903 13.9202 6.18172 13.9202H43.8189C46.0976 13.9202 47.916 15.821 47.815 18.0975L46.1699 55.1775C46.0751 57.3155 44.314 59.0002 42.1739 59.0002H7.8268C5.68661 59.0002 3.92559 57.3155 3.83073 55.1775L2.18565 18.0974ZM18.0003 49.5402C16.6196 49.5402 15.5003 48.4209 15.5003 47.0402V24.9602C15.5003 23.5795 16.6196 22.4602 18.0003 22.4602C19.381 22.4602 20.5003 23.5795 20.5003 24.9602V47.0402C20.5003 48.4209 19.381 49.5402 18.0003 49.5402ZM29.5003 47.0402C29.5003 48.4209 30.6196 49.5402 32.0003 49.5402C33.381 49.5402 34.5003 48.4209 34.5003 47.0402V24.9602C34.5003 23.5795 33.381 22.4602 32.0003 22.4602C30.6196 22.4602 29.5003 23.5795 29.5003 24.9602V47.0402Z" clipRule="evenodd" fillRule="evenodd"></path>
-                    <path fill="#B5BAC1" d="M2 13H48L47.6742 21.28H2.32031L2 13Z"></path>
-                </svg>
-                <span className="tooltip">Delete</span>
+            <button className="deleteBtn" onClick={handleDeleteClick}>
+                <svg viewBox="0 0 448 512" className="svgIcon"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg>
             </button>
             <br />
             <div className="user-picture">
@@ -112,7 +108,6 @@ const TrainerSmallProfileAdmin = ({ trainer, setTrainers, allTrainers }) => {
             <br />
             {showMore && (
                 <div className="classes-container">
-                    <h3>Classes:</h3>
                     <h4>Past Classes:</h4>
                     {renderClasses(trainerClasses.filter(myClass => new Date(myClass.date) < new Date()))}
                     <h4>Future Classes:</h4>

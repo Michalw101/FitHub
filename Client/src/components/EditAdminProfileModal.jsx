@@ -38,48 +38,51 @@ export default function EditAdminProfileModal({ formData, setFormData, onClose }
         <div className="modal-overlay">
             <div className="modal-content">
                 <button className="close-button" onClick={onClose}>❌</button>
-                <h2>Edit your profile...</h2>
+                <h1>Edit your profile...</h1>
+                <br/>
                 <label>
-                    First name:
-                    <input
-                        type="text"
-                        value={editFormData.first_name}
-                        name="first_name"
-                        onChange={handleChanged}
-                    />
+                    <h4>First name</h4>
+                    <div className='inputGroup'>
+                        <input
+                            
+                            type="text"
+                            value={editFormData.first_name}
+                            name="first_name"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br />
                 <label>
-                    Last name:
-                    <input
+                    <h4>Last name</h4>
+                    <div className='inputGroup'>
+                        <input
+                            
                         type="text"
                         value={editFormData.last_name}
                         name="last_name"
                         onChange={handleChanged}
                     />
+                    </div>
                 </label>
-                <br /><br />
                 <label>
-                    Email:
+                    <h4>Email</h4>
+                    <div className='inputGroup'>
                     <input
                         type="text"
                         value={editFormData.email}
                         name="email"
                         onChange={handleChanged}
-                    />
+                    /></div>
                 </label>
-                <br /><br />
                 <label>
-                    Phone:
+                    <h4>Phone</h4>
+                    <div className='inputGroup'>
                     <input
                         type="text"
                         value={editFormData.phone}
                         name="phone"
                         onChange={handleChanged}
-                    />
+                    /></div>
                 </label>
-                
-                <br /><br />
                 <button className="bookmarkBtn" onClick={handleSave}>
                     <span className="IconContainer">
                         <svg viewBox="0 0 384 512" height="0.9em" className="icon">
