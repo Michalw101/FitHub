@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { UserContext } from '../App';
 import '../css/trainerDetailsProfile.css';
 import EditTrainerProfileModal from './EditTrainerProfileModal'
 

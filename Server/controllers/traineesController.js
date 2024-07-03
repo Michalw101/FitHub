@@ -1,5 +1,15 @@
 const model = require('../model/traineesModel');
 
+async function getAllTrainees() {
+    try {
+
+        return model.getAllTrainees();
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
 async function getApprovedTrainees(query) {
     try {
 
@@ -37,6 +47,15 @@ async function deleteWaitingTrainees(query) {
     }
 };
 
+async function deleteTrainee(id) {
+    try {
+        return model.deleteTrainee(id);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
 async function updateTrainee(body, id) {
     try {
         return model.updateTrainee(body, id);
@@ -54,4 +73,4 @@ async function checkIfApproved(query) {
         throw err;
     }
 };
-module.exports = { getApprovedTrainees, updateTrainee, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees }
+module.exports = { getApprovedTrainees, getAllTrainees, deleteTrainee, updateTrainee, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees }

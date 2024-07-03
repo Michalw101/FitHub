@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { serverRequests } from '../Api';
-import TrainerSmallProfile from './TrainerSmallProfile';
+import TrainerSmallProfileAdmin from '../components/TrainerSmallProfileAdmin';
 import '../css/trainers.css';
 
 
-const Trainers = () => {
+const TrainersAdmin = () => {
   const [allTrainers, setAllTrainers] = useState(null);
   const [filteredTrainers, setFilteredTrainers] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [specialty, setSpecialty] = useState('');
   const [gender, setGender] = useState('');
 
   useEffect(() => {
@@ -40,24 +39,17 @@ const Trainers = () => {
       filtered = filtered.filter(trainer =>
         trainer.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         trainer.last_name.toLowerCase().includes(searchTerm.toLowerCase())
-
       );
     }
 
-    if (filtered && specialty && specialty.trim() !== '') {
-      filtered = filtered.filter(trainer =>
-        trainer.specialization.toLowerCase().includes(specialty.toLowerCase())
-      );
-    }
-
-    if (filtered && gender && gender !== '') {
+       if (filtered && gender && gender !== '') {
       filtered = filtered.filter(trainer =>
         trainer.gender.toLowerCase() === gender.toLowerCase()
       );
     }
 
     setFilteredTrainers(filtered);
-  }, [searchTerm, specialty, gender, allTrainers]);
+  }, [searchTerm, gender, allTrainers]);
 
   if (!allTrainers)
     return (
@@ -99,29 +91,24 @@ const Trainers = () => {
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />
-          <input
-            type="text"
-            placeholder="Search by specialty"
-            value={specialty}
-            onChange={e => setSpecialty(e.target.value)}
-          />
+         
           <select
             value={gender}
             onChange={e => setGender(e.target.value)}
           >
             <option value="">All Genders</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="male">Boys only</option>
+            <option value="female">Girls only</option>
           </select>
         </div>
         <div id='trainers'>
 
         {filteredTrainers && filteredTrainers.length === 0 ? (
-          <h1>No trainers found.</h1>
+          <h1>No trainees found.</h1>
         ) : (
           filteredTrainers.map(trainer => (
             <div key={trainer.trainer_id}>
-              <TrainerSmallProfile trainer={trainer} />
+              <TrainerSmallProfileAdmin trainer={trainer} setTrainers={setAllTrainers} allTrainers={allTrainers}/>
             </div>
           ))
         )}
@@ -130,4 +117,4 @@ const Trainers = () => {
   );
 };
 
-export default Trainers;
+export default TrainersAdmin;

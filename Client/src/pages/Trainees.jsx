@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { serverRequests } from '../Api';
-import TrainerSmallProfile from './TrainerSmallProfile';
+import TraineeSmallProfile from '../components/TraineeSmallProfile';
 import '../css/trainers.css';
 
 
-const Trainers = () => {
-  const [allTrainers, setAllTrainers] = useState(null);
-  const [filteredTrainers, setFilteredTrainers] = useState(null);
+const Trainees = () => {
+  const [allTrainees, setAllTrainees] = useState(null);
+  const [filteredTrainees, setFilteredTrainees] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [specialty, setSpecialty] = useState('');
   const [gender, setGender] = useState('');
 
   useEffect(() => {
-    const url = 'trainers';
+    const url = 'trainees';
 
     serverRequests('GET', url, null)
       .then(response => {
@@ -24,8 +23,8 @@ const Trainers = () => {
       })
       .then(data => {
         if (data) {
-          setAllTrainers(data.trainers);
-          setFilteredTrainers(data.trainers);
+          setAllTrainees(data.trainees);
+          setFilteredTrainees(data.trainees);
         }
       })
       .catch(error => {
@@ -34,32 +33,25 @@ const Trainers = () => {
   }, []);
 
   useEffect(() => {
-    let filtered = allTrainers;
+    let filtered = allTrainees;
 
     if (filtered && searchTerm && searchTerm.trim() !== '') {
-      filtered = filtered.filter(trainer =>
-        trainer.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        trainer.last_name.toLowerCase().includes(searchTerm.toLowerCase())
-
+      filtered = filtered.filter(trainee =>
+        trainee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        trainee.last_name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    if (filtered && specialty && specialty.trim() !== '') {
-      filtered = filtered.filter(trainer =>
-        trainer.specialization.toLowerCase().includes(specialty.toLowerCase())
+       if (filtered && gender && gender !== '') {
+      filtered = filtered.filter(trainee =>
+        trainee.gender.toLowerCase() === gender.toLowerCase()
       );
     }
 
-    if (filtered && gender && gender !== '') {
-      filtered = filtered.filter(trainer =>
-        trainer.gender.toLowerCase() === gender.toLowerCase()
-      );
-    }
+    setFilteredTrainees(filtered);
+  }, [searchTerm, gender, allTrainees]);
 
-    setFilteredTrainers(filtered);
-  }, [searchTerm, specialty, gender, allTrainers]);
-
-  if (!allTrainers)
+  if (!allTrainees)
     return (
       <div className="loader">
         <div className="wrapper">
@@ -99,29 +91,24 @@ const Trainers = () => {
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />
-          <input
-            type="text"
-            placeholder="Search by specialty"
-            value={specialty}
-            onChange={e => setSpecialty(e.target.value)}
-          />
+         
           <select
             value={gender}
             onChange={e => setGender(e.target.value)}
           >
             <option value="">All Genders</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="male">Boys only</option>
+            <option value="female">Girls only</option>
           </select>
         </div>
         <div id='trainers'>
 
-        {filteredTrainers && filteredTrainers.length === 0 ? (
-          <h1>No trainers found.</h1>
+        {filteredTrainees && filteredTrainees.length === 0 ? (
+          <h1>No trainees found.</h1>
         ) : (
-          filteredTrainers.map(trainer => (
-            <div key={trainer.trainer_id}>
-              <TrainerSmallProfile trainer={trainer} />
+          filteredTrainees.map(trainee => (
+            <div key={trainee.trainee_id}>
+              <TraineeSmallProfile trainee={trainee} setTrainees={setAllTrainees} allTrainees={allTrainees}/>
             </div>
           ))
         )}
@@ -130,4 +117,4 @@ const Trainers = () => {
   );
 };
 
-export default Trainers;
+export default Trainees;

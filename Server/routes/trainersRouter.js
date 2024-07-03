@@ -37,4 +37,15 @@ router.put('/:id', async (req, res) => {
     }
 })
 
+router.delete("/:id", async (req, res) => {
+    const id= req.params.id;
+    console.log('delete trainer received:'); 
+    try {
+        res.send(await controller.deleteTrainer(id));
+    } catch (err) {
+        console.error("Error in DELETE /:", err); 
+        res.status(500).send({ ok: false });
+    }
+});
+
 module.exports = router

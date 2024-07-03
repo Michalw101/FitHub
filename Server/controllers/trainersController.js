@@ -43,7 +43,6 @@ async function updateTrainer(body, id) {
 
 async function deleteTrainer(id) {
     try {
-        console.log('delete todo controller');
         return model.deleteTrainer(id);
     }
     catch (err) {

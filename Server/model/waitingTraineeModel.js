@@ -3,11 +3,11 @@ const pool = require('../DB.js');
 async function createWaitingTrainee(body) {
     try {
         console.log("model", body);
-        const { user_id, class_id} = body;
+        const { trainee_id, class_id} = body;
 
         const userInsertQuery = `INSERT INTO trainees_waiting_list (trainee_id ,class_id)
               VALUES (?,?)`;
-        await pool.query(userInsertQuery, [user_id, class_id]);
+        await pool.query(userInsertQuery, [trainee_id, class_id]);
 
         console.log("trainee created successfully");
         return { user: body, ok: true };

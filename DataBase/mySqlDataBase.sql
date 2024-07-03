@@ -173,12 +173,29 @@ VALUES
 (214859415, 'Lussie', 'Admin', 'michal24263@gmail.com', '0548475867', '2004-11-23', 'Female', 1),
 (1, 'Kevin', 'The minion', 'micsharo@g.jct.ac.il', '0548429273', '1988-03-25', 'Female', 2),
 (2, 'Bob', 'The minion', 'ylyyrwslmy25@gmail.com', '0548429273', '2004-07-08', 'Male', 3),
-(3, 'Ariel ', 'Seashell', 'micsharo@g.jct.ac.il', '0548429273', '2020-03-25', 'Female', 2),
+(3, 'Ariel', 'Seashell', 'micsharo@g.jct.ac.il', '0548429273', '2020-03-25', 'Female', 2),
 (4, 'Simba', 'Roark', 'micsharo@g.jct.ac.il', '0548429273', '2000-03-25', 'Male', 2),
 (5, 'Belle', 'Beaumont', 'micsharo@g.jct.ac.il', '0548429273', '2001-03-25', 'Female', 2),
 (6, 'Elsa', 'Snow', 'micsharo@g.jct.ac.il', '0548429273', '2003-03-25', 'Female', 2),
 (7, 'Aladdin', 'Desertwind', 'micsharo@g.jct.ac.il', '0548429273', '2002-03-25', 'Male', 2),
-(8, 'Hercules', 'Titan', 'micsharo@g.jct.ac.il', '0548429273', '1999-03-25', 'Male', 2);
+(8, 'Hercules', 'Titan', 'micsharo@g.jct.ac.il', '0548429273', '1999-03-25', 'Male', 2),
+(9, 'Mickey', 'Mouse', 'micsharo@g.jct.ac.il', '0548429273', '2004-01-01', 'Male', 3),
+(10, 'Minnie', 'Mouse', 'micsharo@g.jct.ac.il', '0548429273', '2004-02-14', 'Female', 3),
+(11, 'Donald', 'Duck', 'micsharo@g.jct.ac.il', '0548429273', '2004-03-15', 'Male', 3),
+(12, 'Daisy', 'Duck', 'micsharo@g.jct.ac.il', '0548429273', '2004-04-10', 'Female', 3),
+(13, 'Goofy', 'Goof', 'micsharo@g.jct.ac.il', '0548429273', '2004-05-05', 'Male', 3),
+(14, 'Pluto', 'Pup', 'micsharo@g.jct.ac.il', '0548429273', '2004-06-20', 'Male', 3),
+(15, 'Tiana', 'Frog', 'micsharo@g.jct.ac.il', '0548429273', '2004-07-25', 'Female', 3),
+(16, 'Rapunzel', 'Tower', 'micsharo@g.jct.ac.il', '0548429273', '2004-08-18', 'Female', 3),
+(17, 'Moana', 'Ocean', 'micsharo@g.jct.ac.il', '0548429273', '2004-09-10', 'Female', 3),
+(18, 'Mulan', 'Warrior', 'micsharo@g.jct.ac.il', '0548429273', '2004-10-12', 'Female', 3),
+(19, 'Anna', 'Arendelle', 'micsharo@g.jct.ac.il', '0548429273', '2004-11-30', 'Female', 3),
+(20, 'Elsa', 'Arendelle', 'micsharo@g.jct.ac.il', '0548429273', '2004-12-05', 'Female', 3),
+(21, 'Aurora', 'Briar', 'micsharo@g.jct.ac.il', '0548429273', '2004-01-15', 'Female', 3),
+(22, 'Snow', 'White', 'micsharo@g.jct.ac.il', '0548429273', '2004-02-25', 'Female', 3),
+(23, 'Cinderella', 'Glass', 'micsharo@g.jct.ac.il', '0548429273', '2004-03-30', 'Female', 3),
+(24, 'Pocahontas', 'Native', 'micsharo@g.jct.ac.il', '0548429273', '2004-04-22', 'Female', 3);
+
 
 INSERT INTO trainers (trainer_id, experience, degree_link, specialization, instegram_link, facebook_link, twitter_link)
 VALUES 
@@ -193,12 +210,45 @@ VALUES
 
 INSERT INTO information (information_id, heart_disease, chest_pain_at_rest, chest_pain_daily_activity, chest_pain_exercise, dizziness_balance_loss, fainting, asthma_medication, asthma_symptoms, family_heart_disease, family_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk) 
 VALUES 
-(1, false, false, false, false, false, false, false, false, false, false, false, false, false);
+(1, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(2, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(3, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(4, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(5, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(6, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(7, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(8, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(9, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(10, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(11, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(12, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(13, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(14, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(15, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(16, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(17, false, false, false, false, false, false, false, false, false, false, false, false, false);
+
 
 
 INSERT INTO trainees (trainee_id, information_id) 
 VALUES 
-(2, 1);
+(2, 1),
+(9, 2),
+(10, 3),
+(11, 4),
+(12, 5),
+(13, 6),
+(14, 7),
+(15, 8),
+(16, 9),
+(17, 10),
+(18, 11),
+(19, 12),
+(20, 13),
+(21, 14),
+(22, 15),
+(23, 16),
+(24, 17);
 
 INSERT INTO limits_in_class (trainer_id, gender_limit, heart_disease, chest_pain, fainted_or_dizziness, asthma, family_heart_disease_or_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk) 
 VALUES 
@@ -252,18 +302,21 @@ VALUES
 (5, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
 (6, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
 (7, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
-(8, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15');
+(8, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(9, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(10, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(11, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(12, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(13, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(14, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(15, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(16, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(17, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(18, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(19, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(20, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(21, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(22, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(23, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
+(24, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15');
 
--- SELECT * FROM classes NATURAL JOIN limits_in_class NATURAL JOIN trainers JOIN users where user_id = trainer_id;
-
--- delete from limits_in_class where limits_id > 8;
--- insert into trainers_waiting_list(user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, experience, specialization, last_work_place, place_of_study, instegram_link, facebook_link, twitter_link)
--- values (4, "a", "a", "michal0548429273@gmail.com", "050", '2004-06-03', "Female", "aaaa", "12", "blablabla", "d", "f", "f","f", "f");
-
--- insert into trainees_waiting_list(trainee_id, class_id) values (214955064, 7);
-
--- insert into trainees(trainee_id, information_id) values (214955064, 1);
-
-
-
--- SELECT * FROM trainees_waiting_list join users where class_id = 3  and users.user_id = trainees_waiting_list.trainee_id

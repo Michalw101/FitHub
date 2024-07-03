@@ -27,7 +27,7 @@ async function getClassesByQuery(query) {
             user_id = query.user_id;
         } else {
             throw new Error('Invalid query format. Expected { user_id: ... }');
-        }  
+        }
 
 
         const sql = `SELECT 
@@ -132,7 +132,22 @@ async function getTraineeRegisteredClasses(query) {
 
 async function getTraineeApprovedClasses(query) {
     try {
-        const sql = `select * from classes natural join trainees_in_class natural join limits_in_class where ?`;
+        const sql = `SELECT
+        classes.*,
+            trainees_in_class.*,
+            limits_in_class.*,
+            users.first_name AS trainer_first_name,
+                users.last_name AS trainer_last_name
+        FROM
+        classes
+        NATURAL JOIN
+        trainees_in_class
+        NATURAL JOIN
+        limits_in_class
+        JOIN 
+        users ON classes.trainer_id = users.user_id
+        WHERE
+            ?`;
         const result = await pool.query(sql, query);
 
         if (result.length > 0) {
@@ -248,4 +263,4 @@ async function updateClass(body, id) {
 
 };
 
-module.exports = { createClass, getTraineeApprovedClasses, updateClass, getAllClasses, getClassesByQuery, getTrainerClasses,getTraineeRegisteredClasses, deleteClass, getClass }
+module.exports = { createClass, getTraineeApprovedClasses, updateClass, getAllClasses, getClassesByQuery, getTrainerClasses, getTraineeRegisteredClasses, deleteClass, getClass }

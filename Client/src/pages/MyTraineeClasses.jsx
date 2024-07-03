@@ -6,12 +6,12 @@ import TraineeClass from '../components/TraineeClass';
 export default function MyTraineeClasses({ userData }) {
     const [registeredClasses, setRegisteredClasses] = useState(null);
     const [approvedClasses, setApprovedClasses] = useState(null);
+    const [pastClasses, setPastClasses] = useState(null);
 
     useEffect(() => {
         const fetchTraineeClasses = async () => {
             const urlRegistered = `my-classes/trainee/registered?trainee_id=${userData.user_id}`;
             const urlApproved = `my-classes/trainee/approved?trainee_id=${userData.user_id}`;
-
 
             serverRequests('GET', urlRegistered, null)
                 .then(response => {
@@ -31,21 +31,34 @@ export default function MyTraineeClasses({ userData }) {
                             return response.json();
                         }).then((data) => {
                             if (data) {
-                                setApprovedClasses(data.classes);
+                                const currentClasses = [];
+                                const pastClasses = [];
+                                const currentDate = new Date();
+
+                                data.classes.forEach(myClass => {
+                                    const classDate = new Date(myClass.date);
+                                    if (classDate < currentDate) {
+                                        pastClasses.push(myClass);
+                                    } else {
+                                        currentClasses.push(myClass);
+                                    }
+                                });
+
+                                setApprovedClasses(currentClasses);
+                                setPastClasses(pastClasses);
                             }
                         }).catch(error => {
                             console.error(error);
                         });
-                }
-                )
+                })
                 .catch(error => {
                     console.error(error);
                 });
-        }
+        };
         fetchTraineeClasses();
-    }, []);
+    }, [userData.user_id]);
 
-    if (!registeredClasses || !approvedClasses) {
+    if (!registeredClasses || !approvedClasses || !pastClasses) {
         return (
             <div className="loader">
                 <div className="wrapper">
@@ -59,7 +72,7 @@ export default function MyTraineeClasses({ userData }) {
         );
     }
 
-    if (registeredClasses.length === 0 && approvedClasses.length === 0) {
+    if (registeredClasses.length === 0 && approvedClasses.length === 0 && pastClasses.length === 0) {
         return <h1>No classes found.</h1>;
     }
 
@@ -80,7 +93,10 @@ export default function MyTraineeClasses({ userData }) {
             {renderClasses(registeredClasses, false)}
 
             <h3>Approved Classes:</h3>
-            {renderClasses(approvedClasses, true)}
+            {renderClasses(approvedClasses, false)}
+
+            <h3>Past Classes:</h3>
+            {renderClasses(pastClasses, true)}
         </div>
     );
 }

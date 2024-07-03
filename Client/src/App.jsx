@@ -22,7 +22,9 @@ import TraineeClasses from './pages/TraineeClasses'
 import MyClasses from './pages/MyClasses'
 import TrainersInHome from './pages/TrainersInHome'
 import TrainersInTraineesHome from './pages/TrainersInTraineesHome'
+import Trainees from './pages/Trainees'
 import MyTraineeClasses from './pages/MyTraineeClasses'
+import TrainersAdmin from './pages/TrainersAdmin'
 import { serverRequests } from './Api'
 
 
@@ -75,8 +77,11 @@ function App() {
 
           <Route path="/admin-home" element={<HomeLayout setUserData={setUserData} userData={userData} role={1}/>} >
             <Route index element={<AdminHome />} />
-            <Route path="admin-profile" element={<AdminProfile />} />
+            <Route path="admin-profile" element={<AdminProfile userData={userData} />} />
             <Route path="new-trainers" element={<NewTrainers />} />
+            <Route path="all-trainees" element={<Trainees />} />
+            <Route path="all-trainers" element={<TrainersAdmin />} />
+
           </Route>
 
           <Route path="/trainer-home" element={<HomeLayout setUserData={setUserData} userData={userData} role={2}/>} >

@@ -138,4 +138,40 @@ async function updateTrainer(body, id) {
     }
 };
 
-module.exports = { createTrainer, getAllTrainers, updateTrainer }
+
+
+async function deleteTrainer(id) {
+    // const connection = await pool.getConnection();
+    // try {
+    //     await connection.beginTransaction();
+
+    //     const traineeInClassSql = `delete from trainees_in_class where trainee_id = ?`;
+    //     await connection.query(traineeInClassSql, [id]);
+
+    //     const traineeWaitingSql = `delete from trainees_waiting_list where trainee_id = ?`;
+    //     await connection.query(traineeWaitingSql, [id]);
+
+    //     const passSql = `delete from passwords where user_id = ?`;
+    //     await connection.query(passSql, [id]);
+
+    //     const infoSql = `delete from information where information_id = ?`;
+    //     await connection.query(infoSql, [info_id]);
+
+    //     const traineeSql = `delete from trainees where trainee_id = ?`;
+    //     await connection.query(traineeSql, [id]);
+
+    //     const userSql = `delete from users where user_id = ?`;
+    //     await connection.query(userSql, [id]);
+
+    //     await connection.commit();
+    //     return { success: true, message: "Trainer deleted successfully" };
+    // } catch (err) {
+    //     await connection.rollback();
+    //     console.error("Error:", err);
+    //     throw new Error(err.message);
+    // } finally {
+    //     connection.release();
+    // }
+}
+
+module.exports = { createTrainer, deleteTrainer, getAllTrainers, updateTrainer }

@@ -13,9 +13,11 @@ export default function TraineeClass({ myClass }) {
 
     return (
         <div className="single-class-content">
-            <div key={myClass.id} className="class-details">
-                <p><strong>Description:</strong> {myClass.description}</p>
+            <div key={myClass.class_id} className="class-details">
+                <p><strong>Type:</strong> {myClass.class_type}</p>
                 <p><strong>Price:</strong> ${myClass.price}</p>
+                <p><strong>Trainer:</strong> {myClass.trainer_first_name} {myClass.trainer_last_name} </p>
+
                 <p><strong>At:</strong> {`${new Date(myClass.date).toLocaleDateString('he-IL')}`} {formatHourRange(myClass.hour)}</p>
             </div>
         </div>
