@@ -11,35 +11,39 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        const fetchRegisteredUsers = async () => {
-            const URL = `trainees/waiting?class_id=${myClass.class_id}`;
-            try {
-                const response = await serverRequests('GET', URL, null);
-                if (response.ok) {
-                    const data = await response.json();
-                    setRegisteredUsers(data.trainees);
+        const waitingURL = `trainees/waiting?class_id=${myClass.class_id}`;
+        serverRequests('GET', waitingURL, null)
+            .then(response => {
+                if (!response.ok) {
+                    return;
                 }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        };
+                return response.json();
+            })
+            .then((data) => {
+                setRegisteredUsers(data.trainees);
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
-        const fetchApprovedUsers = async () => {
-            const URL = `trainees/approved?class_id=${myClass.class_id}`;
-            try {
-                const response = await serverRequests('GET', URL, null);
-                if (response.ok) {
-                    const data = await response.json();
-                    setApprovedUsers(data.trainees);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        };
-
-        fetchRegisteredUsers();
-        fetchApprovedUsers();
     }, [myClass.class_id]);
+
+    useEffect(() => {
+        const approvedURL = `trainees/approved?class_id=${myClass.class_id}`;
+        serverRequests('GET', approvedURL, null)
+            .then(response => {
+                if (!response.ok) {
+                    return;
+                }
+                return response.json();
+            }).then((data) => {
+                if (data) {
+                    setApprovedUsers(data.trainees)
+                }
+            }).catch(error => {
+                console.error(error);
+            });
+    }, [myClass.class_id])
 
     const handlePayedCheckboxChange = (user) => {
         const deleteUserUrl = `trainees/waiting?trainee_id=${user.user_id}&class_id=${myClass.class_id}`;
@@ -107,7 +111,7 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
         const [classHour, classMinute] = myClass.hour.split(':').map(Number);
         classDateTime.setHours(classHour, classMinute, 0, 0);
 
-        const timeDifference = (classDateTime - now) / (1000 * 60); 
+        const timeDifference = (classDateTime - now) / (1000 * 60);
         return timeDifference <= 60 && timeDifference >= 0;
     }
 
@@ -134,7 +138,7 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
                     console.log(4)
                     return response.json();
                 })
-                .then(() => { 
+                .then(() => {
                     setMyClasses(myClasses.filter(cls => cls.class_id !== myClass.class_id));
                 })
                 .catch(error => {

@@ -28,48 +28,37 @@ async function getClassesByQuery(query) {
         } else {
             throw new Error('Invalid query format. Expected { user_id: ... }');
         }
-
-
-        const sql = `SELECT 
-    c.class_id, 
-    c.trainer_id, 
-    c.date, 
-    c.hour, 
-    c.description, 
-    c.price, 
-    c.link, 
-    c.class_type, 
-    u.first_name AS trainer_first_name, 
-    u.last_name AS trainer_last_name, 
-    u.email AS trainer_email, 
-    u.phone AS trainer_phone, 
-    trainer.instegram_link, 
-    trainer.facebook_link, 
+        const sql = `SELECT
+    c.class_id,
+    c.trainer_id,
+    c.date,
+    c.hour,
+    c.description,
+    c.price,
+    c.link,
+    c.class_type,
+    u.first_name AS trainer_first_name,
+    u.last_name AS trainer_last_name,
+    u.email AS trainer_email,
+    u.phone AS trainer_phone,
+    trainer.instegram_link,
+    trainer.facebook_link,
     trainer.twitter_link
-FROM 
-    classes c
-JOIN 
-    limits_in_class l ON c.limits_id = l.limits_id
-JOIN 
-    trainees t ON t.trainee_id = ?
-JOIN 
-    information i ON t.information_id = i.information_id
-JOIN 
-    users u ON c.trainer_id = u.user_id
-JOIN 
-    trainers trainer ON c.trainer_id = trainer.trainer_id
-WHERE 
-    (l.gender_limit = 'both' OR l.gender_limit = u.gender) AND
-    (l.heart_disease = FALSE OR l.heart_disease = i.heart_disease) AND
-    (l.chest_pain = FALSE OR l.chest_pain = i.chest_pain_at_rest OR l.chest_pain = i.chest_pain_daily_activity OR l.chest_pain = i.chest_pain_exercise) AND
-    (l.fainted_or_dizziness = FALSE OR l.fainted_or_dizziness = i.dizziness_balance_loss OR l.fainted_or_dizziness = i.fainting) AND
-    (l.asthma = FALSE OR l.asthma = i.asthma_medication OR l.asthma = i.asthma_symptoms) AND
-    (l.family_heart_disease_or_sudden_death = FALSE OR l.family_heart_disease_or_sudden_death = i.family_heart_disease OR l.family_heart_disease_or_sudden_death = i.family_sudden_death) AND
-    (l.exercise_supervision = FALSE OR l.exercise_supervision = i.exercise_supervision) AND
-    (l.chronic_disease = FALSE OR l.chronic_disease = i.chronic_disease) AND
-    (l.pregnancy_risk = FALSE OR l.pregnancy_risk = i.pregnancy_risk);
-
-
+FROM classes c
+JOIN limits_in_class l ON c.limits_id = l.limits_id
+JOIN trainees t ON t.trainee_id = ?
+JOIN information i ON t.information_id = i.information_id
+JOIN users u ON c.trainer_id = u.user_id
+JOIN trainers trainer ON c.trainer_id = trainer.trainer_id
+WHERE (l.gender_limit = 'both' OR l.gender_limit = u.gender)
+AND (l.heart_disease = FALSE OR i.heart_disease = FALSE)
+AND (l.chest_pain = FALSE OR (i.chest_pain_at_rest = FALSE AND i.chest_pain_daily_activity = FALSE AND i.chest_pain_exercise = FALSE))
+AND (l.fainted_or_dizziness = FALSE OR (i.dizziness_balance_loss = FALSE AND i.fainting = FALSE))
+AND (l.asthma = FALSE OR (i.asthma_medication = FALSE AND i.asthma_symptoms = FALSE))
+AND (l.family_heart_disease_or_sudden_death = FALSE OR (i.family_heart_disease = FALSE AND i.family_sudden_death = FALSE))
+AND (l.exercise_supervision = FALSE OR i.exercise_supervision = FALSE)
+AND (l.chronic_disease = FALSE OR i.chronic_disease = FALSE)
+AND (l.pregnancy_risk = FALSE OR i.pregnancy_risk = FALSE);
 `;
         const result = await pool.query(sql, user_id);
 
@@ -114,7 +103,22 @@ async function getTrainerClasses(query) {
 
 async function getTraineeRegisteredClasses(query) {
     try {
-        const sql = `select * from classes natural join trainees_waiting_list natural join limits_in_class where ?`;
+        const sql =
+            `SELECT
+        classes.*,
+            trainees_waiting_list.*,
+            limits_in_class.*,
+            users.first_name AS trainer_first_name,
+                users.last_name AS trainer_last_name
+            FROM classes
+        NATURAL JOIN
+        trainees_waiting_list
+        NATURAL JOIN
+        limits_in_class
+        JOIN 
+        users ON classes.trainer_id = users.user_id
+        WHERE
+            ?`;
         const result = await pool.query(sql, query);
 
         if (result.length > 0) {
@@ -138,8 +142,7 @@ async function getTraineeApprovedClasses(query) {
             limits_in_class.*,
             users.first_name AS trainer_first_name,
                 users.last_name AS trainer_last_name
-        FROM
-        classes
+            FROM classes
         NATURAL JOIN
         trainees_in_class
         NATURAL JOIN

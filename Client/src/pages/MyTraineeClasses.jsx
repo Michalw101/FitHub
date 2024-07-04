@@ -9,53 +9,50 @@ export default function MyTraineeClasses({ userData }) {
     const [pastClasses, setPastClasses] = useState(null);
 
     useEffect(() => {
-        const fetchTraineeClasses = async () => {
-            const urlRegistered = `my-classes/trainee/registered?trainee_id=${userData.user_id}`;
-            const urlApproved = `my-classes/trainee/approved?trainee_id=${userData.user_id}`;
+        const urlRegistered = `my-classes/trainee/registered?trainee_id=${userData.user_id}`;
+        const urlApproved = `my-classes/trainee/approved?trainee_id=${userData.user_id}`;
 
-            serverRequests('GET', urlRegistered, null)
-                .then(response => {
-                    if (!response.ok) {
-                        return;
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    setRegisteredClasses(data.classes);
+        serverRequests('GET', urlRegistered, null)
+            .then(response => {
+                if (!response.ok) {
+                    return;
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setRegisteredClasses(data.classes);
 
-                    serverRequests('GET', urlApproved, null)
-                        .then(response => {
-                            if (!response.ok) {
-                                return;
-                            }
-                            return response.json();
-                        }).then((data) => {
-                            if (data) {
-                                const currentClasses = [];
-                                const pastClasses = [];
-                                const currentDate = new Date();
+                serverRequests('GET', urlApproved, null)
+                    .then(response => {
+                        if (!response.ok) {
+                            return;
+                        }
+                        return response.json();
+                    }).then((data) => {
+                        if (data) {
+                            const currentClasses = [];
+                            const pastClasses = [];
+                            const currentDate = new Date();
 
-                                data.classes.forEach(myClass => {
-                                    const classDate = new Date(myClass.date);
-                                    if (classDate < currentDate) {
-                                        pastClasses.push(myClass);
-                                    } else {
-                                        currentClasses.push(myClass);
-                                    }
-                                });
+                            data.classes.forEach(myClass => {
+                                const classDate = new Date(myClass.date);
+                                if (classDate < currentDate) {
+                                    pastClasses.push(myClass);
+                                } else {
+                                    currentClasses.push(myClass);
+                                }
+                            });
 
-                                setApprovedClasses(currentClasses);
-                                setPastClasses(pastClasses);
-                            }
-                        }).catch(error => {
-                            console.error(error);
-                        });
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        };
-        fetchTraineeClasses();
+                            setApprovedClasses(currentClasses);
+                            setPastClasses(pastClasses);
+                        }
+                    }).catch(error => {
+                        console.error(error);
+                    });
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }, [userData.user_id]);
 
     if (!registeredClasses || !approvedClasses || !pastClasses) {

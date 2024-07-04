@@ -1,27 +1,29 @@
 import React from 'react';
 
-const SingleClass = ({ userData, event, onClose, seeMoreBtn, handleSeeMoreClick, handleClassRegistration }) => {
-    const isPastEvent = (event) => {
-        const now = new Date();
-        return event.to < now;
-    };
-
+const SingleClass = ({ userData, event, onClose, registrationError, handleClassRegistration }) => {
+    const currentDateTime = new Date();
+    const eventHasPassed = currentDateTime > event.from;
     return (
         <div className="single-class-modal">
             <div className="single-class-content">
                 <button className="close-button" onClick={onClose}>❌</button>
                 <h2>What's on today? {new Date(event.from).toLocaleDateString()}</h2><br></br>
-                <h3>{event.title} with {event.trainer.first_name} {event.trainer.last_name}</h3><br/>
-                <p>{`${new Date(event.from).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.to).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p><br/>
-                <p><strong>Only ${event.price}</strong></p><br/>
-                {/* {userData.role_id === 3 && (
-                    <button onClick={() => handleSeeMoreClick(event.id)}>
-                        {seeMoreBtn === event.id ? 'See less...' : 'See more...'}
-                    </button>
-                )} */}
-                <p>Contact {event.trainer.first_name}! </p><br/>
+                <h3>{event.title} with {event.trainer.first_name} {event.trainer.last_name}</h3><br />
+                <p>{`${new Date(event.from).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.to).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p><br />
+                <p><strong>Only ${event.price}</strong></p><br />
+
+                <p>Contact {event.trainer.first_name}! </p><br />
                 <p><strong>{event.trainer.phone}</strong></p>
-                <p><strong>{event.trainer.email}</strong></p><br/>
+                <p><strong>{event.trainer.email}</strong></p><br />
+                {userData.role_id === 3 && !eventHasPassed && (
+                    <button onClick={() => handleClassRegistration(event)}>Join Class!</button>
+
+                )}
+
+                {registrationError && (
+                    <p style={{ color: 'red' }}>{registrationError}</p>
+                )}
+
                 <p>Find {event.trainer.first_name}...</p>
                 <div className="wrapper">
                     <a className="icon facebook" href={event.trainer.facebook_link}>
@@ -66,14 +68,7 @@ const SingleClass = ({ userData, event, onClose, seeMoreBtn, handleSeeMoreClick,
                         </svg>
                     </a>
                 </div>
-                {seeMoreBtn === event.id && (<div>
-                    <p><strong>Other details...</strong></p>
-                    {!isPastEvent(event) ? (
-                        <button onClick={() => handleClassRegistration(event)}>Join class!</button>
-                    ) : (
-                        <p style={{ color: 'red' }}><strong>This class has already ended.</strong></p>
-                    )}
-                </div>)}
+
             </div>
         </div>
     );

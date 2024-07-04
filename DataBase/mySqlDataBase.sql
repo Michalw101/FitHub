@@ -210,7 +210,7 @@ VALUES
 
 INSERT INTO information (information_id, heart_disease, chest_pain_at_rest, chest_pain_daily_activity, chest_pain_exercise, dizziness_balance_loss, fainting, asthma_medication, asthma_symptoms, family_heart_disease, family_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk) 
 VALUES 
-(1, false, false, false, false, false, false, false, false, false, false, false, false, false),
+(1, true, true, false, false, false, false, false, false, false, false, false, false, false),
 (2, false, false, false, false, false, false, false, false, false, false, false, false, false),
 (3, false, false, false, false, false, false, false, false, false, false, false, false, false),
 (4, false, false, false, false, false, false, false, false, false, false, false, false, false),
@@ -319,4 +319,37 @@ VALUES
 (22, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
 (23, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15'),
 (24, '464e1a2683f24ff030f2deb7bb3452903ba9afb8cc67ad260e2efe6a42a8cf5f', '2a0280e31556715cbef22eca1b36ef15');
+
+SELECT
+    c.class_id,
+    c.trainer_id,
+    c.date,
+    c.hour,
+    c.description,
+    c.price,
+    c.link,
+    c.class_type,
+    u.first_name AS trainer_first_name,
+    u.last_name AS trainer_last_name,
+    u.email AS trainer_email,
+    u.phone AS trainer_phone,
+    trainer.instegram_link,
+    trainer.facebook_link,
+    trainer.twitter_link
+FROM classes c
+JOIN limits_in_class l ON c.limits_id = l.limits_id
+JOIN trainees t ON t.trainee_id = 15
+JOIN information i ON t.information_id = i.information_id
+JOIN users u ON c.trainer_id = u.user_id
+JOIN trainers trainer ON c.trainer_id = trainer.trainer_id
+JOIN users tu ON t.trainee_id = tu.user_id 
+WHERE (l.gender_limit = 'both' OR l.gender_limit = tu.gender)
+AND (l.heart_disease = FALSE OR i.heart_disease = FALSE)
+AND (l.chest_pain = FALSE OR (i.chest_pain_at_rest = FALSE AND i.chest_pain_daily_activity = FALSE AND i.chest_pain_exercise = FALSE))
+AND (l.fainted_or_dizziness = FALSE OR (i.dizziness_balance_loss = FALSE AND i.fainting = FALSE))
+AND (l.asthma = FALSE OR (i.asthma_medication = FALSE AND i.asthma_symptoms = FALSE))
+AND (l.family_heart_disease_or_sudden_death = FALSE OR (i.family_heart_disease = FALSE AND i.family_sudden_death = FALSE))
+AND (l.exercise_supervision = FALSE OR i.exercise_supervision = FALSE)
+AND (l.chronic_disease = FALSE OR i.chronic_disease = FALSE)
+AND (l.pregnancy_risk = FALSE OR i.pregnancy_risk = FALSE);
 

@@ -53,7 +53,7 @@ router.get("/approved", async (req, res) => {
         if (req.query.user_id && req.query.class_id) {
             res.send(await controller.checkIfApproved(req.query));
         } else {
-            res.send(await controller.getApprovedTrainees());
+            res.send(await controller.getApprovedTrainees(req.query));
         }
     } catch (err) {
         console.error("Error in GET /approved:", err);

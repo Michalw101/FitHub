@@ -20,11 +20,10 @@ export default function Classes({ setClasses, classes, userData }) {
 
     useEffect(() => {
         let url;
-        url = "classes"
-        // if (userData.role_id === 2)
-        //     url = "classes";
-        // else
-        //     url = `classes/by-query?user_id=${userData.user_id}`;
+        if (userData.role_id === 2)
+            url = "classes";
+        else
+            url = `classes/by-query?user_id=${userData.user_id}`;
 
         serverRequests('GET', url, null)
             .then(response => {
@@ -73,10 +72,10 @@ export default function Classes({ setClasses, classes, userData }) {
                     classType: classItem.class_type,
                     price: classItem.price,
                     trainer: {
-                        first_name: classItem.first_name,
-                        last_name: classItem.last_name,
-                        phone: classItem.phone,
-                        email: classItem.email,
+                        first_name: classItem.trainer_first_name,
+                        last_name: classItem.trainer_last_name,
+                        phone: classItem.trainer_phone,
+                        email: classItem.trainer_email,
                         twitter_link: classItem.twitter_link,
                         facebook_link: classItem.facebook_link,
                         instegram_link: classItem.instegram_link
@@ -152,8 +151,15 @@ export default function Classes({ setClasses, classes, userData }) {
     };
 
     const handleClassRegistration = (event) => {
+
+        const currentDateTime = new Date();
+        if (currentDateTime > event.from) {
+            setRegistrationError("You cannot register for a class that has already taken place.");
+            return;
+        }
+
         const checkUrl = `trainees/approved?user_id=${userData.user_id}&class_id=${event.id}`;
-    
+
         serverRequests('GET', checkUrl, null)
             .then(response => {
                 if (!response.ok) {
@@ -184,7 +190,7 @@ export default function Classes({ setClasses, classes, userData }) {
                                 alert(`Hey! To complete the registration process for the ${event.title} class, pay by Bit a $${event.price} payment to the Trainer ${event.trainer.first_name}. A link to the class will be sent to you when the payment is confirmed. ${event.trainer.first_name}'s phone number: ${event.trainer.phone}. Thank you very much!`);
                                 navigate('/trainee-home/trainee-classes');
                                 setSelectedDayEvents([]);
-                                setRegistrationError(null);  // Clear error message
+                                setRegistrationError(null);
                             }
                         }).catch(error => {
                             console.error(error);
@@ -197,7 +203,7 @@ export default function Classes({ setClasses, classes, userData }) {
                 setRegistrationError("An error occurred while checking registration status");
             });
     };
-    
+
     const handleSeeMoreClick = (id) => {
         setRegistrationError('');
         setSeeMoreBtn(prev => (prev !== id ? id : 0));
@@ -298,39 +304,46 @@ export default function Classes({ setClasses, classes, userData }) {
                 tileContent={tileContent}
             />
             {selectedEvent && (
-                <SingleClass event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+                <SingleClass userData={userData}   registrationError={registrationError} handleClassRegistration={handleClassRegistration} event={selectedEvent} onClose={() => setSelectedEvent(null)} />
             )}
             {selectedDayEvents.length > 0 && (
                 <div className="single-class-modal">
                     <div className="single-class-content">
                         <button className="close-button" onClick={() => setSelectedDayEvents([])}>❌</button>
                         <h2>Classes on {new Date(selectedDayEvents[0].from).toLocaleDateString()}</h2>
-                        {selectedDayEvents.map(event => (
-                            <div key={event.id} className="event-details">
-                                <p><strong>Description:</strong> {event.title}</p>
-                                <p><strong>Time:</strong> {`${new Date(event.from).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.to).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p>
-                                <p><strong>Price:</strong> ${event.price}</p>
-                                <p><strong>Trainer:</strong> {event.trainer.first_name} {event.trainer.last_name}</p>
-                                {userData.role_id === 3 && (
-                                    <button onClick={() => handleSeeMoreClick(event.id)}>
-                                        {seeMoreBtn === event.id ? 'See less...' : 'See more...'}
-                                    </button>
-                                )}
-                                {seeMoreBtn === event.id && (
-                                    <div>
-                                        <p><strong>Other details...</strong></p>
-                                        <button onClick={() => handleClassRegistration(event)}>Join class!</button>
-                                        {registrationError && (
-                                            <p style={{ color: 'red' }}>You already registered for this class</p>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
+                        {selectedDayEvents.map(event => {
+                            const currentDateTime = new Date();
+                            const eventHasPassed = currentDateTime > event.from;
+                            return (
+                                <div key={event.id} className="event-details">
+                                    <p><strong>Description:</strong> {event.title}</p>
+                                    <p><strong>Time:</strong> {`${new Date(event.from).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.to).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p>
+                                    <p><strong>Price:</strong> ${event.price}</p>
+                                    <p><strong>Trainer:</strong> {event.trainer.first_name} {event.trainer.last_name}</p>
+                                    {userData.role_id === 3 && (
+                                        <button onClick={() => handleSeeMoreClick(event.id)}>
+                                            {seeMoreBtn === event.id ? 'See less...' : 'See more...'}
+                                        </button>
+                                    )}
+                                    {seeMoreBtn === event.id && (
+                                        <div>
+                                            <p><strong>Other details...</strong></p>
+                                            {!eventHasPassed && (
+                                                <button onClick={() => handleClassRegistration(event)}>Join class!</button>
+                                            )}
+                                            {registrationError && (
+                                                <p style={{ color: 'red' }}>{registrationError}</p>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+
                     </div>
                 </div>
             )}
         </div>
     );
-    
+
 }

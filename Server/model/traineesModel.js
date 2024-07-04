@@ -40,7 +40,8 @@ async function getWaitingTrainees(query) {
 
 async function getApprovedTrainees(query) {
     try {
-        const sql = `SELECT * FROM trainees_in_class join users where ?  and users.user_id = trainees_in_class.trainee_id`;
+        console.log("query", query);
+        const sql = `SELECT * FROM trainees_in_class join users where users.user_id = trainees_in_class.trainee_id and ? `;
         const result = await pool.query(sql, query);
         console.log(result[0]);
 
@@ -208,9 +209,12 @@ async function updateTrainee(body, id) {
 
 async function checkIfApproved(query) {
     try {
-        const { trainee_id, class_id } = query;
-        const sql = `select * from trainees_in_class where trainee_id = ? and class_id =?`;
-        const result = await pool.query(sql, [trainee_id, class_id]);
+        
+        const { user_id, class_id } = query;
+        console.log('user_id', user_id);
+        console.log('class_id', class_id);
+        const sql = `select * from trainees_in_class where trainee_id =? and class_id =?`;
+        const result = await pool.query(sql, [user_id, class_id]);
         console.log(result);
         if (result[0].length > 0)
             return { success: true, message: "trainees successful", isApproved: true };
