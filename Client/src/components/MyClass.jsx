@@ -125,21 +125,27 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
 
         if (confirm(`Are you sure you want to cancel the class you will hold on ${new Date(myClass.date).toLocaleDateString('he-IL')}? We recommend that you cancel a lesson only if you really have to!`)) {
 
-            console.log(1)
             const deleteClassUrl = `classes/${myClass.class_id}`;
-            console.log(2)
             serverRequests('DELETE', deleteClassUrl, myClass)
                 .then(response => {
-                    console.log(3)
                     if (!response.ok) {
                         console.error("error");
                         return;
                     }
-                    console.log(4)
                     return response.json();
                 })
                 .then(() => {
                     setMyClasses(myClasses.filter(cls => cls.class_id !== myClass.class_id));
+                    serverRequests('POST', 'notifications', null)
+                        .then(response => {
+                            if (!response.ok) {
+                                return;
+                            }
+                            return response.json();
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 })
                 .catch(error => {
                     console.error(error);

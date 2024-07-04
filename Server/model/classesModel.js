@@ -78,11 +78,6 @@ AND (l.pregnancy_risk = FALSE OR i.pregnancy_risk = FALSE);
 };
 
 
-async function getClass() {
-
-};
-
-
 async function getTrainerClasses(query) {
     try {
         const sql = `SELECT * FROM classes NATURAL JOIN limits_in_class where ?`;
@@ -266,4 +261,4 @@ async function updateClass(body, id) {
 
 };
 
-module.exports = { createClass, getTraineeApprovedClasses, updateClass, getAllClasses, getClassesByQuery, getTrainerClasses, getTraineeRegisteredClasses, deleteClass, getClass }
+module.exports = { createClass, getTraineeApprovedClasses, updateClass, getAllClasses, getClassesByQuery, getTrainerClasses, getTraineeRegisteredClasses, deleteClass }

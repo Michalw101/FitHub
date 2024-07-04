@@ -58,6 +58,8 @@ export default function EditClassModal({ myClass, myClasses, setMyClasses, onClo
             }).catch(error => {
                 console.error('Error', error);
             });
+
+            
     };
 
     const toggleHealthCondition = (condition) => {

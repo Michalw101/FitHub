@@ -33,6 +33,9 @@ app.use("/users", usersRouter);
 const loginRouter = require("./routes/loginRouter");
 app.use("/login", loginRouter);
 
+const notificationsRouter = require("./routes/notificationsRouter");
+app.use("/notifications", notificationsRouter);
+
 const logoutRouter = require("./routes/logoutRouter");
 app.use("/logout", logoutRouter);
 
