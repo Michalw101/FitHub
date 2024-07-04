@@ -73,11 +73,25 @@ async function addApprovedTrainees(body) {
 };
 
 
-async function deleteWaitingTrainees(query) {
+async function deleteTraineeFromClass(query) {
     try {
         const { trainee_id, class_id } = query;
-        const sql = `delete from trainees_waiting_list where trainee_id = ? and class_id = ?`;
+        const sql = `DELETE FROM trainees_in_class WHERE trainee_id = ? AND class_id = ?`;
         await pool.query(sql, [trainee_id, class_id]);
+        return { success: false, message: "Deleted successful" };
+    } catch (err) {
+        console.error("Error:", err);
+        throw new Error(err.message, err);
+    }
+}
+
+
+
+async function deleteWaitingTrainees(query) {
+    try {
+        const {trainee_id ,  class_id} = query;
+        const sql = `delete from trainees_waiting_list where trainee_id = ? and class_id = ?`;
+        await pool.query(sql, [trainee_id ,  class_id]);
         return { success: true, message: "trainees successful" };
     } catch (err) {
         console.error("Error:", err);
@@ -209,7 +223,7 @@ async function updateTrainee(body, id) {
 
 async function checkIfApproved(query) {
     try {
-        
+
         const { user_id, class_id } = query;
         console.log('user_id', user_id);
         console.log('class_id', class_id);
@@ -229,4 +243,4 @@ async function checkIfApproved(query) {
 
 
 
-module.exports = {getAllTrainees,deleteTrainee, getApprovedTrainees, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees, updateTrainee }
+module.exports = { getAllTrainees, deleteTrainee, deleteTraineeFromClass, getApprovedTrainees, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees, updateTrainee }

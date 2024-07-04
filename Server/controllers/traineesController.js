@@ -47,6 +47,16 @@ async function deleteWaitingTrainees(query) {
     }
 };
 
+async function deleteTraineeFromClass(query) {
+    try {
+        return model.deleteTraineeFromClass(query); 
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
+
 async function deleteTrainee(id, sendMail) {
     try {
         return model.deleteTrainee(id, sendMail);
@@ -73,4 +83,4 @@ async function checkIfApproved(query) {
         throw err;
     }
 };
-module.exports = { getApprovedTrainees, getAllTrainees, deleteTrainee, updateTrainee, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees }
+module.exports = { getApprovedTrainees, deleteTraineeFromClass, getAllTrainees, deleteTrainee, updateTrainee, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees }

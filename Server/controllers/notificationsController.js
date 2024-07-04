@@ -9,4 +9,14 @@ async function createNotification(body) {
     }
 };
 
-module.exports ={createNotification}
+async function getNotifications(query) {
+    try {
+        return model.getNotifications(query);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
+
+module.exports ={createNotification, getNotifications}

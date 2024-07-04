@@ -72,6 +72,7 @@ export default function Classes({ setClasses, classes, userData }) {
                     classType: classItem.class_type,
                     price: classItem.price,
                     trainer: {
+                        id: classItem.trainee_id,
                         first_name: classItem.trainer_first_name,
                         last_name: classItem.trainer_last_name,
                         phone: classItem.trainer_phone,

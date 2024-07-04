@@ -25,6 +25,7 @@ import TrainersInTraineesHome from './pages/TrainersInTraineesHome'
 import Trainees from './pages/Trainees'
 import MyTraineeClasses from './pages/MyTraineeClasses'
 import TrainersAdmin from './pages/TrainersAdmin'
+import Notifications from './pages/Notifications'
 import { serverRequests } from './Api'
 
 
@@ -89,6 +90,7 @@ function App() {
             <Route path="trainer-profile" element={<TrainerProfile userData={userData}/>} />
             <Route path="trainer-classes" element={<TrainerClasses userData={userData}/>} />
             <Route path="my-classes" element={<MyClasses userData={userData}/>} />
+            <Route path="notifications" element={<Notifications userData={userData}/>} />
           </Route>
 
         </Routes>

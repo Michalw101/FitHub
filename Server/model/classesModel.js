@@ -37,6 +37,7 @@ async function getClassesByQuery(query) {
     c.price,
     c.link,
     c.class_type,
+    u.user_id AS trainer_id,
     u.first_name AS trainer_first_name,
     u.last_name AS trainer_last_name,
     u.email AS trainer_email,
@@ -136,7 +137,8 @@ async function getTraineeApprovedClasses(query) {
             trainees_in_class.*,
             limits_in_class.*,
             users.first_name AS trainer_first_name,
-                users.last_name AS trainer_last_name
+                users.last_name AS trainer_last_name,
+                users.user_id AS trainer_id 
             FROM classes
         NATURAL JOIN
         trainees_in_class

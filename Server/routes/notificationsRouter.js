@@ -5,7 +5,15 @@ const controller = require('../controllers/notificationsController');
 
 router.post('/', async (req, res) => {
     try {
-        res.send(await controller.createNote(req.body));
+        res.send(await controller.createNotification(req.body));
+    } catch (err) {
+        res.status(500).send({ ok: false });
+    }
+})
+
+router.get('/', async (req, res) => {
+    try {
+        res.send(await controller.getNotifications(req.query));
     } catch (err) {
         res.status(500).send({ ok: false });
     }

@@ -55,6 +55,7 @@ export default function MyTraineeClasses({ userData }) {
             });
     }, [userData.user_id]);
 
+
     if (!registeredClasses || !approvedClasses || !pastClasses) {
         return (
             <div className="loader">
@@ -73,11 +74,11 @@ export default function MyTraineeClasses({ userData }) {
         return <h1>No classes found.</h1>;
     }
 
-    const renderClasses = (classes, pastClass) => (
+    const renderClasses = (classes, pastClass, withCancel) => (
         <div>
             {classes.map(myClass => (
                 <div key={myClass.class_id} className={pastClass ? 'past-event' : ''}>
-                    <TraineeClass myClass={myClass} pastClass={pastClass} status={myClass.status} />
+                    <TraineeClass userData={userData} myClass={myClass} pastClass={pastClass} withCancel={withCancel} setApprovedClasses={setApprovedClasses} approvedClasses={approvedClasses}/>
                 </div>
             ))}
         </div>
@@ -87,13 +88,13 @@ export default function MyTraineeClasses({ userData }) {
         <div>
             <h2>Your classes...</h2>
             <h3>Registered and Not Approved:</h3>
-            {renderClasses(registeredClasses, false)}
+            {renderClasses(registeredClasses, false, false)}
 
             <h3>Approved Classes:</h3>
-            {renderClasses(approvedClasses, false)}
+            {renderClasses(approvedClasses, false, true)}
 
             <h3>Past Classes:</h3>
-            {renderClasses(pastClasses, true)}
+            {renderClasses(pastClasses, true, false)}
         </div>
     );
 }
