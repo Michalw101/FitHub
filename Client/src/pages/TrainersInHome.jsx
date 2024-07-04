@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Trainers from '../components/Trainers';
 import '../css/trainersInHome.css'
