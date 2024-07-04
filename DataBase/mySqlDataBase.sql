@@ -161,6 +161,16 @@ CREATE TABLE passwords (
       ON DELETE CASCADE
 );
 
+CREATE TABLE notifications(
+	notification_id INT PRIMARY KEY auto_increment,
+    user_id int,
+    note varchar(255),
+    FOREIGN KEY (user_id) 
+      REFERENCES users (user_id) 
+      ON UPDATE RESTRICT 
+      ON DELETE CASCADE
+);
+
 INSERT INTO roles (role_name) 
 VALUES 
 ('Admin'),
@@ -196,6 +206,10 @@ VALUES
 (23, 'Cinderella', 'Glass', 'micsharo@g.jct.ac.il', '0548429273', '2004-03-30', 'Female', 3),
 (24, 'Pocahontas', 'Native', 'micsharo@g.jct.ac.il', '0548429273', '2004-04-22', 'Female', 3);
 
+
+insert into notifications(notification_id, user_id, note)
+values(1, 1, "check");
+    
 
 INSERT INTO trainers (trainer_id, experience, degree_link, specialization, instegram_link, facebook_link, twitter_link)
 VALUES 
@@ -338,7 +352,7 @@ SELECT
     trainer.twitter_link
 FROM classes c
 JOIN limits_in_class l ON c.limits_id = l.limits_id
-JOIN trainees t ON t.trainee_id = 15
+JOIN trainees t ON t.trainee_id = 9
 JOIN information i ON t.information_id = i.information_id
 JOIN users u ON c.trainer_id = u.user_id
 JOIN trainers trainer ON c.trainer_id = trainer.trainer_id
