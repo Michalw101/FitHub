@@ -24,7 +24,7 @@ export default function TraineeClass({userData, myClass, withCancel, pastClass, 
                 }
                 setApprovedClasses(approvedClasses.filter(myClass => myClass.class_id !== classId));
             }).then(() => {
-                serverRequests('POST', 'notifications', {users: [myClass.trainer_id], massege: noteText})
+                serverRequests('POST', 'notifications', {users: [myClass.trainer_id], message: noteText})
                     .then(response => {
                         if (!response.ok) {
                             return;

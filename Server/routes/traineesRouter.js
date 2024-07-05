@@ -44,6 +44,16 @@ router.delete("/cancel", async (req, res) => {
     }
 });
 
+router.delete("/approved", async (req, res) => {
+    try {
+        res.send(await controller.deleteTraineeFromClass(req.query));
+    } catch (err) {
+        console.error("Error in DELETE /:", err);
+        res.status(500).send({ ok: false });
+    }
+});
+
+
 router.delete("/:id", async (req, res) => {
     const id = req.params.id;
     const sendMail = req.body.sendMail;
@@ -61,8 +71,10 @@ router.get("/approved", async (req, res) => {
     console.log('approved received:', req.query);
     try {
         if (req.query.user_id && req.query.class_id) {
+            console.log('1');
             res.send(await controller.checkIfApproved(req.query));
         } else {
+            console.log('2');
             res.send(await controller.getApprovedTrainees(req.query));
         }
     } catch (err) {

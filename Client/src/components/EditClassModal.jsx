@@ -42,24 +42,48 @@ export default function EditClassModal({ myClass, myClasses, setMyClasses, onClo
 
     const handleSave = async () => {
         const updatedClass = { ...myClass, description, price, class_type: classType, gender_limit: genderLimit, ...healthConditions };
-        const url = `classes/${myClass.class_id}`;
-        serverRequests('PUT', url, updatedClass)
+        const updateClassUrl = `classes/${myClass.class_id}`;
+        const registeredTraineesUrl = `trainees/approved?class_id=${myClass.class_id}`;
+        const postNotificationUrl = `notifications`;
+        const note = `your class ${myClass.description} changed by the trainer to ${updatedClass.description} :(`;
+
+        serverRequests('GET', registeredTraineesUrl, null)
             .then(response => {
-                console.log(response);
                 if (!response.ok) {
+                    console.error("Error fetching registered trainees");
                     return;
                 }
                 return response.json();
-            }).then(data => {
-                if (data) {
-                    setMyClasses(myClasses.map(cls => cls.class_id === myClass.class_id ? data.myClass : cls));
-                    onClose();
-                }
-            }).catch(error => {
-                console.error('Error', error);
-            });
+            })
+            .then(data => {
+                const usersToNote = data.trainees.map(user => user.user_id);
 
-            
+                serverRequests('PUT', updateClassUrl, updatedClass)
+                    .then(response => {
+                        console.log(response);
+                        if (!response.ok) {
+                            return;
+                        }
+                        return response.json();
+                    }).then(data => {
+                        if (data) {
+                            setMyClasses(myClasses.map(cls => cls.class_id === myClass.class_id ? data.myClass : cls));
+
+                            serverRequests('POST', postNotificationUrl, { users: usersToNote, message: note })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        console.error("Error sending notification");
+                                        return;
+                                    }
+                                    return response.json();
+                                });
+                            onClose();
+                        }
+                    }).catch(error => {
+                        console.error('Error', error);
+                    });
+            })
+
     };
 
     const toggleHealthCondition = (condition) => {

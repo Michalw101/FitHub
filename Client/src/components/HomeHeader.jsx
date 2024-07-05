@@ -23,6 +23,10 @@ export default function HomeHeader({ setUserData, userData }) {
         navigate('trainee-my-classes')
     }
 
+    const handleNotificationsClick = () => {
+        navigate('notifications')
+    }
+
     const handleLogoutClicked = () => {
         serverRequests('POST', `logout`, {...userData, credentials: 'include'})
             .then(response => {
@@ -110,7 +114,7 @@ export default function HomeHeader({ setUserData, userData }) {
                     </svg>
                     My Classes
                 </button>
-                <button className="value">
+                <button className="value" onClick={handleNotificationsClick}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 25" fill="none">
                         <path
                             fillRule="evenodd"

@@ -40,10 +40,11 @@ async function getWaitingTrainees(query) {
 
 async function getApprovedTrainees(query) {
     try {
-        console.log("query", query);
-        const sql = `SELECT * FROM trainees_in_class join users where users.user_id = trainees_in_class.trainee_id and ? `;
-        const result = await pool.query(sql, query);
-        console.log(result[0]);
+        const { class_id } = query;
+        console.log("class_id", class_id);
+        const sql = `SELECT * FROM trainees_in_class join users where users.user_id = trainees_in_class.trainee_id and class_id =? `;
+        const result = await pool.query(sql, class_id);
+        console.log(result);
 
 
         if (result.length > 0) {
@@ -75,9 +76,8 @@ async function addApprovedTrainees(body) {
 
 async function deleteTraineeFromClass(query) {
     try {
-        const { trainee_id, class_id } = query;
-        const sql = `DELETE FROM trainees_in_class WHERE trainee_id = ? AND class_id = ?`;
-        await pool.query(sql, [trainee_id, class_id]);
+        const sql = `DELETE FROM trainees_in_class WHERE ?`;
+        await pool.query(sql, query);
         return { success: false, message: "Deleted successful" };
     } catch (err) {
         console.error("Error:", err);
@@ -89,9 +89,9 @@ async function deleteTraineeFromClass(query) {
 
 async function deleteWaitingTrainees(query) {
     try {
-        const {trainee_id ,  class_id} = query;
+        const { trainee_id, class_id } = query;
         const sql = `delete from trainees_waiting_list where trainee_id = ? and class_id = ?`;
-        await pool.query(sql, [trainee_id ,  class_id]);
+        await pool.query(sql, [trainee_id, class_id]);
         return { success: true, message: "trainees successful" };
     } catch (err) {
         console.error("Error:", err);

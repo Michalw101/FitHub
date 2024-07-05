@@ -73,6 +73,8 @@ function App() {
             <Route path="trainee-classes" element={<TraineeClasses userData={userData}/>} />
             <Route path="trainers" element={<TrainersInTraineesHome setUserData={setUserData} userData={userData}/>} />
             <Route path="trainee-my-classes" element={<MyTraineeClasses userData={userData}/>} />
+            <Route path="notifications" element={<Notifications userData={userData}/>} />
+
 
           </Route>
 
