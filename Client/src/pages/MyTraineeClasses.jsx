@@ -74,11 +74,11 @@ export default function MyTraineeClasses({ userData }) {
         return <h1>No classes found.</h1>;
     }
 
-    const renderClasses = (classes, pastClass, withCancel) => (
+    const renderClasses = (classes, pastClass, withCancel, isApproved) => (
         <div>
             {classes.map(myClass => (
                 <div key={myClass.class_id} className={pastClass ? 'past-event' : ''}>
-                    <TraineeClass userData={userData} myClass={myClass} pastClass={pastClass} withCancel={withCancel} setApprovedClasses={setApprovedClasses} approvedClasses={approvedClasses}/>
+                    <TraineeClass userData={userData} myClass={myClass} pastClass={pastClass} withCancel={withCancel} setApprovedClasses={setApprovedClasses} approvedClasses={approvedClasses} isApproved={isApproved}/>
                 </div>
             ))}
         </div>
@@ -88,10 +88,10 @@ export default function MyTraineeClasses({ userData }) {
         <div>
             <h2>Your classes...</h2>
             <h3>Registered and Not Approved:</h3>
-            {renderClasses(registeredClasses, false, false)}
+            {renderClasses(registeredClasses, false, false, false)}
 
             <h3>Approved Classes:</h3>
-            {renderClasses(approvedClasses, false, true)}
+            {renderClasses(approvedClasses, false, true, true)}
 
             <h3>Past Classes:</h3>
             {renderClasses(pastClasses, true, false)}

@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/myClass.css';
 import { serverRequests } from '../Api';
 
-export default function TraineeClass({userData, myClass, withCancel, pastClass, setApprovedClasses, approvedClasses }) {
+export default function TraineeClass({ userData, myClass, withCancel, pastClass, setApprovedClasses, approvedClasses, isApproved }) {
 
     function formatHourRange(startHour) {
         const [hours, minutes] = startHour.split(':').map(Number);
@@ -24,7 +24,7 @@ export default function TraineeClass({userData, myClass, withCancel, pastClass, 
                 }
                 setApprovedClasses(approvedClasses.filter(myClass => myClass.class_id !== classId));
             }).then(() => {
-                serverRequests('POST', 'notifications', {users: [myClass.trainer_id], message: noteText})
+                serverRequests('POST', 'notifications', { users: [myClass.trainer_id], message: noteText })
                     .then(response => {
                         if (!response.ok) {
                             return;
@@ -47,6 +47,9 @@ export default function TraineeClass({userData, myClass, withCancel, pastClass, 
                 <p><strong>Price:</strong> ${myClass.price}</p>
                 <p><strong>Trainer:</strong> {myClass.trainer_first_name} {myClass.trainer_last_name}</p>
                 <p><strong>At:</strong> {`${new Date(myClass.date).toLocaleDateString('he-IL')}`} {formatHourRange(myClass.hour)}</p>
+                {isApproved && (
+                    <p><strong>Link:</strong> {myClass.link}</p>
+                )}
                 {!pastClass && withCancel && (
                     <button onClick={() => handleCancel(myClass.class_id)}>Cancel</button>
                 )}

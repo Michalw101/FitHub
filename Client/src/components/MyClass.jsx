@@ -197,9 +197,12 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
 
                 {!pastClass && (
                     <div>
+                        <p><strong>Link:</strong> {myClass.link}</p>
                         <button onClick={handleSeeRegisteredUsers}>
                             {viewType === 'registered' ? 'Hide Registered Trainees' : 'Show Registered Trainees'}
                             {registeredUsers.length > 0 && <span className="badge">{registeredUsers.length}</span>}
+                            
+
                         </button>
                     </div>
                 )}
