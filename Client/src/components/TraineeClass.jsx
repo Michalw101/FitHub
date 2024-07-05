@@ -16,7 +16,7 @@ export default function TraineeClass({userData, myClass, withCancel, pastClass, 
     const noteText = `Hi, ${userData.first_name} ${userData.last_name} canceled his participation in ${myClass.description} class. Please cancel the transfer of the Bit payment in the amount of $${myClass.price} to his number ${userData.phone}`;
 
     const handleCancel = (classId) => {
-        const urlCancel = `trainees/cancel?class_id=${classId}&trainee_id=${userData.user_id}`;
+        const urlCancel = `trainees/cancel?trainee_id=${userData.user_id}&class_id=${classId}`;
         serverRequests('DELETE', urlCancel, userData)
             .then(response => {
                 if (!response.ok) {

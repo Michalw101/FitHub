@@ -76,8 +76,9 @@ async function addApprovedTrainees(body) {
 
 async function deleteTraineeFromClass(query) {
     try {
+        const { trainee_id, class_id } = query;
         const sql = `DELETE FROM trainees_in_class WHERE ?`;
-        await pool.query(sql, query);
+        await pool.query(sql, [trainee_id, class_id]);
         return { success: false, message: "Deleted successful" };
     } catch (err) {
         console.error("Error:", err);

@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from '../App'
 import { serverRequests } from "../Api"
@@ -7,6 +7,31 @@ import '../css/TraineeHome.css'
 export default function HomeHeader({ setUserData, userData }) {
 
     const navigate = useNavigate();
+
+    const [notificationsCount, setNotificationsCount] = useState(0);
+
+    useEffect(() => {
+        const url = `notifications?user_id=${userData.user_id}`;
+
+        serverRequests('GET', url, null)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch notifications');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.notifications) {
+                    setNotificationsCount(data.notifications.length);
+                } else {
+                    setNotificationsCount(0);
+                }
+            })
+            .catch(error => {
+                console.error('Error', error);
+                setNotificationsCount(0);
+            });
+    }, [userData.user_id]);
 
     const profileHandleClick = () => {
         navigate('profile')
@@ -114,7 +139,10 @@ export default function HomeHeader({ setUserData, userData }) {
                     </svg>
                     My Classes
                 </button>
-                <button className="value" onClick={handleNotificationsClick}>
+                <button className="value notification-button" onClick={handleNotificationsClick}>
+                {notificationsCount > 0 && (
+                        <span className="badge">{notificationsCount}</span>
+                    )}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 25" fill="none">
                         <path
                             fillRule="evenodd"

@@ -11,7 +11,6 @@
 /* button styling */
 .button1 {
     text-align: left;
-    --border-right: 6px;
     --text-stroke-color: rgba(102, 167, 152, 0.6);
     --animation-color: #00ffc8;
     --fs-size: 2em;

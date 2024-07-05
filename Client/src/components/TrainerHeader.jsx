@@ -1,12 +1,35 @@
-import React, { useContext } from "react"
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
-import { UserContext } from '../App'
 import { serverRequests } from "../Api"
 import '../css/TraineeHome.css'
 
-export default function AdminHeader({ setUserData, userData }) {
+export default function TrainerHeader({ setUserData, userData }) {
 
     const navigate = useNavigate();
+    const [notificationsCount, setNotificationsCount] = useState(0);
+
+    useEffect(() => {
+        const url = `notifications?user_id=${userData.user_id}`;
+
+        serverRequests('GET', url, null)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch notifications');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.notifications) {
+                    setNotificationsCount(data.notifications.length);
+                } else {
+                    setNotificationsCount(0);
+                }
+            })
+            .catch(error => {
+                console.error('Error', error);
+                setNotificationsCount(0);
+            });
+    }, [userData.user_id]);
 
     const profileHandleClick = () => {
         navigate('trainer-profile')
@@ -25,7 +48,7 @@ export default function AdminHeader({ setUserData, userData }) {
     }
 
     const handleLogoutClicked = () => {
-        serverRequests('POST', `logout`, {...userData, credentials: 'include'})
+        serverRequests('POST', `logout`, { ...userData, credentials: 'include' })
             .then(response => {
                 console.log(response);
                 if (!response.ok) {
@@ -88,8 +111,12 @@ export default function AdminHeader({ setUserData, userData }) {
                     My Classes
                 </button>
 
-                <button className="value" onClick={handleNotificationsClick}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 25" fill="none">
+                <button className="value notification-button" onClick={handleNotificationsClick}>
+                    {notificationsCount > 0 && (
+                        <span className="badge">{notificationsCount}</span>
+                    )}
+                
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 25" fill="none">
                         <path
                             fillRule="evenodd"
                             fill="#7D8590"
@@ -98,7 +125,10 @@ export default function AdminHeader({ setUserData, userData }) {
                         ></path>
                     </svg>
                     Notifications
+                    
                 </button>
+
+                
 
                 <button className="value" onClick={handleLogoutClicked}>
                     <svg

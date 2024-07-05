@@ -71,3 +71,18 @@ header {
   filter: blur(1.5px);
   transform: scale(0.95, 0.95);
 }
+
+
+.notification-button {
+  position: relative;
+}
+
+.notification-button .badge {
+  position: absolute;
+  top: 0;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
