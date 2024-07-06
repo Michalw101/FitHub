@@ -61,11 +61,10 @@ const Login = ({ setUserData }) => {
                 navigate('/admin-home');
                 break;
               case 2:
-                navigate('/trainer-home');
+                navigate('/admin-home');
                 break;
               case 3:
-                // navigate('/trainee-home');
-                navigate('/trainer-home');
+                navigate('/trainee-home');
                 break;
               default:
                 console.log('no role id');

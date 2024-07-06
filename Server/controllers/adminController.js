@@ -1,4 +1,4 @@
-const model = require('../model/usersModel');
+const model = require('../model/adminModel');
 
 
 async function updateAdmin(body, id) {

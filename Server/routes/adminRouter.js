@@ -1,18 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const controller = require('../controllers/adminController');
+const authorizeAdmin = require('../middleware/authorizeAdmin');
 
-const currentUser = require("../middleware/currentUser");
-
-
-router.get("/current-user", currentUser, async (req, res) => {
-    console.log('current user router');
-   
+router.put('/:id', authorizeAdmin, async (req, res) => {
     try {
-        res.send(await controller.getUser(req.query));
+        const id = req.params.id;
+        res.send(await controller.updateAdmin(req.body, id));
     } catch (err) {
         res.status(500).send({ ok: false });
     }
-});
+})
+
 
 module.exports = router;
