@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { UserContext } from '../App'
 import { serverRequests } from "../Api"
 import '../css/TraineeHome.css'
 

@@ -50,10 +50,7 @@ const Registration = ({ setUserData }) => {
                     family_sudden_death: 0,
                     exercise_supervision: 0,
                     chronic_disease: 0,
-                    pregnancy_risk: 0,
-                    card_number: "",
-                    card_expiry: "",
-                    card_CVV: ""
+                    pregnancy_risk: 0
                 }))
 
                 navigate('/user-details');

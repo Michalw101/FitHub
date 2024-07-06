@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../App';
+import { serverRequests } from '../Api';
+import { useNavigate } from 'react-router-dom';
 import Step1 from '../components/RegistrationStep1';
 import Step2 from '../components/RegistrationStep2';
 import Step3 from '../components/RegistrationStep3';
@@ -7,29 +9,108 @@ import ProgressBar from '../components/RegistrationProgressBar';
 
 function UserDetails({ setUserData }) {
     const userData = useContext(UserContext);
+    const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(1);
+    const [signupUser, setSignupUser] = useState({ ...userData });
+    const [errors, setErrors] = useState({});
 
-    const nextStep = () => {
-        setCurrentStep(prev => (prev < 3 ? prev + 1 : prev));
+    const validateStep1 = () => {
+        const { first_name, last_name, email, birth_date, phone, gender } = signupUser;
+        const newErrors = {};
+
+        if (!first_name) newErrors.first_name = 'First name is required';
+        if (!last_name) newErrors.last_name = 'Last name is required';
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = 'Valid email is required';
+        if (!birth_date || new Date().getFullYear() - new Date(birth_date).getFullYear() < 18) newErrors.birth_date = 'Must be at least 18 years old';
+        if (!phone || phone.length < 9) newErrors.phone = 'Valid phone number is required';
+        if (!gender) newErrors.gender = 'Gender is required';
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
-   
+    const validateStep2 = () => {
+        const newErrors = {};
+
+        const requiredFields = [
+            'heart_disease',
+            'chest_pain_at_rest',
+            'chest_pain_daily_activity',
+            'chest_pain_exercise',
+            'dizziness_balance_loss',
+            'fainting',
+            'asthma_medication',
+            'asthma_symptoms',
+            'family_heart_disease',
+            'family_sudden_death',
+            'exercise_supervision',
+            'chronic_disease',
+            'pregnancy_risk'
+        ];
+
+        requiredFields.forEach(field => {
+            if (signupUser[field] === undefined || signupUser[field] === null) {
+                newErrors[field] = `Please select an option for ${field.replace('_', ' ')}`;
+            }
+        });
+
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+
+
+
+    const nextStep = () => {
+        let isValid = true;
+        switch (currentStep) {
+
+            case 1: isValid = validateStep1();
+                break;
+            case 2: isValid = validateStep2();
+                break;
+        }
+
+        if (isValid) {
+            setCurrentStep(prev => (prev < 3 ? prev + 1 : prev));
+        }
+    };
+
     const handleChanged = (e) => {
         const { name, value } = e.target;
-        setUserData((prevFormData) => ({
+        setSignupUser((prevFormData) => ({
             ...prevFormData,
             [name]: value,
         }));
-        console.log(userData);
     };
 
+
+    const handleRegistration = () => {
+        const url = "signup"
+        serverRequests('PUT', url, signupUser)
+            .then(response => {
+                console.log(response);
+                if (!response.ok) {
+                    alert("error");
+                    return;
+                }
+                return response.json();
+            }).then((data) => {
+                setUserData(data.user)
+                navigate('/trainee-home');
+            }).catch(error => {
+                setSignUpError(error);
+            });
+
+    }
     return (
         <>
             <div>
                 <ProgressBar currentStep={currentStep} setCurrentStep={setCurrentStep} />
-                {currentStep === 1 && <Step1 handleChanged={handleChanged} />}
-                {currentStep === 2 && <Step2 handleChanged={handleChanged} />}
-                {currentStep === 3 && <Step3 setUserData={setUserData} />}
+                {currentStep === 1 && <Step1 handleChanged={handleChanged} signupUser={signupUser} errors={errors} />}
+                {currentStep === 2 && <Step2 handleChanged={handleChanged} signupUser={signupUser} errors={errors} />}
+                {currentStep === 3 && <Step3 setUserData={setUserData} signupUser={signupUser} errors={errors} handleRegistration={handleRegistration} />}
                 <div>
                     {currentStep < 3 &&
                         <div className="btn-conteiner">
@@ -50,9 +131,7 @@ function UserDetails({ setUserData }) {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 export default UserDetails;
-
-

@@ -1,9 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import TraineeHeader from "./TraineeHeader";
 import Footer from "./Footer";
 import AdminHeader from "./AdminHeader";
 import TrainerHeader from "./TrainerHeader"; 
+import TraineeHeader from "./TraineeHeader";
 
 const HomeLayout =({ setUserData, userData }) =>{
     const renderHeader = () => {
@@ -11,9 +11,7 @@ const HomeLayout =({ setUserData, userData }) =>{
             case 1:
                 return <AdminHeader setUserData={setUserData} userData={userData} />;
             case 2:
-                return <AdminHeader setUserData={setUserData} userData={userData} />;
-
-                // return <TrainerHeader setUserData={setUserData} userData={userData} />;
+                return <TrainerHeader setUserData={setUserData} userData={userData} />;
             case 3:
                 return <TraineeHeader setUserData={setUserData} userData={userData} />;
 

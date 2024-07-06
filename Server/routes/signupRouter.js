@@ -4,7 +4,7 @@ const controller = require('../controllers/signupController.js');
 const authorizeAdmin = require('../middleware/authorizeAdmin');
 
 
-router.post("/", authorizeAdmin, async (req, res) => {
+router.post("/", async (req, res) => {
     console.log("req:", req.body);
     try {
         res.send(await controller.postSignup(req.body));
@@ -15,7 +15,7 @@ router.post("/", authorizeAdmin, async (req, res) => {
 });
 
 
-router.put("/", authorizeAdmin, async (req, res) => {
+router.put("/", async (req, res) => {
     console.log("req:", req.body);
     try {
         res.send(await controller.putSignup(req.body));

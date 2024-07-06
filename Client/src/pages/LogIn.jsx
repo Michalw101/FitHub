@@ -61,7 +61,7 @@ const Login = ({ setUserData }) => {
                 navigate('/admin-home');
                 break;
               case 2:
-                navigate('/admin-home');
+                navigate('/trainer-home');
                 break;
               case 3:
                 navigate('/trainee-home');

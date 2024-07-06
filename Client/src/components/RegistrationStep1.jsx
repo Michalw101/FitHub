@@ -1,11 +1,9 @@
-import { useContext } from 'react';
-import { UserContext } from '../App';
+import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../css/step1.css'
+import '../css/step1.css';
 
-const RegistrationStep1 = ({ handleChanged }) => {
-  const userData = useContext(UserContext);
+const RegistrationStep1 = ({ handleChanged, signupUser, errors }) => {
 
   const formatDateToSQL = (date) => {
     const d = new Date(date);
@@ -14,13 +12,9 @@ const RegistrationStep1 = ({ handleChanged }) => {
     const day = (`0${d.getDate()}`).slice(-2);
     return `${year}-${month}-${day}`;
   };
-  
-
-
   const handleDateChange = (date) => {
     handleChanged({ target: { name: 'birth_date', value: formatDateToSQL(date) } });
   };
-  
 
   const handleGenderChange = (event) => {
     const { name, value } = event.target;
@@ -28,23 +22,26 @@ const RegistrationStep1 = ({ handleChanged }) => {
   };
 
   return (
+
     <div>
       <form>
         <br />
         <div className='endOfRegisterForm'>
           <div className='details'>
-            
+
             <p className='headerP'>Let`s get to know you...</p><br />
-            
+
             <div className='inputGroup'>
               <input
                 type="text"
                 required=""
                 autoComplete="off"
                 name="first_name"
-                value={userData.first_name || ''}
+                value={signupUser.first_name || ''}
                 onChange={handleChanged} />
               <label htmlFor='name'>First name</label>
+              {errors.first_name && <p className="error">{errors.first_name}</p>}
+
             </div>
 
             <div className='inputGroup'>
@@ -53,34 +50,40 @@ const RegistrationStep1 = ({ handleChanged }) => {
                 required=""
                 autoComplete="off"
                 name="last_name"
-                value={userData.last_name || ''}
+                value={signupUser.last_name || ''}
                 onChange={handleChanged}
               />
               <label htmlFor='name'>Last name</label>
+              {errors.last_name && <p className="error">{errors.last_name}</p>}
+
             </div>
 
             <div className='inputGroup'>
               <input
-                type="email"
+                type="text"
                 name="email"
                 required=""
                 autoComplete="off"
-                value={userData.email || ''}
+                value={signupUser.email || ''}
                 onChange={handleChanged}
               />
               <label htmlFor='name'>Email</label>
+              {errors.email && <p className="error">{errors.email}</p>}
+
             </div>
 
             <div className='inputGroup'>
               <div className="date-picker-container">
                 <DatePicker
-                  selected={userData.birth_date ? new Date(userData.birth_date) : null}
+                  selected={signupUser.birth_date ? new Date(signupUser.birth_date) : null}
                   onChange={handleDateChange}
                   dateFormat="dd/MM/yyyy"
                   placeholderText="Your Birthday DD/MM/YYYY"
                   className="date-picker-input"
                 />
               </div>
+              {errors.birth_date && <p className="error">{errors.birth_date}</p>}
+
             </div>
 
             <div className='inputGroup'>
@@ -89,10 +92,12 @@ const RegistrationStep1 = ({ handleChanged }) => {
                 name="phone"
                 required=""
                 autoComplete="off"
-                value={userData.phone || ''}
+                value={signupUser.phone || ''}
                 onChange={handleChanged}
               />
               <label htmlFor='name'>Phone</label>
+              {errors.phone && <p className="error">{errors.phone}</p>}
+
             </div>
             <br />
 
@@ -105,7 +110,7 @@ const RegistrationStep1 = ({ handleChanged }) => {
                   value="male"
                   name="gender"
                   type="radio"
-                  checked={userData.gender === 'male'}
+                  checked={signupUser.gender === 'male'}
                   onChange={handleGenderChange}
                 />
                 <label className="genderlabel malebutton" htmlFor="male">
@@ -123,7 +128,7 @@ const RegistrationStep1 = ({ handleChanged }) => {
                   value="female"
                   name="gender"
                   type="radio"
-                  checked={userData.gender === 'female'}
+                  checked={signupUser.gender === 'female'}
                   onChange={handleGenderChange}
                 />
                 <label className="genderlabel femalebutton" htmlFor="female">
@@ -135,6 +140,8 @@ const RegistrationStep1 = ({ handleChanged }) => {
                   Female
                 </label>
               </div>
+              {errors.gender && <p className="error">{errors.gender}</p>}
+
             </div>
             <br />
           </div>
@@ -142,6 +149,9 @@ const RegistrationStep1 = ({ handleChanged }) => {
       </form>
     </div>
   );
-};
+}
 
 export default RegistrationStep1;
+
+
+

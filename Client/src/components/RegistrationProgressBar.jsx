@@ -5,7 +5,11 @@ const ProgressBar = ({ currentStep, setCurrentStep }) => {
   return (
     <div className="progress-bar">
       {[1, 2, 3].map(step => (
-        <div onClick={() => setCurrentStep(step)} key={step} className={`circle ${currentStep >= step ? 'active' : ''}`} >
+        <div
+          onClick={() => step < currentStep && setCurrentStep(step)}
+          key={step}
+          className={`circle ${currentStep >= step ? 'active' : ''}`}
+        >
           {step}
         </div>
       ))}

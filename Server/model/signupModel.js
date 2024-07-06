@@ -23,12 +23,8 @@ async function putSignup(body) {
         const traineeInsertQuery = `INSERT INTO trainees (trainee_id, information_id) VALUES (?, ?)`;
         await pool.query(traineeInsertQuery, [user_id, lastInsertedId]);
 
-        const getUserQuery = `SELECT * FROM users WHERE user_id = ?`;
-        const userResult = await pool.query(getUserQuery, user_id);
-        const currentUser = userResult[0][0];
-
         console.log("User created successfully");
-        return { user: currentUser, success: true };
+        return { user: {...body, role_id: 3}, success: true };
 
     } catch (error) {
         console.error("Error creating user:", error);
