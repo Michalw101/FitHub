@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../css/myClass.css';
 import { serverRequests } from '../Api';
 import EditClassModal from './EditClassModal'
@@ -9,6 +10,7 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
     const [viewType, setViewType] = useState(null);
     const [isApproved, setIsApproved] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const navigate= useNavigate();
 
     useEffect(() => {
         const waitingURL = `trainees/waiting?class_id=${myClass.class_id}`;
@@ -149,18 +151,21 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
                 }
                 return response.json();
             })
-            .then(data => {
+            .then((data) => {
                 const usersToNote = data.trainees.map(user => user.user_id);
 
                 return serverRequests('DELETE', deleteClassUrl, myClass)
                     .then(response => {
-                        if (!response.ok) {
-                            console.error("Error deleting class");
-                            return;
-                        }
+                        
                         return response.json();
                     })
-                    .then(() => {
+                    .then((data) => {
+                        if (!data.ok) {
+                            alert(data.res);
+                            //note to admin
+                            navigate('/');
+                            return;
+                        }
                         setMyClasses(myClasses.filter(cls => cls.class_id !== myClass.class_id));
 
                         serverRequests('POST', postNotificationUrl, { users: usersToNote, message: note })

@@ -9,7 +9,7 @@ const authenticateSession = (req, res, next) => {
     if (token) {
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) {
-                console.error('JWT verification error:', err);
+                console.log('JWT verification error:', err);
                 return res.sendStatus(403); 
             }
             req.user = user;

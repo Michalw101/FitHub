@@ -1,11 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import HomeHeader from "./HomeHeader";
+// import TraineeHeader from "./TraineeHeader";
 import Footer from "./Footer";
 import AdminHeader from "./AdminHeader";
 import TrainerHeader from "./TrainerHeader"; 
 
-export default function HomeLayout({ setUserData, userData }) {
+const HomeLayout =({ setUserData, userData }) =>{
     const renderHeader = () => {
         switch (userData.role_id) {
             case 1:
@@ -13,7 +13,9 @@ export default function HomeLayout({ setUserData, userData }) {
             case 2:
                 return <TrainerHeader setUserData={setUserData} userData={userData} />;
             case 3:
-                return <HomeHeader setUserData={setUserData} userData={userData} />;
+                // return <TraineeHeader setUserData={setUserData} userData={userData} />;
+                return <TrainerHeader setUserData={setUserData} userData={userData} />;
+
             default:
                 console.log('no role id');
                 return null;
@@ -30,3 +32,5 @@ export default function HomeLayout({ setUserData, userData }) {
         </div>
     );
 }
+
+export default HomeLayout

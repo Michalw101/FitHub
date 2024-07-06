@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const controller = require('../controllers/traineesController');
-const { query } = require("../DB");
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 

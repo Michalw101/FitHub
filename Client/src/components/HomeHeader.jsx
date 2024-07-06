@@ -4,7 +4,7 @@ import { UserContext } from '../App'
 import { serverRequests } from "../Api"
 import '../css/TraineeHome.css'
 
-export default function HomeHeader({ setUserData, userData }) {
+export default function TraineeHeader({ setUserData, userData }) {
 
     const navigate = useNavigate();
 

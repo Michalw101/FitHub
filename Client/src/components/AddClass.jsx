@@ -1,12 +1,13 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
+import { useNavigate } from 'react-router-dom';
 import { serverRequests } from '../Api';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/addClass.css';
 
 
 const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => {
-
+    const navigate = useNavigate();
 
     const formatDateToSQL = (date) => {
         const d = new Date(date);
@@ -23,15 +24,17 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
     const handleCreateClass = () => {
         serverRequests('POST', 'classes', newClass)
             .then(response => {
-                console.log(response);
-                if (!response.ok) {
-                    console.error('Error creating class');
-                    return;
-                }
+                console.log(response);             
                 return response.json();
             })
             .then(data => {
                 if (data) {
+                    if (!data.ok) {
+                        alert(data.res);
+                        //note to admin
+                        navigate('/');
+                        return;
+                    }
                     setClasses([...classes, data.class]);
                     alert(`Class added succesfuly on ${newClass.date} at ${newClass.hour}`);
                     onClose();

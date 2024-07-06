@@ -64,7 +64,8 @@ const Login = ({ setUserData }) => {
                 navigate('/trainer-home');
                 break;
               case 3:
-                navigate('/trainee-home');
+                // navigate('/trainee-home');
+                navigate('/trainer-home');
                 break;
               default:
                 console.log('no role id');

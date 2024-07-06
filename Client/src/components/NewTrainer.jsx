@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import '../css/newTrainer.css'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { serverRequests } from '../Api';
+import '../css/newTrainer.css'
 
 export default function NewTrainer({ trainer, setTrainers, trainers }) {
     const [acceptingTrainer, setAcceptingTrainer] = useState(false);
+    const navigate = useNavigate();
 
     const handleDeleteClick = () => {
 
@@ -13,7 +15,13 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
                 .then(response => {
                     console.log(response);
                     return response.json();
-                }).then(() => {
+                }).then((data) => {
+                    if (!data.ok) {
+                        alert(data.res);
+                        //note to admin
+                        navigate('/');
+                        return;
+                    }
                     setTrainers(trainers.filter(currentTrainer => currentTrainer.user_id !== trainer.user_id));
                 }).catch(error => {
                     console.error(error);
@@ -70,7 +78,7 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
 
     return (
         <div>
-            <br/>
+            <br />
             <div className="card1">
                 <div className="card__img">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%">
