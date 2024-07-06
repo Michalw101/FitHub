@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const controller = require('../controllers/traineesController');
+const authorizeAdmin = require('../middleware/authorizeAdmin');
+const authorizeTrainer= require('../middleware/authorizeTrainer')
+
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.get("/", async (req, res) => {
+router.get("/", authorizeAdmin, async (req, res) => {
     try {
         res.send(await controller.getAllTrainees());
     } catch (err) {
@@ -14,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 
-router.get("/waiting", async (req, res) => {
+router.get("/waiting", authorizeTrainer, async (req, res) => {
     console.log('waiting received:', req.query);
     try {
         res.send(await controller.getWaitingTrainees(req.query));
@@ -24,7 +27,7 @@ router.get("/waiting", async (req, res) => {
     }
 });
 
-router.delete("/waiting", async (req, res) => {
+router.delete("/waiting", authorizeTrainer, async (req, res) => {
     console.log('delete waiting received:', req.query);
     try {
         res.send(await controller.deleteWaitingTrainees(req.query));
@@ -43,7 +46,7 @@ router.delete("/cancel", async (req, res) => {
     }
 });
 
-router.delete("/approved", async (req, res) => {
+router.delete("/approved", authorizeTrainer, async (req, res) => {
     try {
         res.send(await controller.deleteTraineeFromClass(req.query));
     } catch (err) {
@@ -53,7 +56,7 @@ router.delete("/approved", async (req, res) => {
 });
 
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authorizeAdmin, async (req, res) => {
     const id = req.params.id;
     const sendMail = req.body.sendMail;
     console.log('delete trainee received:');

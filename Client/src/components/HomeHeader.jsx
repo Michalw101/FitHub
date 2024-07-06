@@ -53,6 +53,8 @@ export default function TraineeHeader({ setUserData, userData }) {
     }
 
     const handleLogoutClicked = () => {
+        if (!window.confirm("Are you sure you want to log out?"))
+            return;
         serverRequests('POST', `logout`, {...userData, credentials: 'include'})
             .then(response => {
                 console.log(response);
