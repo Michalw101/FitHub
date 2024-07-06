@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const controller = require('../controllers/signupController.js');
+const authorizeAdmin = require('../middleware/authorizeAdmin');
 
-router.post("/", async (req, res) => {
+
+router.post("/", authorizeAdmin, async (req, res) => {
     console.log("req:", req.body);
     try {
         res.send(await controller.postSignup(req.body));
@@ -13,7 +15,7 @@ router.post("/", async (req, res) => {
 });
 
 
-router.put("/", async (req, res) => {
+router.put("/", authorizeAdmin, async (req, res) => {
     console.log("req:", req.body);
     try {
         res.send(await controller.putSignup(req.body));

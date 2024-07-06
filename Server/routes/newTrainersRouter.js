@@ -6,7 +6,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 
-router.get("/", async (req, res) => {
+router.get("/", authorizeAdmin, async (req, res) => {
     console.log(req.session)
     try {
         res.send(await controller.getAllNewTrainers());
