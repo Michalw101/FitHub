@@ -48,7 +48,7 @@ export default function TrainerHeader({ setUserData, userData }) {
     }
 
     const handleLogoutClicked = () => {
-        if (!window.confirm("Are you sure you want to log out?"))
+        if (!window.confirm("Are you sure you want to ?"))
             return;
         serverRequests('POST', `logout`, { ...userData, credentials: 'include' })
             .then(response => {
@@ -62,6 +62,7 @@ export default function TrainerHeader({ setUserData, userData }) {
             .then(data => {
                 if (data) {
                     setUserData(null);
+                    sessionStorage.clear();
                     navigate('/');
                 }
             })

@@ -29,7 +29,7 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
             })
             .then(data => {
                 if (data) {
-                    if (!data.ok) {
+                    if (data.ok == false) {
                         alert(data.res);
                         //note to admin
                         navigate('/');

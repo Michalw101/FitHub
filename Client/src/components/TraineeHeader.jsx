@@ -66,6 +66,7 @@ export default function TraineeHeader({ setUserData, userData }) {
             .then(data => {
                 if (data) {
                     setUserData(null);
+                    sessionStorage.clear();
                     navigate('/');
                 }
             })

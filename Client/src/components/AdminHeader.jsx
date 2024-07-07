@@ -38,6 +38,7 @@ export default function AdminHeader({ setUserData, userData }) {
             .then(data => {
                 if (data) {
                     setUserData(null);
+                    sessionStorage.clear();
                     navigate('/');
                 }
             })

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../App';
 import '../css/traineeProfile.css';
 
 import EditTraineeProfileModal from './EditTraineeProfileModal'
 
-const TraineeProfile = ({ userData }) => {
+const TraineeProfile = () => {
+    const userData = useContext(UserContext);
 
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({ ...userData });
@@ -11,6 +13,13 @@ const TraineeProfile = ({ userData }) => {
 
     let birthDate = new Date(formData.birth_date);
     let formattedDate = birthDate.toLocaleDateString('he-IL');
+
+    
+    useEffect(() => {
+        if (userData) {
+            setFormData({ ...userData });
+        }
+    }, [userData]);
 
 
     const handleEditClick = () => {

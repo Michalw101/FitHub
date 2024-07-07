@@ -10,6 +10,16 @@ async function getAllTrainees() {
     }
 };
 
+async function getTraineesByTrainer(id) {
+    try {
+
+        return model.getTraineesByTrainer(id);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
 async function getApprovedTrainees(query) {
     try {
 
@@ -83,4 +93,15 @@ async function checkIfApproved(query) {
         throw err;
     }
 };
-module.exports = { getApprovedTrainees, deleteTraineeFromClass, getAllTrainees, deleteTrainee, updateTrainee, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees }
+
+async function createWaitingTrainee(body) {
+    try {
+        console.log("controller body" + body);
+        return model.createWaitingTrainee(body);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
+module.exports = { getApprovedTrainees, createWaitingTrainee, getTraineesByTrainer, deleteTraineeFromClass, getAllTrainees, deleteTrainee, updateTrainee, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees }

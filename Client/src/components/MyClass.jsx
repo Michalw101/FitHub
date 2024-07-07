@@ -160,7 +160,7 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
                         return response.json();
                     })
                     .then((data) => {
-                        if (!data.ok) {
+                        if (data.ok == false) {
                             alert(data.res);
                             //note to admin
                             navigate('/');

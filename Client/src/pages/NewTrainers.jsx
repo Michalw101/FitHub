@@ -1,22 +1,28 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import NewTrainer from '../components/NewTrainer';
 import { serverRequests } from '../Api';
-import '../css/newTrainers.css'
+import '../css/newTrainers.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function NewTrainers() {
+  
   const [trainers, setTrainers] = useState(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
 
     const url = `new-trainers`;
 
     serverRequests('GET', url, null)
       .then(response => {
-        console.log(response);
-        if (!response.ok) {
-          return;
-        }
         return response.json();
       }).then(data => {
+        if (data.ok == false) {
+          alert(data.res);
+          //note to admin
+          navigate('/');
+          return;
+      }
         if (data) {
           setTrainers(data.trainers);
         }

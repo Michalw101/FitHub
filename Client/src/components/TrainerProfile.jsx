@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../App';
 import '../css/trainerDetailsProfile.css';
 import EditTrainerProfileModal from './EditTrainerProfileModal'
 
-export default function TrainerProfile({ userData }) {
-
+export default function TrainerProfile() {
+    
+    const userData = useContext(UserContext);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({ ...userData });
 
     let birthDate = new Date(formData.birth_date);
     let formattedDate = birthDate.toLocaleDateString('he-IL');
+
+    
+    useEffect(() => {
+        if (userData) {
+            setFormData({ ...userData });
+        }
+    }, [userData]);
 
     const handleEditClick = () => {
         setIsEditing(true);

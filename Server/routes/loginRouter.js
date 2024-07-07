@@ -16,7 +16,6 @@ router.post("/", async (req, res) => {
                     res.status(500).send({ message: 'Internal server error' });
                 } else {
                     console.log('Session after login:', req.session);
-                    // res.cookie('token', result.token, req.session.cookie);
                     res.status(200).send({ message: 'Logged in', user: result.user, token: result.token });
                 }
             });

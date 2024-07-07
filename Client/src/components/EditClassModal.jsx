@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import '../css/editModal.css';
 import { serverRequests } from '../Api';
+import { useNavigate } from 'react-router-dom';
 
 export default function EditClassModal({ myClass, myClasses, setMyClasses, onClose }) {
 
+    const navigate = useNavigate();
     const [description, setDescription] = useState(myClass.description);
     const [price, setPrice] = useState(myClass.price);
     const [classType, setClassType] = useState(myClass.class_type);
@@ -66,6 +68,12 @@ export default function EditClassModal({ myClass, myClasses, setMyClasses, onClo
                         }
                         return response.json();
                     }).then(data => {
+                        if (data.ok == false) {
+                            alert(data.res);
+                            //note to admin
+                            navigate('/');
+                            return;
+                        }
                         if (data) {
                             setMyClasses(myClasses.map(cls => cls.class_id === myClass.class_id ? data.myClass : cls));
 

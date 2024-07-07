@@ -39,7 +39,7 @@ function TrainerRegistration({ setUserData }) {
             'last_work_place',
             'diploma',
             'specialization',
-            // 'degree_link',
+            'degree_link',
             'experience'
         ];
     
@@ -49,9 +49,9 @@ function TrainerRegistration({ setUserData }) {
             }
         }); 
 
-        // if (!signupUser.degree_link) {
-        //     newErrors['degree_link'] = 'Please upload a PDF file of your degree';
-        // } 
+        if (!signupUser.degree_link) {
+            newErrors['degree_link'] = 'Please upload a PDF file of your degree';
+        } 
            
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -84,7 +84,7 @@ function TrainerRegistration({ setUserData }) {
     };
 
     const handleRegistration = () => {
-        const url = "trainer-signup"
+        const url = "trainers/waiting"
         serverRequests('POST', url, signupUser)
           .then(response => {
             console.log(response);

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { serverRequests } from '../Api';
 import TraineeSmallProfile from '../components/TraineeSmallProfile';
 import '../css/trainees.css';
-
+import { useNavigate } from 'react-router-dom';
 
 const Trainees = () => {
+
+  const navigate = useNavigate();
   const [allTrainees, setAllTrainees] = useState(null);
   const [filteredTrainees, setFilteredTrainees] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,13 +17,15 @@ const Trainees = () => {
 
     serverRequests('GET', url, null)
       .then(response => {
-        console.log(response);
-        if (!response.ok) {
-          return;
-        }
         return response.json();
       })
       .then(data => {
+        if (data.ok == false) {
+          alert(data.res);
+          //note to admin
+          navigate('/');
+          return;
+      }
         if (data) {
           setAllTrainees(data.trainees);
           setFilteredTrainees(data.trainees);

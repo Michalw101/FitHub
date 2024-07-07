@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import '../css/trainerProfile.css';
 import { serverRequests } from '../Api';
+import { useNavigate } from 'react-router-dom';
 
 const TrainerSmallProfileAdmin = ({ trainer, setTrainers, allTrainers }) => {
+
+    const navigate = useNavigate();
     const colors = ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1', '#00a18c', '#B565A7', '#009B77'];
     const [backgroundColor, setBackgroundColor] = useState('');
     const [showMore, setShowMore] = useState(false);
@@ -50,21 +53,60 @@ const TrainerSmallProfileAdmin = ({ trainer, setTrainers, allTrainers }) => {
     }
 
     const handleDeleteClick = () => {
-        if (window.confirm(`Are you sure you want to delete ${trainer.first_name} forever?`)) {
-            const url = `trainers/${trainer.user_id}`;
-            serverRequests('DELETE', url, { ...trainer, sendMail: true })
-                .then(response => {
-                    console.log(response);
-                    return response.json();
-                })
-                .then(() => {
-                    setTrainers(allTrainers.filter(currentTrainer => currentTrainer.user_id !== trainer.user_id));
-                })
-                .catch(error => {
-                    console.error('Error deleting trainer:', error);
-                });
-        }
+        if (!window.confirm(`Are you sure you want to delete ${trainer.first_name} forever?`))
+            return;
+        const deleteUrl = `trainers/${trainer.user_id}`;
+        const fetchUsersUrl = `trainees/trainer/${trainer.trainer_id}`;
+        const postNotificationUrl = `notifications`;
+        const note = `Trainer ${trainer.first_name} ${trainer.last_name} has been deleted`;
+
+        serverRequests('GET', fetchUsersUrl, null)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const userIds = data.trainees.map(user => user.user_id);
+
+                serverRequests('DELETE', deleteUrl, { ...trainer, sendMail: true })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to delete trainer');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.ok == false) {
+                            alert(data.res);
+                            navigate('/');
+                            return;
+                        }
+                        setTrainers(allTrainers.filter(currentTrainer => currentTrainer.user_id !== trainer.user_id));
+
+                        serverRequests('POST', postNotificationUrl, { users: userIds, message: note })
+                            .then(response => {
+                                if (!response.ok) {
+                                    console.error("Error sending notification");
+                                    return;
+                                }
+                                return response.json();
+                            })
+                            .catch(error => {
+                                console.error('Error sending notifications:', error);
+                            });
+                    })
+                    .catch(error => {
+                        console.error('Error deleting trainer:', error);
+                    });
+            })
+            .catch(error => {
+                console.error('Error fetching users:', error);
+            });
+
     };
+
 
     const renderClasses = (classes) => (
         <ul>

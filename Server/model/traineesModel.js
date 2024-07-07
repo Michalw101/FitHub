@@ -20,6 +20,39 @@ async function getAllTrainees() {
     }
 };
 
+async function getTraineesByTrainer(trainer_id) {
+    try {
+        const sql = `
+            SELECT users.*, information.*
+            FROM trainees_in_class
+            JOIN users ON trainees_in_class.trainee_id = users.user_id
+            JOIN information ON trainees_in_class.trainee_id = information.information_id
+            WHERE trainees_in_class.class_id IN (
+                SELECT class_id FROM classes WHERE trainer_id = ?
+            )
+            UNION
+            SELECT users.*, information.*
+            FROM trainees_waiting_list
+            JOIN users ON trainees_waiting_list.trainee_id = users.user_id
+            JOIN information ON trainees_waiting_list.trainee_id = information.information_id
+            WHERE trainees_waiting_list.class_id IN (
+                SELECT class_id FROM classes WHERE trainer_id = ?
+            );
+        `;
+        const result = await pool.query(sql, [trainer_id, trainer_id]);
+
+        if (result.length > 0) {
+            return { success: true, message: "Trainees retrieved successfully", trainees: result[0] };
+        } else {
+            console.log("No trainees found");
+            throw new Error("No trainees found");
+        }
+    } catch (err) {
+        console.error("Error:", err);
+        throw new Error(err.message, err);
+    }
+}
+
 async function getWaitingTrainees(query) {
     try {
         const sql = `SELECT * FROM trainees_waiting_list join users where ?  and users.user_id = trainees_waiting_list.trainee_id`;
@@ -241,7 +274,30 @@ async function checkIfApproved(query) {
         throw new Error(err.message, err);
     }
 }
+async function createWaitingTrainee(body) {
+    try {
+        console.log("model", body);
+        const { trainee_id, class_id} = body;
+
+        const userInsertQuery = `INSERT INTO trainees_waiting_list (trainee_id ,class_id)
+              VALUES (?,?)`;
+        await pool.query(userInsertQuery, [trainee_id, class_id]);
+
+        console.log("trainee created successfully");
+        return { user: body, ok: true };
+
+    } catch (error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+          console.log("Error register class: Duplicate entry. You cannot register twice.");
+         throw new Error("Error: You cannot register twice.", error);
+        } else {
+          console.log("Error register class:", error);
+          throw new Error("An error occurred while registrating class.");
+        }
+      }
+};
 
 
 
-module.exports = { getAllTrainees, deleteTrainee, deleteTraineeFromClass, getApprovedTrainees, getWaitingTrainees, checkIfApproved, addApprovedTrainees, deleteWaitingTrainees, updateTrainee }
+
+module.exports = { getAllTrainees, createWaitingTrainee, deleteTrainee, deleteTraineeFromClass, getApprovedTrainees, getWaitingTrainees, checkIfApproved, addApprovedTrainees,getTraineesByTrainer, deleteWaitingTrainees, updateTrainee }

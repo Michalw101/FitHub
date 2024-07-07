@@ -17,17 +17,17 @@ export default function EditAdminProfileModal({ formData, setFormData, onClose }
     };
 
     const handleSave = async () => {
-        const url = `users/${editFormData.user_id}`;
+        const url = `admin/${editFormData.user_id}`;
         serverRequests('PUT', url, editFormData)
             .then(response => {
-                if (!data.ok) {
+                return response.json();
+            }).then(data => {
+                if (data.ok == false) {
                     alert(data.res);
                     //note to admin
                     navigate('/');
                     return;
                 }
-                return response.json();
-            }).then(data => {
                 if (data) {
                     setFormData(data.admin);
                     onClose();

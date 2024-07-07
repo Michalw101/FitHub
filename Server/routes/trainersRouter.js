@@ -3,6 +3,9 @@ const router = express.Router();
 const controller = require('../controllers/trainersController')
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
+const authorizeAdmin = require("../middleware/authorizeAdmin")
+const authorizeTrainer = require("../middleware/authorizeTrainer")
+
 
 
 router.get("/", async (req, res) => {
@@ -17,7 +20,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/",authorizeAdmin, async (req, res) => {
     try {
         res.send(await controller.createTrainer(req.body));
     }
@@ -26,8 +29,18 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.post("/waiting", async (req, res) => {
+    console.log("req:", req.body);
+    try {
+        res.send(await controller.postSignup(req.body));
+    } catch (err) {
+        console.log(`router error ${err} `);
+        res.status(500).send({ ok: false,  error: err });
+    }
+});
 
-router.put('/:id', async (req, res) => {
+
+router.put('/:id',authorizeTrainer,  async (req, res) => {
     try {
         const id = req.params.id;
         console.log('trainers router');
@@ -37,7 +50,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",authorizeAdmin, async (req, res) => {
     const id= req.params.id;
     console.log('delete trainer received:'); 
     try {

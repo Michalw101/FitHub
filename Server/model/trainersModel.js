@@ -5,28 +5,25 @@ const crypto = require('crypto');
 
 async function getAllTrainers() {
     try {
-        const sql = `SELECT * FROM trainers NATURAL JOIN users where trainers.trainer_id = users.user_id`;
-        const result = await pool.query(sql);
-
+        const sql = `SELECT * FROM trainers NATURAL JOIN users WHERE trainers.trainer_id = users.user_id`;
+        const [result] = await pool.query(sql);
 
         if (result.length > 0) {
-            return { success: true, message: "Trainers successful", trainers: result[0] };
-        }
-        else {
+            return { success: true, message: "Trainers fetched successfully", trainers: result };
+        } else {
             console.log("Trainers not found");
-            throw new Error("Trainers not found")
+            throw new Error("Trainers not found");
         }
     } catch (err) {
         console.error("Error:", err);
-        throw new Error(err.message)
+        throw new Error(err.message);
     }
-};
+}
 
 async function createTrainer(body) {
     try {
         console.log('Model received data:', body);
-        const { user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, specialization, experience,
-            instegram_link, facebook_link, twitter_link } = body;
+        const { user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, specialization, experience, instegram_link, facebook_link, twitter_link } = body;
 
         const formattedBirthDate = new Date(birth_date).toISOString().split('T')[0];
 
@@ -44,11 +41,10 @@ async function createTrainer(body) {
         const passwordInsertQuery = `INSERT INTO passwords (user_id, user_password, salt) VALUES (?, ?, ?)`;
         await pool.query(passwordInsertQuery, [user_id, hashedPassword, salt]);
 
-        const currentUser = body;
-        sendEmailToUser(currentUser, password);
+        sendEmailToUser(body, password);
 
         console.log("User created successfully");
-        return { user: currentUser, ok: true };
+        return { user: body, ok: true };
 
     } catch (error) {
         console.error("Error creating user:", error);
@@ -64,19 +60,34 @@ const generateRandomPassword = (length) => {
         password += chars.substring(randomNumber, randomNumber + 1);
     }
     return password;
-};
+}
 
+async function postSignup(body) {
+    try {
+        const { user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, experience, last_work_place, specialization, diploma, instegram_link, facebook_link, twitter_link } = body;
 
+        const userInsertQuery = `INSERT INTO trainers_waiting_list (user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, experience, specialization, last_work_place, place_of_study, instegram_link, facebook_link, twitter_link) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+        await pool.query(userInsertQuery, [user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, experience, specialization, last_work_place, diploma, instegram_link, facebook_link, twitter_link]);
 
-const { SENDER_EMAIL, APP_PASSWORD } = process.env
+        sendEmailToAdmin(body);
+        sendEmailToUser(body);
+
+        console.log("User created successfully");
+        return { user: body, ok: true };
+
+    } catch (error) {
+        console.log("Error creating user:", error);
+        throw error;
+    }
+}
+
+const { SENDER_EMAIL, ADMIN_1_EMAIL, ADMIN_2_EMAIL, APP_PASSWORD } = process.env;
 
 const sendMail = async (transporter, mailOptions) => {
-
     try {
         await transporter.sendMail(mailOptions);
         console.log('Email sent');
-    }
-    catch (error) {
+    } catch (error) {
         console.error(error);
     }
 }
@@ -92,6 +103,21 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+const sendEmailToAdmin = (user) => {
+    const mailOptions = {
+        from: SENDER_EMAIL,
+        to: [ADMIN_1_EMAIL, ADMIN_2_EMAIL],
+        subject: `New trainer registration (${user.email})`,
+        text: `New trainer wants to join your team!
+        ${user.first_name} ${user.last_name} (${user.gender})
+        with ${user.experience} years of experience in ${user.specialization},
+        Degree link to your Google Drive: ${user.degree_link} (degree from ${user.diploma})
+        Email to contact ${user.first_name} ${user.last_name}: ${user.email}
+        Or by phone: ${user.phone}`
+    };
+    sendMail(transporter, mailOptions);
+}
+
 const sendEmailToUser = (user, password) => {
     const mailOptions = {
         from: SENDER_EMAIL,
@@ -101,7 +127,7 @@ const sendEmailToUser = (user, password) => {
 
            I hope you're doing well.
 
-           I'm excited to let you know that we'd love to have you join our team at FITHUB. Your skills and passion for fitness really stood out to us, and we think you'll be a great fit.
+           I'm excited to let you know that we'd love to have you join our team at FitHub. Your skills and passion for fitness really stood out to us, and we think you'll be a great fit.
 
            Here is your password: 
 
@@ -109,26 +135,23 @@ const sendEmailToUser = (user, password) => {
            
            Feel free to change it after your first login.
 
-           I've attached the job offer with all the details about the role, responsibilities, and pay. Please take a look and let us know if you're in.
+           If you have any questions or need more info, feel free to reach out. We're looking forward to having you with us!
 
-            If you have any questions or need more info, feel free to reach out. We're looking forward to having you with us!
-            
-            FitHub Teams`
+           FitHub Team`
     };
     sendMail(transporter, mailOptions);
 }
 
-
 async function updateTrainer(body, id) {
     try {
-        const user_id = id; 
-        const { first_name, last_name, email, phone, specialization, experience, twitterLink, facebookLink, instegramLink } = body;
+        const user_id = id;
+        const { first_name, last_name, email, phone, specialization, experience, twitter_link, facebook_link, instegram_link } = body;
 
         const userSql = `UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE user_id = ?`;
         await pool.query(userSql, [first_name, last_name, email, phone, user_id]);
-        
+
         const trainerSql = `UPDATE trainers SET specialization = ?, experience = ?, twitter_link = ?, facebook_link = ?, instegram_link = ? WHERE trainer_id = ?`;
-        await pool.query(trainerSql, [specialization, experience, twitterLink, facebookLink, instegramLink, user_id]);
+        await pool.query(trainerSql, [specialization, experience, twitter_link, facebook_link, instegram_link, user_id]);
 
         return { success: true, message: "Trainer updated successfully", trainer: body };
 
@@ -136,47 +159,44 @@ async function updateTrainer(body, id) {
         console.error("Error updating trainer:", error);
         throw error;
     }
-};
-
-
-
-async function deleteTrainer(id) {
-    // const connection = await pool.getConnection();
-    // try {
-    //     await connection.beginTransaction();
-
-    //     const classIdSql = `select class_id from classes where trainee_id= ?`;
-    //     const [classIdResult] = await connection.query(classIdSql, [id]);
-    //     if (classIdResult.length === 0) {
-    //         throw new Error('Trainee not found');
-    //     }
-    //     const class_id = classIdResult[0].class_id;
-
-
-
-
-
-    //     const classSql = `delete from classes where trainer_id = ?`;
-    //     await connection.query(classSql, [id]);
-
-    //     const passSql = `delete from passwords where user_id = ?`;
-    //     await connection.query(passSql, [id]);
-
-    //     const trainerSql = `delete from trainers where trainer_id = ?`;
-    //     await connection.query(trainerSql, [id]);
-
-    //     const userSql = `delete from users where user_id = ?`;
-    //     await connection.query(userSql, [id]);
-
-    //     await connection.commit();
-    //     return { success: true, message: "Trainer deleted successfully" };
-    // } catch (err) {
-    //     await connection.rollback();
-    //     console.error("Error:", err);
-    //     throw new Error(err.message);
-    // } finally {
-    //     connection.release();
-    // }
 }
 
-module.exports = { createTrainer, deleteTrainer, getAllTrainers, updateTrainer }
+async function deleteTrainer(id) {
+    try {
+        const traineesInClassSql = `DELETE tic FROM trainees_in_class tic
+                                    JOIN classes c ON tic.class_id = c.class_id
+                                    WHERE c.trainer_id = ?`;
+        await pool.query(traineesInClassSql, id);
+
+        const traineesWaitingSql = `DELETE twl FROM trainees_waiting_list twl
+                                    JOIN classes c ON twl.class_id = c.class_id
+                                    WHERE c.trainer_id = ?`;
+        await pool.query(traineesWaitingSql, id);
+
+        const classesSql = `DELETE FROM classes
+                            WHERE trainer_id = ?`;
+        await pool.query(classesSql, id);
+
+        const limitsInClassesSql = `DELETE FROM limits_in_class
+                                    WHERE trainer_id = ?`;
+        await pool.query(limitsInClassesSql, id);
+
+        const trainerSql = `DELETE FROM trainers
+                            WHERE trainer_id = ?`;
+        await pool.query(trainerSql, id);
+
+        const userSql = `DELETE FROM users
+                           WHERE user_id = ?`;
+        await pool.query(userSql, id);
+
+
+
+        return { success: true, message: "Trainer delete successfully" };
+
+    } catch (error) {
+        console.error("Error delete trainer:", error);
+        throw error;
+    }
+}
+
+module.exports = { createTrainer, postSignup, deleteTrainer, getAllTrainers, updateTrainer };

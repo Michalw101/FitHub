@@ -11,6 +11,14 @@ const Login = ({ setUserData }) => {
   const [loginError, setLoginError] = useState('');
   const [salt, setSalt] = useState('');
 
+
+  function setToken(token, expiresIn) {
+    const expirationTime = new Date().getTime() + expiresIn * 60000; 
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('expirationTime', expirationTime);
+  }
+
+
   const [formData, setFormData] = useState({
     user_id: "",
     password: "",
@@ -18,7 +26,7 @@ const Login = ({ setUserData }) => {
   });
   const URL = 'login';
 
-  const handleLogin= ()=> {
+  const handleLogin = () => {
     serverRequests('GET', `${URL}/${formData.user_id}`, null)
       .then(response => {
         console.log(response);
@@ -54,8 +62,8 @@ const Login = ({ setUserData }) => {
         })
         .then(data => {
           if (data) {
-            const {user, token} = data;
-            localStorage.setItem('token', token);
+            const { user, token } = data;
+            setToken(token, 15);
             setUserData(user);
             setLoginError('Registration successful');
             switch (data.user.role_id) {
@@ -67,6 +75,7 @@ const Login = ({ setUserData }) => {
                 break;
               case 3:
                 navigate('/trainee-home');
+
                 break;
               default:
                 console.log('no role id');
@@ -88,7 +97,7 @@ const Login = ({ setUserData }) => {
     }));
   };
 
-  const forgotPasswordHandle= () => {
+  const forgotPasswordHandle = () => {
     formData.user_id
     //send mail with new password or let him decide?
 

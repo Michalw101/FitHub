@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import '../css/editModal.css';
 import { serverRequests } from '../Api';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function EditTrainerProfileModal({ formData, setFormData, onClose }) {
 
     const [editFormData, setEditFormData] = useState({ ...formData })
+    const navigate = useNavigate();
 
     const handleChanged = (e) => {
         const { name, value } = e.target;
@@ -19,12 +20,14 @@ export default function EditTrainerProfileModal({ formData, setFormData, onClose
         const url = `trainers/${editFormData.user_id}`;
         serverRequests('PUT', url, editFormData)
             .then(response => {
-                console.log(response);
-                if (!response.ok) {
-                    return;
-                }
                 return response.json();
             }).then(data => {
+                if (data.ok == false) {
+                    alert(data.res);
+                    //note to admin
+                    navigate('/');
+                    return;
+                }
                 if (data) {
                     setFormData(data.trainer);
                     onClose();

@@ -18,6 +18,7 @@ export default function Classes({ setClasses, classes, userData }) {
     const [registrationError, setRegistrationError] = useState('');
 
 
+
     useEffect(() => {
         let url;
         if (userData.role_id === 2)
@@ -33,6 +34,12 @@ export default function Classes({ setClasses, classes, userData }) {
                 return response.json();
             })
             .then(data => {
+                if (data.ok == false) {
+                    alert(data.res);
+                    //note to admin
+                    navigate('/');
+                    return;
+                }
                 if (data) {
                     setClasses(data.classes);
                 }
@@ -40,7 +47,7 @@ export default function Classes({ setClasses, classes, userData }) {
             .catch(error => {
                 console.error('Error', error);
             });
-    }, []);
+    }, [userData]);
 
     useEffect(() => {
         if (classes && classes.length > 0) {
@@ -161,10 +168,12 @@ export default function Classes({ setClasses, classes, userData }) {
 
         const checkUrl = `trainees/approved?user_id=${userData.user_id}&class_id=${event.id}`;
 
+
         serverRequests('GET', checkUrl, null)
             .then(response => {
                 if (!response.ok) {
-                    setRegistrationError("Error checking registration status");
+        setRegistrationError(null);
+
                     return;
                 }
                 return response.json();
@@ -173,7 +182,7 @@ export default function Classes({ setClasses, classes, userData }) {
                 if (data && data.isApproved) {
                     setRegistrationError("You are already registered and approved for this class");
                 } else {
-                    const url = "waiting-trainee";
+                    const url = "trainees/waiting";
                     const body = {
                         trainee_id: userData.user_id,
                         class_id: event.id
@@ -305,12 +314,15 @@ export default function Classes({ setClasses, classes, userData }) {
                 tileContent={tileContent}
             />
             {selectedEvent && (
-                <SingleClass userData={userData}   registrationError={registrationError} handleClassRegistration={handleClassRegistration} event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+                <SingleClass userData={userData} registrationError={registrationError} handleClassRegistration={handleClassRegistration} event={selectedEvent} onClose={() => setSelectedEvent(null)} />
             )}
             {selectedDayEvents.length > 0 && (
                 <div className="single-class-modal">
                     <div className="single-class-content">
-                        <button className="close-button" onClick={() => setSelectedDayEvents([])}>❌</button>
+                        <button className="close-button" onClick={() => {
+                            setSelectedDayEvents([]),
+                            setRegistrationError(null);
+                        }}>❌</button>
                         <h2>Classes on {new Date(selectedDayEvents[0].from).toLocaleDateString()}</h2>
                         {selectedDayEvents.map(event => {
                             const currentDateTime = new Date();

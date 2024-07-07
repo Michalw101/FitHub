@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import MyClass from '../components/MyClass';
 import { serverRequests } from '../Api';
 import '../css/myClasses.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function MyClasses({ userData }) {
     const [myClasses, setMyClasses] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const url = `my-classes?trainer_id=${userData.user_id}`;
@@ -12,29 +14,34 @@ export default function MyClasses({ userData }) {
         serverRequests('GET', url, null)
             .then(response => {
                 console.log(response);
-                if (!response.ok) {
-                    return;
-                }
                 return response.json();
             }).then(data => {
+                if (data.ok === false) {
+                    alert(data.res);
+                    // note to admin
+                    navigate('/');
+                    return;
+                }
                 if (data) {
                     setMyClasses(data.classes);
                 }
             }).catch(error => {
                 console.error('Error', error);
             });
-    }, [userData.user_id]);
+    }, [userData.user_id, navigate]);
 
     if (!myClasses)
-        return <div className="loader">
-            <div className="wrapper">
-                <div className="circle"></div>
-                <div className="line-1"></div>
-                <div className="line-2"></div>
-                <div className="line-3"></div>
-                <div className="line-4"></div>
+        return (
+            <div className="loader">
+                <div className="wrapper">
+                    <div className="circle"></div>
+                    <div className="line-1"></div>
+                    <div className="line-2"></div>
+                    <div className="line-3"></div>
+                    <div className="line-4"></div>
+                </div>
             </div>
-        </div>;
+        );
 
     if (myClasses.length === 0)
         return <h1>No classes found.</h1>;
@@ -42,7 +49,7 @@ export default function MyClasses({ userData }) {
     const sortedClasses = myClasses.sort((a, b) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
-        
+
         if (dateA.getTime() === dateB.getTime()) {
             const hourA = new Date(`1970-01-01T${a.hour}`);
             const hourB = new Date(`1970-01-01T${b.hour}`);
@@ -70,11 +77,11 @@ export default function MyClasses({ userData }) {
         const classTotalMinutes = timeToMinutes(myClass.hour);
 
         if (classDate > today) {
-            return true; 
+            return true;
         } else if (classDate.getTime() === today.getTime() && classTotalMinutes >= currentTotalMinutes) {
-            return true; 
+            return true;
         }
-        return false; 
+        return false;
     });
 
     const pastClasses = sortedClasses.filter(myClass => {
@@ -83,11 +90,11 @@ export default function MyClasses({ userData }) {
         const classTotalMinutes = timeToMinutes(myClass.hour);
 
         if (classDate < today) {
-            return true; 
+            return true;
         } else if (classDate.getTime() === today.getTime() && classTotalMinutes < currentTotalMinutes) {
-            return true; 
+            return true;
         }
-        return false; 
+        return false;
     });
 
     return (
@@ -95,12 +102,22 @@ export default function MyClasses({ userData }) {
             <h2>Your classes...</h2>
             {futureClasses.map((myClass) => (
                 <div key={myClass.class_id}>
-                    <MyClass myClass={myClass} myClasses={myClasses} setMyClasses={setMyClasses} pastClass={false} />
+                    <MyClass
+                        myClass={myClass}
+                        myClasses={myClasses}
+                        setMyClasses={setMyClasses}
+                        pastClass={false}
+                    />
                 </div>
             ))}
             {pastClasses.map((myClass) => (
                 <div key={myClass.class_id} className='past-event'>
-                    <MyClass myClass={myClass} pastClass={true} />
+                    <MyClass
+                        myClass={myClass}
+                        myClasses={myClasses}
+                        setMyClasses={setMyClasses}
+                        pastClass={true}
+                    />
                 </div>
             ))}
         </div>

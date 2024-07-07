@@ -24,11 +24,11 @@ app.use(session({
 
 const PORT = process.env.PORT || 3000;
 
-const protectedRoute = require('./routes/protectedRoute');
-app.use("/", protectedRoute);
-
 const usersRouter = require('./routes/usersRouter');
 app.use("/users", usersRouter);
+
+const adminRouter = require('./routes/adminRouter');
+app.use("/admin", adminRouter);
 
 const loginRouter = require("./routes/loginRouter");
 app.use("/login", loginRouter);
@@ -48,9 +48,6 @@ app.use("/classes", classesRouter);
 const myClassesRouter = require("./routes/myClassesRouter");
 app.use("/my-classes", myClassesRouter);
 
-const waitingTraineeRouter = require("./routes/waitingTraineeRouter");
-app.use("/waiting-trainee", waitingTraineeRouter);
-
 const trainersRouter = require("./routes/trainersRouter");
 app.use("/trainers", trainersRouter);
 
@@ -63,8 +60,6 @@ app.use("/new-trainers", newTrainersRouter);
 const uploadRouter = require("./routes/uploadRouter");
 app.use('/upload', uploadRouter);
 
-const trainerSignupRouter = require("./routes/trainerSignupRouter");
-app.use("/trainer-signup", trainerSignupRouter);
 
 app.listen(PORT, () => {
   console.log(`SERVER: http://localhost:${PORT}`);

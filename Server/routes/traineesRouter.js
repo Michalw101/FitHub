@@ -16,8 +16,18 @@ router.get("/", authorizeAdmin, async (req, res) => {
     }
 });
 
+router.get("/trainer/:id", async (req, res) => {
+    const id = req.params.id;
+    try {
+        res.send(await controller.getTraineesByTrainer(id));
+    } catch (err) {
+        console.error("Error in GET /:", err);
+        res.status(500).send({ ok: false });
+    }
+});
 
-router.get("/waiting", authorizeTrainer, async (req, res) => {
+
+router.get("/waiting", async (req, res) => {
     console.log('waiting received:', req.query);
     try {
         res.send(await controller.getWaitingTrainees(req.query));
@@ -70,13 +80,10 @@ router.delete("/:id", authorizeAdmin, async (req, res) => {
 
 
 router.get("/approved", async (req, res) => {
-    console.log('approved received:', req.query);
     try {
         if (req.query.user_id && req.query.class_id) {
-            console.log('1');
             res.send(await controller.checkIfApproved(req.query));
         } else {
-            console.log('2');
             res.send(await controller.getApprovedTrainees(req.query));
         }
     } catch (err) {
@@ -86,8 +93,7 @@ router.get("/approved", async (req, res) => {
 });
 
 
-router.post("/approved", async (req, res) => {
-    console.log('approved received:', req.query);
+router.post("/approved", authorizeTrainer, async (req, res) => {
     try {
         res.send(await controller.addApprovedTrainees(req.body));
     } catch (err) {
@@ -104,6 +110,15 @@ router.put('/:id', async (req, res) => {
     } catch (err) {
         console.error("Error in PUT /:", err);
         res.status(500).send({ ok: false });
+    }
+})
+
+router.post('/waiting', async (req, res) => {
+    console.log('waiting class router', req.body);
+    try {
+        res.send(await controller.createWaitingTrainee(req.body));
+    } catch (err) {
+        res.status(500).send({ ok: false, error: err.message });
     }
 })
 
