@@ -54,7 +54,9 @@ const Login = ({ setUserData }) => {
         })
         .then(data => {
           if (data) {
-            setUserData(data.user);
+            const {user, token} = data;
+            localStorage.setItem('token', token);
+            setUserData(user);
             setLoginError('Registration successful');
             switch (data.user.role_id) {
               case 1:

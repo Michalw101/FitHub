@@ -15,7 +15,7 @@ router.get("/", authorizeAdmin, async (req, res) => {
     }
 });
 
-router.delete("/:id", authorizeAdmin, async (req, res) => {
+router.delete("/:id", async (req, res) => {
     const id = req.params.id;
     const sendMail = req.body.sendMail;
     console.log('delete trainer router');

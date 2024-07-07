@@ -1,7 +1,12 @@
 export async function serverRequests(method, URL, body) {
+    const token = localStorage.getItem('token');
     if (method === 'GET') {
         try {
-            const fetchResponse = await fetch(`http://localhost:3000/${URL}`);
+            const fetchResponse = await fetch(`http://localhost:3000/${URL}`, {
+                headers: {
+                    'authorization': token
+                }
+            });
             console.log('fetch response: ', fetchResponse);
             // if (fetchResponse.ok) {
             //       return fetchResponse;
@@ -18,6 +23,7 @@ export async function serverRequests(method, URL, body) {
     const requestOption = {
         method: method,
         headers: {
+            'authorization': token,
             ...(body instanceof FormData ? {} : { 'Content-Type': 'application/json' }),
         },
         body: body instanceof FormData ? body : JSON.stringify(body),

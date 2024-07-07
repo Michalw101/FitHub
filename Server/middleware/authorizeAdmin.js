@@ -1,6 +1,8 @@
 const authenticateSession = require('./authenticateSession'); 
 
 const authorizeAdmin = (req, res, next) => {
+    console.log('authorizeAdmin');
+    console.log(req.cookies)
     console.log('in authorizeAdmin');
     authenticateSession(req, res, () => {
         const user = req.user; 

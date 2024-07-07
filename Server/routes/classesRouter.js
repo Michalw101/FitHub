@@ -4,7 +4,7 @@ const controller = require('../controllers/classesController');
 const authorizeTrainer = require('../middleware/authorizeTrainer');
 
 
-router.get("/", authorizeTrainer, async (req, res) => {
+router.get("/", async (req, res) => {
     console.log('all');
     try {
         res.send(await controller.getAllClasses());
