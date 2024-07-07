@@ -31,7 +31,7 @@ const SingleClass = ({ userData, event, onClose, registrationError, handleClassR
                         <svg
                             viewBox="0 0 320 512"
                             height="1.2em"
-                            fill="currentColor"
+                            fill="curColorrent"
                             xmlns="http://www.w3.org/2000/svg"
                         >
                             <path

@@ -55,7 +55,7 @@ const Registration = ({ setUserData }) => {
 
                 navigate('/user-details');
             }).catch(error => {
-                setSignUpError('Your ID is already exist, try Log in');
+                setSignUpError(error.massege);
             });
 
     }

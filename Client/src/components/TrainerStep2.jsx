@@ -3,8 +3,7 @@ import { UserContext } from '../App';
 import '../css/trainerStep2.css';
 import { serverRequests } from '../Api';
 
-const TrainerStep2 = ({ handleChanged }) => {
-    const userData = useContext(UserContext);
+const TrainerStep2 = ({  handleChanged, signupUser, errors }) => {
 
     const [instegramLink, setInstegramLink] = useState(false);
     const [facebookLink, setFacebookLink] = useState(false);
@@ -72,9 +71,11 @@ const TrainerStep2 = ({ handleChanged }) => {
                     required=""
                     autoComplete="off"
                     name="user_id"
-                    value={userData.user_id || ''}
+                    value={signupUser.user_id || ''}
                     onChange={handleChanged} />
+            {errors.user_id && <p className="error">{errors.user_id}</p>}
             </div>
+
             <p className='topics'>Where was your last place of work?</p>
             <div className='inputGroup'>
                 <input
@@ -82,9 +83,11 @@ const TrainerStep2 = ({ handleChanged }) => {
                     required=""
                     autoComplete="off"
                     name="last_work_place"
-                    value={userData.last_work_place || ''}
+                    value={signupUser.last_work_place || ''}
                     onChange={handleChanged} />
+            {errors.last_work_place && <p className="error">{errors.last_work_place}</p>}
             </div>
+
             <p className='topics'>Where did you study and acquire a trainer's degree?</p>
             <div className='inputGroup'>
                 <input
@@ -92,9 +95,11 @@ const TrainerStep2 = ({ handleChanged }) => {
                     required=""
                     autoComplete="off"
                     name="diploma"
-                    value={userData.diploma || ''}
+                    value={signupUser.diploma || ''}
                     onChange={handleChanged} />
+            {errors.diploma && <p className="error">{errors.diploma}</p>}
             </div>
+
             <p className='topics'>What's your specialization?</p>
             <div className='inputGroup'>
                 <input
@@ -102,9 +107,11 @@ const TrainerStep2 = ({ handleChanged }) => {
                     required=""
                     autoComplete="off"
                     name="specialization"
-                    value={userData.specialization || ''}
+                    value={signupUser.specialization || ''}
                     onChange={handleChanged} />
+            {errors.specialization && <p className="error">{errors.specialization}</p>}
             </div>
+
             <p className='topics'>Please upload a PDF file of your degree</p><br></br>
             <form className="file-upload-form" onSubmit={handleFileUpload}>
                 
@@ -127,14 +134,19 @@ const TrainerStep2 = ({ handleChanged }) => {
             {uploadError && <p className="error">{uploadError}</p>}
             {uploadSuccess && <p className="success">File uploaded successfully!</p>}
             {isUploading && <p className="loading">Uploading...</p>}
+            {errors.degree_link && <p className="error">{errors.degree_link}</p>}
+
             <br></br>
             <p className='topics'>How many years of experience do you have?</p>
             <div className='inputGroup'>
                 <input type="number" name="experience" min="0" max="50" onChange={handleChanged} />
             </div>
+            {errors.experience && <p className="error">{errors.experience}</p>}
+
 
             <br></br>
             <p className='topics'>Want to share your social life as a Trainer?</p><br />
+           
             <div className='linksInput'>
 
                 <button className="button" onClick={() => setInstegramLink((prev) => !prev)}>
@@ -188,7 +200,7 @@ const TrainerStep2 = ({ handleChanged }) => {
                     required=""
                     autoComplete="off"
                     name="instegram_link"
-                    value={userData.instegram_link || ''}
+                    value={signupUser.instegram_link || ''}
                     onChange={handleChanged}
                     placeholder='Instegram link' />
             </div>)}
@@ -199,7 +211,7 @@ const TrainerStep2 = ({ handleChanged }) => {
                     required=""
                     autoComplete="off"
                     name="facebook_link"
-                    value={userData.facebook_link || ''}
+                    value={signupUser.facebook_link || ''}
                     onChange={handleChanged}
                     placeholder='Facebook link' />
             </div>)}
@@ -209,7 +221,7 @@ const TrainerStep2 = ({ handleChanged }) => {
                     required=""
                     autoComplete="off"
                     name="twitter_link"
-                    value={userData.twitter_link || ''}
+                    value={signupUser.twitter_link || ''}
                     onChange={handleChanged}
                     placeholder='Twitter link' />
             </div>)}

@@ -10,7 +10,7 @@ import Trainers from './components/Trainers'
 import Registration from './pages/Registration'
 import UserDetails from './pages/UserDetails'
 import TraineeHome from './pages/TraineeHome'
-import Profile from "./components/Profile"
+import Profile from "./components/TraineeProfile"
 import TrainerRegistration from './pages/TrainerRegistration'
 import AdminHome from './pages/AdminHome'
 import NewTrainers from './pages/NewTrainers'
