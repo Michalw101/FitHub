@@ -11,10 +11,11 @@ const SingleClass = ({ userData, event, onClose, registrationError, handleClassR
                 <h3>{event.title} with {event.trainer.first_name} {event.trainer.last_name}</h3><br />
                 <p>{`${new Date(event.from).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.to).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p><br />
                 <p><strong>Only ${event.price}</strong></p><br />
-
                 <p>Contact {event.trainer.first_name}! </p><br />
                 <p><strong>{event.trainer.phone}</strong></p>
                 <p><strong>{event.trainer.email}</strong></p><br />
+                <p>hhh{event.gender_limit}</p>
+
                 {userData.role_id === 3 && !eventHasPassed && (
                     <button onClick={() => handleClassRegistration(event)}>Join Class!</button>
 

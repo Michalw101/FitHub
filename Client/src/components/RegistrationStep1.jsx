@@ -80,10 +80,14 @@ const RegistrationStep1 = ({ handleChanged, signupUser, errors }) => {
                   dateFormat="dd/MM/yyyy"
                   placeholderText="Your Birthday DD/MM/YYYY"
                   className="date-picker-input"
+                  showYearDropdown
+                  showMonthDropdown
+                  dropdownMode="select"
+                  yearDropdownItemNumber={100}
+                  scrollableYearDropdown
                 />
               </div>
               {errors.birth_date && <p className="error">{errors.birth_date}</p>}
-
             </div>
 
             <div className='inputGroup'>
