@@ -80,10 +80,10 @@ export default function Classes({ setClasses, classes, userData }) {
                     price: classItem.price,
                     trainer: {
                         id: classItem.trainee_id,
-                        first_name: classItem.trainer_first_name,
-                        last_name: classItem.trainer_last_name,
-                        phone: classItem.trainer_phone,
-                        email: classItem.trainer_email,
+                        first_name: classItem.first_name,
+                        last_name: classItem.last_name,
+                        phone: classItem.phone,
+                        email: classItem.email,
                         twitter_link: classItem.twitter_link,
                         facebook_link: classItem.facebook_link,
                         instegram_link: classItem.instegram_link

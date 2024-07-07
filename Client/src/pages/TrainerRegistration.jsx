@@ -31,6 +31,24 @@ function TrainerRegistration({ setUserData }) {
         return Object.keys(newErrors).length === 0;
     };
 
+
+    const checkUserIdExists = () => {
+        return serverRequests('GET', `users/${signupUser.user_id}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error checking user ID');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data.user!= null;
+            })
+            .catch(error => {
+                setErrors(prev => ({ ...prev, user_id: error.message }));
+                return false;
+            });
+    };
+    
     const validateStep2 = () => {
         const newErrors = {};
     
@@ -52,6 +70,14 @@ function TrainerRegistration({ setUserData }) {
         if (!signupUser.degree_link) {
             newErrors['degree_link'] = 'Please upload a PDF file of your degree';
         } 
+
+
+        if (Object.keys(newErrors).length === 0) {
+            const userIdExists = checkUserIdExists();
+            if (userIdExists) {
+                newErrors['user_id'] = 'User ID already exists';
+            }
+        }
            
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
