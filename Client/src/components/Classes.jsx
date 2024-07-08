@@ -87,7 +87,16 @@ export default function Classes({ setClasses, classes, userData }) {
                         twitter_link: classItem.twitter_link,
                         facebook_link: classItem.facebook_link,
                         instegram_link: classItem.instegram_link
-                    }
+                    },
+                    gender_limit: classItem.gender_limit,
+                    heart_disease: classItem.heart_disease,
+                    chest_pain: classItem.chest_pain,
+                    fainted_or_dizziness: classItem.fainted_or_dizziness,
+                    asthma: classItem.asthma,
+                    family_heart_disease_or_sudden_death: classItem.family_heart_disease_or_sudden_death,
+                    exercise_supervision: classItem.exercise_supervision,
+                    chronic_disease: classItem.chronic_disease,
+                    pregnancy_risk: classItem.pregnancy_risk
                 };
             }).filter(event => event !== null);
 
@@ -172,7 +181,7 @@ export default function Classes({ setClasses, classes, userData }) {
         serverRequests('GET', checkUrl, null)
             .then(response => {
                 if (!response.ok) {
-        setRegistrationError(null);
+                    setRegistrationError(null);
 
                     return;
                 }
@@ -321,7 +330,7 @@ export default function Classes({ setClasses, classes, userData }) {
                     <div className="single-class-content">
                         <button className="close-button" onClick={() => {
                             setSelectedDayEvents([]),
-                            setRegistrationError(null);
+                                setRegistrationError(null);
                         }}>❌</button>
                         <h2>Classes on {new Date(selectedDayEvents[0].from).toLocaleDateString()}</h2>
                         {selectedDayEvents.map(event => {

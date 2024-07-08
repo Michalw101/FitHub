@@ -1,0 +1,4 @@
+.gender-button.selected, .health-button.selected {
+    background-color: #007bff;
+    color: white;
+}
