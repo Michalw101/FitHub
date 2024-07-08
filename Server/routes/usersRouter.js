@@ -18,4 +18,15 @@ router.get("/:id", async (req, res) => {
 });
 
 
+router.put('/password/:id', async (req, res) => {
+    try {
+        console.log('router body', req.body);
+        const id = req.params.id;
+        console.log('router id', id);
+        res.send(await controller.updatePassword(req.body, id));
+    } catch (err) {
+        res.status(500).send({ ok: false, err: err.message });
+    }
+})
+
 module.exports = router;

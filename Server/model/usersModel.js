@@ -37,4 +37,26 @@ async function getUser(id) {
     }
 }
 
-module.exports = { getUser }
+async function updatePassword(body, id) {
+    try {
+        const { password, salt } = body;
+        console.log('password', password);
+        console.log('salt', salt);
+        console.log('id', id);
+
+
+        const updatePasswordSql = `UPDATE passwords SET user_password = ?, salt = ? WHERE user_id = ?`;
+        await pool.query(updatePasswordSql, [password, salt, id]);
+
+       
+        return { success: true, message: "Password updated successfully" };
+
+    } catch (err) {
+        console.error("Error:", err);
+        return { success: false, message: "An error occurred", error: err };
+    }
+}
+
+
+
+module.exports = { getUser, updatePassword }

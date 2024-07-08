@@ -6,8 +6,11 @@ require('dotenv').config();
 async function postLogin(body) {
     try {
         const { user_id, password } = body;
+        console.log('user_id', user_id);
+        console.log('password', password);
 
-        const loginSql = `SELECT * FROM passwords where user_id =?`
+
+        const loginSql = `SELECT * FROM passwords where user_id = ?`
         const loginResult = await pool.query(loginSql, user_id);
 
         const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET;

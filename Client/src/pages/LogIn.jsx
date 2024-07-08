@@ -29,11 +29,6 @@ const Login = ({ setUserData }) => {
   const handleLogin = () => {
     serverRequests('GET', `${URL}/${formData.user_id}`, null)
       .then(response => {
-        console.log(response);
-        if (!response.ok) {
-          setLoginError("Incorrect password or ID");
-          return;
-        }
         return response.json();
       })
       .then(data => {

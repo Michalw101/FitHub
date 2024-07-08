@@ -7,7 +7,7 @@ async function postLogin(body) {
         const { password, salt } = body;       
         const saltedPassword = password + salt;
         const hashedPassword = crypto.createHash('sha256').update(saltedPassword).digest('hex');
-       
+       console.log(hashedPassword);
         return model.postLogin({ ...body, password: hashedPassword });
 
     } catch (err) {

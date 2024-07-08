@@ -1,30 +1,101 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../App';
 import '../css/traineeProfile.css';
-
+import { serverRequests } from '../Api';
 import EditTraineeProfileModal from './EditTraineeProfileModal'
 
 const TraineeProfile = () => {
-    const userData = useContext(UserContext);
 
+    const userData = useContext(UserContext);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({ ...userData });
     const [showMore, setShowMore] = useState(false);
-
+    const [changePassword, setChangePassword] = useState(false);
+    const [newPassword, setNewPassword] = useState({ new: "", verify: "", old: "" })
+    const [newPasswordError, setChangePasswordError] = useState("");
+    const [salt, setSalt] = useState('');
     let birthDate = new Date(formData.birth_date);
     let formattedDate = birthDate.toLocaleDateString('he-IL');
 
-    
     useEffect(() => {
         if (userData) {
             setFormData({ ...userData });
         }
     }, [userData]);
 
-
     const handleEditClick = () => {
         setIsEditing(true);
     };
+
+    const handleNewPaswordChanged = (e) => {
+        const { name, value } = e.target;
+        setNewPassword((prevFormData) => ({
+            ...prevFormData,
+            [name]: value,
+        }));
+    }
+
+    const handlePasswordClicked = () => {
+        if (newPassword.new !== newPassword.verify) {
+            setChangePasswordError("Passwords must match");
+            return;
+        }
+
+        serverRequests('GET', `login/${formData.user_id}`, null)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.salt) {
+                    setSalt(data.salt);
+                } else {
+                    setChangePasswordError("Error fetching salt");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                setChangePasswordError("Error fetching salt");
+            });
+    }
+
+
+    useEffect(() => {
+        if (salt) {
+
+            serverRequests('POST', 'login', { password: newPassword.old, salt: salt, user_id: formData.user_id })
+                .then(response => {
+                    console.log(response);
+                    if (!response.ok) {
+                        setChangePasswordError("Incorrect old password");
+                        setSalt('')
+                        return;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data) {
+                        serverRequests('PUT', `users/password/${formData.user_id}`, { password: newPassword.new })
+                            .then(response => {
+                                return response.json()
+                            })
+                            .then(data => {
+                                if (data) {
+                                    alert(data.message);
+                                    setChangePasswordError('');
+                                    setChangePassword(false);
+                                    setNewPassword({ new: "", verify: "", old: "" });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                setChangePasswordError(error.message);
+                            });
+                    }
+                })
+                .catch(error => {
+                    setLoginError('Error', error);
+                });
+        }
+    }, [salt]);
+
 
 
     return (
@@ -181,6 +252,66 @@ const TraineeProfile = () => {
                     <svg className="chevron-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
                 </label>
                 <br />
+
+                <p>Change Password</p>
+                <label className="container" onClick={() => { setChangePassword((prev) => !prev) }}>
+                    <input type="checkbox" defaultChecked={true} onChange={() => { setChangePassword((prev) => !prev) }} />
+                    <svg className="chevron-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path></svg>
+                    <svg className="chevron-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+                </label>
+                {changePassword && (<div>
+                    <div className='inputGroup'>
+                        <label>Your old password</label>
+                        <input
+                            type="text"
+                            required=""
+                            autoComplete="off"
+                            name="old"
+                            value={newPassword.old}
+                            onChange={handleNewPaswordChanged}
+                        />
+                    </div>
+                    <div className='inputGroup'>
+
+                        <label>Your new password</label>
+
+                        <input
+                            type="text"
+                            required=""
+                            autoComplete="off"
+                            name="new"
+                            value={newPassword.new}
+                            onChange={handleNewPaswordChanged}
+                        />
+                    </div>
+                    <div className='inputGroup'>
+
+                        <label>verify new password</label>
+
+                        <input
+                            type="text"
+                            required=""
+                            autoComplete="off"
+                            name="verify"
+                            value={newPassword.verify}
+                            onChange={handleNewPaswordChanged}
+                        />
+                    </div>
+                    {newPasswordError && <p className="error">{newPasswordError}</p>}
+
+
+                    <button className="bookmarkBtn" onClick={handlePasswordClicked}>
+                        <span className="IconContainer">
+                            <svg viewBox="0 0 384 512" height="0.9em" className="icon">
+                                <path
+                                    d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z"
+                                ></path>
+                            </svg>
+                        </span>
+                        <p className="text">Save</p>
+                    </button>
+
+                </div>)}
 
             </div>
         </div >
