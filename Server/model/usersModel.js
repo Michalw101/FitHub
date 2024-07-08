@@ -7,6 +7,10 @@ async function getUser(id) {
         let fullUserSql;
         let fullUserResult;
 
+        if (roleResult[0].length === 0) {
+            return { success: true, message: "User not found", user: null };
+        }
+
         if (!roleResult[0][0].role_id) {
             const setRole = `UPDATE users SET role_id = ? where user_id =?`
             await pool.query(setRole, [3, id]);

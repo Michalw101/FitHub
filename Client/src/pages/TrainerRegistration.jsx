@@ -32,24 +32,21 @@ function TrainerRegistration({ setUserData }) {
     };
 
 
-    const checkUserIdExists = () => {
-        return serverRequests('GET', `users/${signupUser.user_id}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error checking user ID');
-                }
-                return response.json();
-            })
-            .then(data => {
-                return data.user!= null;
-            })
-            .catch(error => {
-                setErrors(prev => ({ ...prev, user_id: error.message }));
-                return false;
-            });
+   
+    const checkUserIdExists = async () => {
+        try {
+            const response = await serverRequests('GET', `users/${signupUser.user_id}`);
+            if (!response.ok) {
+                throw new Error('Error checking user ID');
+            }
+            const data = await response.json();
+            return data.user != null;
+        } catch (error) {
+            setErrors(prev => ({ ...prev, user_id: error.message }));
+            return false;
+        }
     };
-    
-    const validateStep2 = () => {
+    const validateStep2 =async () => {
         const newErrors = {};
     
         const requiredFields = [
@@ -73,7 +70,7 @@ function TrainerRegistration({ setUserData }) {
 
 
         if (Object.keys(newErrors).length === 0) {
-            const userIdExists = checkUserIdExists();
+            const userIdExists = await checkUserIdExists();
             if (userIdExists) {
                 newErrors['user_id'] = 'User ID already exists';
             }
@@ -86,13 +83,12 @@ function TrainerRegistration({ setUserData }) {
   
     
 
-    const nextStep = () => {
+    const nextStep = async () => {
         let isValid = true;
         switch (currentStep) {
-
             case 1: isValid = validateStep1();
                 break;
-            case 2: isValid = validateStep2();
+            case 2: isValid = await validateStep2();
                 break;
         }
 
