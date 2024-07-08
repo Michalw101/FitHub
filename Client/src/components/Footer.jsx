@@ -1,10 +1,7 @@
 import React from "react";
 
 export default function Footer() {
-    const pinkColor = "#FF69B4";
-    // const pinkColor = "#333333";
-     
-    
+    const pinkColor = "#FF69B4";  
 
     const svgStyle = {
         marginRight: "10px", 

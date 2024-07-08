@@ -1,4 +1,7 @@
 const pool = require('../DB.js');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 
 
 async function putSignup(body) {
@@ -23,8 +26,16 @@ async function putSignup(body) {
         const traineeInsertQuery = `INSERT INTO trainees (trainee_id, information_id) VALUES (?, ?)`;
         await pool.query(traineeInsertQuery, [user_id, lastInsertedId]);
 
-        console.log("User created successfully");
-        return { user: {...body, role_id: 3}, success: true };
+        const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET;
+        console.log('JWT_SECRET:', JWT_SECRET);
+
+
+        const accessToken = jwt.sign({ user_id: user_id, role_id: 3 }, JWT_SECRET, { expiresIn: '1h' });
+
+        console.log('Generated Access Token:', accessToken);
+
+
+        return { user: {...body, role_id: 3}, success: true ,message:'User created successfully', token: accessToken};
 
     } catch (error) {
         console.error("Error creating user:", error);

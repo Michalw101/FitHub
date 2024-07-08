@@ -44,7 +44,16 @@ async function getClassesByQuery(query) {
     u.phone ,
     trainer.instegram_link,
     trainer.facebook_link,
-    trainer.twitter_link
+    trainer.twitter_link,
+    l.gender_limit,
+l.heart_disease,
+l.chest_pain,
+l.fainted_or_dizziness , 
+l.asthma , 
+l.family_heart_disease_or_sudden_death , 
+l.exercise_supervision , 
+l.chronic_disease ,
+l.pregnancy_risk
 FROM classes c
 JOIN limits_in_class l ON c.limits_id = l.limits_id
 JOIN trainees t ON t.trainee_id = ?

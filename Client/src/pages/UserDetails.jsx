@@ -14,6 +14,13 @@ function UserDetails({ setUserData }) {
     const [signupUser, setSignupUser] = useState({ ...userData });
     const [errors, setErrors] = useState({});
 
+    function setToken(token, expiresIn) {
+        const expirationTime = new Date().getTime() + expiresIn * 60000;
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('expirationTime', expirationTime);
+    }
+
+
     const validateStep1 = () => {
         const { first_name, last_name, email, birth_date, phone, gender } = signupUser;
         const newErrors = {};
@@ -90,17 +97,16 @@ function UserDetails({ setUserData }) {
         const url = "signup"
         serverRequests('PUT', url, signupUser)
             .then(response => {
-                console.log(response);
-                if (!response.ok) {
-                    alert("error");
-                    return;
-                }
                 return response.json();
             }).then((data) => {
-                setUserData(data.user)
-                navigate('/trainee-home');
+                if (data) {
+                    const { user, token } = data;
+                    setToken(token, 15);
+                    setUserData(user)
+                    navigate('/trainee-home');
+                }
             }).catch(error => {
-                setSignUpError(error);
+                alert(error.message);
             });
 
     }

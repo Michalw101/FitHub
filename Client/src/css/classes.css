@@ -95,6 +95,8 @@
     max-width: 500px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
+    overflow-y: auto;
+
 }
 
 .close-button {

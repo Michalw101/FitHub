@@ -13,7 +13,7 @@ router.get("/",authorizeTrainer, async (req, res) => {
     }
 });
 
-router.get("/trainee/registered",authorizeTrainer, async (req, res) => {
+router.get("/trainee/registered", async (req, res) => {
     console.log("query", req.query);
     try {
         res.send(await controller.getTraineeRegisteredClasses(req.query));
@@ -22,7 +22,7 @@ router.get("/trainee/registered",authorizeTrainer, async (req, res) => {
     }
 });
 
-router.get("/trainee/approved",authorizeTrainer, async (req, res) => {
+router.get("/trainee/approved", async (req, res) => {
     console.log("query", req.query);
     try {
         res.send(await controller.getTraineeApprovedClasses(req.query));
