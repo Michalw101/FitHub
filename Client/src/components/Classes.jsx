@@ -42,7 +42,6 @@ const Classes = ({ setClasses, classes, userData }) => {
     const [priceFilter, setPriceFilter] = useState(null);
     const [classTypeFilter, setClassTypeFilter] = useState(null);
     const [registrationError, setRegistrationError] = useState('');
-    const [isDetailsVisible, setIsDetailsVisible] = useState(false);
     const [seeMoreBtn, setSeeMoreBtn] = useState(0);
 
 
@@ -246,6 +245,7 @@ const Classes = ({ setClasses, classes, userData }) => {
                 <div>
                     <div className="single-class-modal">
                         <div className="single-class-content">
+                        <button className="close-button" onClick={() => { setSelectedDayEvents([]) }}>❌</button>
                             <h2>What's on today? {new Date(date).toLocaleDateString()}</h2><br />
 
                             {selectedDayEvents.map(event => {
