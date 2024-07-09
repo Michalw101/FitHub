@@ -57,7 +57,7 @@ export default function NewTrainers() {
 
   return (
     <div>
-      <h1>New Trainers To FitHub's Trainers Team</h1>
+      <h2>New Trainers To FitHub's Trainers Team</h2>
       <div className="trainers-container">
         {trainers.map((trainer) => (
           <div key={trainer.user_id}>

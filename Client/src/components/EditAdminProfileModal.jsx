@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 export default function EditAdminProfileModal({ formData, setFormData, onClose }) {
 
     const [editFormData, setEditFormData] = useState({ ...formData })
-    const navigate= useNavigate();
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const handleChanged = (e) => {
         const { name, value } = e.target;
@@ -15,8 +16,33 @@ export default function EditAdminProfileModal({ formData, setFormData, onClose }
             [name]: value,
         }));
     };
+    const validateForm = () => {
+        const newErrors = {};
+        if (!editFormData.first_name) {
+            newErrors.first_name = 'First name is required';
+        }
+        if (!editFormData.last_name) {
+            newErrors.last_name = 'Last name is required';
+        }
+        if (!editFormData.email) {
+            newErrors.email = 'Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(editFormData.email)) {
+            newErrors.email = 'Email is invalid';
+        }
+        if (!editFormData.phone) {
+            newErrors.phone = 'Phone number is required';
+        } else if (!/^\d+$/.test(editFormData.phone) || editFormData.phone.length < 9) {
+            newErrors.phone = 'Phone number is invalid';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleSave = async () => {
+        if (!validateForm()) {
+            return;
+        }
         const url = `admin/${editFormData.user_id}`;
         serverRequests('PUT', url, editFormData)
             .then(response => {
@@ -25,15 +51,15 @@ export default function EditAdminProfileModal({ formData, setFormData, onClose }
                 if (data.ok == false) {
                     alert(data.res);
                     serverRequests('POST', 'notifications', { users: [214955064, 214859415], message: data.message })
-                    .then(response => {
-                        if (!response.ok) {
-                            return;
-                        }
-                        return response.json();
-                    })
-                    .catch(error => {
-                        console.error('Error ', error);
-                    });
+                        .then(response => {
+                            if (!response.ok) {
+                                return;
+                            }
+                            return response.json();
+                        })
+                        .catch(error => {
+                            console.error('Error ', error);
+                        });
                     navigate('/');
                     return;
                 }
@@ -51,49 +77,57 @@ export default function EditAdminProfileModal({ formData, setFormData, onClose }
             <div className="modal-content">
                 <button className="close-button" onClick={onClose}>❌</button>
                 <h1>Edit your profile...</h1>
-                <br/>
+                <br />
                 <label>
                     <h4>First name</h4>
                     <div className='inputGroup'>
                         <input
-                            
+
                             type="text"
                             value={editFormData.first_name}
                             name="first_name"
                             onChange={handleChanged}
-                        /></div>
+                        />
+                        {errors.first_name && <div className="error">{errors.first_name}</div>}
+                    </div>
                 </label>
                 <label>
                     <h4>Last name</h4>
                     <div className='inputGroup'>
                         <input
-                            
-                        type="text"
-                        value={editFormData.last_name}
-                        name="last_name"
-                        onChange={handleChanged}
-                    />
+
+                            type="text"
+                            value={editFormData.last_name}
+                            name="last_name"
+                            onChange={handleChanged}
+                        />
+                        {errors.last_name && <div className="error">{errors.last_name}</div>}
+
                     </div>
                 </label>
                 <label>
                     <h4>Email</h4>
                     <div className='inputGroup'>
-                    <input
-                        type="text"
-                        value={editFormData.email}
-                        name="email"
-                        onChange={handleChanged}
-                    /></div>
+                        <input
+                            type="text"
+                            value={editFormData.email}
+                            name="email"
+                            onChange={handleChanged}
+                        />
+                        {errors.email && <div className="error">{errors.email}</div>}
+                    </div>
                 </label>
                 <label>
                     <h4>Phone</h4>
                     <div className='inputGroup'>
-                    <input
-                        type="text"
-                        value={editFormData.phone}
-                        name="phone"
-                        onChange={handleChanged}
-                    /></div>
+                        <input
+                            type="text"
+                            value={editFormData.phone}
+                            name="phone"
+                            onChange={handleChanged}
+                        />
+                        {errors.phone && <div className="error">{errors.phone}</div>}
+                    </div>
                 </label>
                 <button className="bookmarkBtn" onClick={handleSave}>
                     <span className="IconContainer">

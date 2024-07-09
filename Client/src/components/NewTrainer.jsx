@@ -16,7 +16,7 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
                     console.log(response);
                     return response.json();
                 }).then((data) => {
-                    if (!data.ok) {
+                    if (data.ok==false) {
                         alert(data.res);
                         //note to admin
                         navigate('/');

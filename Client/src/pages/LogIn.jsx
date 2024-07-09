@@ -18,16 +18,15 @@ const Login = ({ setUserData }) => {
     sessionStorage.setItem('expirationTime', expirationTime);
   }
 
-
   const [formData, setFormData] = useState({
     user_id: "",
     password: "",
     salt: ""
   });
-  const URL = 'login';
+  const URL = `login/${formData.user_id}`;
 
   const handleLogin = () => {
-    serverRequests('GET', `${URL}/${formData.user_id}`, null)
+    serverRequests('GET', URL, null)
       .then(response => {
         if (!response.ok) {
           setLoginError("Incorrect password or ID");
@@ -48,10 +47,8 @@ const Login = ({ setUserData }) => {
   useEffect(() => {
     if (salt) {
       setFormData(prev => ({ ...prev, salt }));
-
       serverRequests('POST', URL, { ...formData, salt })
         .then(response => {
-          console.log(response);
           if (!response.ok) {
             setLoginError("Incorrect password or ID");
             setSalt('');
@@ -66,7 +63,7 @@ const Login = ({ setUserData }) => {
         .then(data => {
           if (data) {
             const { user, token } = data;
-            setToken(token, 15);
+            setToken(token, 60);
             setUserData(user);
             setLoginError("");
             switch (data.user.role_id) {
@@ -78,10 +75,8 @@ const Login = ({ setUserData }) => {
                 break;
               case 3:
                 navigate('/trainee-home');
-
                 break;
               default:
-                console.log('no role id');
                 navigate('/');
             }
           }
@@ -101,7 +96,6 @@ const Login = ({ setUserData }) => {
   };
 
   const forgotPasswordHandle = () => {
-
     serverRequests('GET', `users/email/${formData.user_id}`, null)
       .then(response => {
         return response.json();
@@ -109,6 +103,8 @@ const Login = ({ setUserData }) => {
       .then(data => {
         if (data) {
           setEmail(data.email);
+        } else {
+          setLoginError('')
         }
       })
       .catch(error => {
