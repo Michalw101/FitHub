@@ -18,5 +18,14 @@ async function getNotifications(query) {
     }
 };
 
+async function putNotifications(user_id) {
+    try {
+        return model.putNotifications(user_id);
+    }
+    catch (err) {
+        throw err;
+    }
+};
 
-module.exports ={createNotification, getNotifications}
+
+module.exports ={createNotification, getNotifications, putNotifications}

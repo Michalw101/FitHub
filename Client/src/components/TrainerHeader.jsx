@@ -9,8 +9,8 @@ export default function TrainerHeader({ setUserData, userData }) {
     const [notificationsCount, setNotificationsCount] = useState(0);
 
     useEffect(() => {
-        const url = `notifications?user_id=${userData.user_id}`;
-
+        const url = `notifications?user_id=${userData.user_id}&is_read=false`;
+    
         serverRequests('GET', url, null)
             .then(response => {
                 if (!response.ok) {
@@ -30,6 +30,7 @@ export default function TrainerHeader({ setUserData, userData }) {
                 setNotificationsCount(0);
             });
     }, [userData.user_id]);
+    
 
     const profileHandleClick = () => {
         navigate('trainer-profile')

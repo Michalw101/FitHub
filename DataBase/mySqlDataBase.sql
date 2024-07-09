@@ -165,6 +165,9 @@ CREATE TABLE notifications(
 	notification_id INT PRIMARY KEY auto_increment,
     user_id int,
     note varchar(255),
+    is_read BOOLEAN,
+    date DATE,
+    hour TIME,
     FOREIGN KEY (user_id) 
       REFERENCES users (user_id) 
       ON UPDATE RESTRICT 
@@ -207,8 +210,8 @@ VALUES
 (24, 'Pocahontas', 'Native', 'micsharo@g.jct.ac.il', '0548429273', '2004-04-22', 'Female', 3);
 
 
-insert into notifications(notification_id, user_id, note)
-values(1, 1, "check");
+insert into notifications(notification_id, user_id, note, is_read, date, hour)
+values(1, 1, "check", false, '2004-10-12', '08:00:00');
     
 
 INSERT INTO trainers (trainer_id, experience, degree_link, specialization, instegram_link, facebook_link, twitter_link)
