@@ -10,10 +10,10 @@ const Login = ({ setUserData }) => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState('');
   const [salt, setSalt] = useState('');
-
+  const [email, setEmail] = useState('');
 
   function setToken(token, expiresIn) {
-    const expirationTime = new Date().getTime() + expiresIn * 60000; 
+    const expirationTime = new Date().getTime() + expiresIn * 60000;
     sessionStorage.setItem('token', token);
     sessionStorage.setItem('expirationTime', expirationTime);
   }
@@ -50,7 +50,11 @@ const Login = ({ setUserData }) => {
           console.log(response);
           if (!response.ok) {
             setLoginError("Incorrect password or ID");
-            setSalt('')
+            setSalt('');
+            setFormData(prev => ({
+              ...prev,
+              password: ""
+            }));
             return;
           }
           return response.json();
@@ -93,8 +97,47 @@ const Login = ({ setUserData }) => {
   };
 
   const forgotPasswordHandle = () => {
-    //send mail with new password
+
+    serverRequests('GET', `users/email/${formData.user_id}`, null)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        if (data) {
+          setEmail(data.email);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   }
+
+  useEffect(() => {
+    if (!email)
+      return;
+    serverRequests('PUT', `users/forgot-password`, { email: email })
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        if (data) {
+          setLoginError(data.message);
+          setFormData({
+            user_id: "",
+            password: "",
+            salt: ""
+          })
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setLoginError(error.message);
+        setFormData(prev => ({
+          ...prev,
+          password: ""
+        }));
+      });
+  }, [email])
 
   return (
     <div className='loginDiv'>
@@ -128,7 +171,7 @@ const Login = ({ setUserData }) => {
         <p className="sign-up-label">
           Don't have an account? <NavLink to="/register" className="sign-up-link">Sign up</NavLink>
         </p>
-       
+
       </div>
     </div>
   );

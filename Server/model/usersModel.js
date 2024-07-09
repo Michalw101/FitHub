@@ -24,7 +24,7 @@ async function getUser(id) {
                 fullUserResult = await pool.query(fullUserSql, id);
                 break;
             case 3:
-                fullUserSql = `SELECT * FROM users NATURAL JOIN trainees  NATURAL JOIN information where users.user_id = trainees.trainee_id and trainees.information_id=information.information_id and users.user_id=? ;`
+                fullUserSql = `SELECT * FROM users NATURAL JOIN trainees NATURAL JOIN information where users.user_id = trainees.trainee_id and trainees.information_id = information.information_id and users.user_id = ? ;`
                 fullUserResult = await pool.query(fullUserSql, id);
                 break;
         }
@@ -33,30 +33,53 @@ async function getUser(id) {
 
     } catch (err) {
         console.error("Error:", err);
-        throw err
+        throw err;
+    }
+}
+
+async function getEmailById(id) {
+    try {
+        const userSql = `SELECT email FROM users WHERE user_id = ?`;
+        const result = await pool.query(userSql, [id]);
+        console.log(result[0][0]);
+        if (result[0].length === 0) {
+            return { success: true, message: "Incorect ID"};
+        }
+        return { success: true, message: "Successful", email: result[0][0].email };
+    } catch (err) {
+        console.error("Error:", err);
+        throw err;
+    }
+}
+
+
+async function getUserByEmail(email) {
+    try {
+        console.log('email', email);
+        const userSql = `SELECT * FROM users WHERE email = ?`;
+        const result = await pool.query(userSql, [email]);
+        console.log(result[0]);
+        if (result[0].length === 0) {
+            return { success: true, message: "Incorrect email"};
+        }
+        return { success: true, message: "Successful", user: result[0][0] };
+    } catch (err) {
+        console.error("Error:", err);
+        throw err;
     }
 }
 
 async function updatePassword(body, id) {
     try {
-        const { password, salt } = body;
-        console.log('password', password);
-        console.log('salt', salt);
-        console.log('id', id);
-
-
+        const { password, salt, user } = body;
         const updatePasswordSql = `UPDATE passwords SET user_password = ?, salt = ? WHERE user_id = ?`;
         await pool.query(updatePasswordSql, [password, salt, id]);
 
-       
         return { success: true, message: "Password updated successfully" };
-
     } catch (err) {
         console.error("Error:", err);
         return { success: false, message: "An error occurred", error: err };
     }
 }
 
-
-
-module.exports = { getUser, updatePassword }
+module.exports = { getUser,getEmailById, updatePassword, getUserByEmail }
