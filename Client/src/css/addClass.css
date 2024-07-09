@@ -52,7 +52,7 @@
 }
 
 .gender-button.selected, .class-type-button.selected, .health-button.selected {
-    background-color: rgb(1, 168, 168);;
+    background-color: #59cfb6;
     color: white;
 }
 
@@ -61,3 +61,28 @@
     color: black;
 }
 
+
+.customDatePicker {
+    font-size: 100%;
+    padding: 0.8em;
+    outline: none;
+    border: 2px solid rgb(255, 255, 255);
+    background-color: transparent;
+    border-radius: 20px;
+    width: 100%;
+    position: relative;
+  }
+  
+  
+  
+  .inputGroup :is(.customDatePicker:focus, .customDatePicker:not(:placeholder-shown))~.dateLabel {
+    transform: translateY(-50%) scale(.9);
+    margin: 0em;
+    margin-left: 1.3em;
+    padding: 0.4em;
+    background-color: #ffffff;
+  }
+  
+  .customDatePicker:focus {
+    border-color: rgb(1, 168, 168);
+  }

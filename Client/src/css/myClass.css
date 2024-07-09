@@ -3,7 +3,7 @@
     background: white;
     padding: 20px;
     border-radius: 8px;
-    width: 90%;
+    width: 100%;
     max-width: 500px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
@@ -56,3 +56,98 @@
     margin-left: 0.5em;
     font-size: 0.8em;
 }
+
+
+.deleteClass {
+    width: 56px;
+    height: 56px;
+    border-radius: 29%;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+    transition-duration: 0.3s;
+    overflow: hidden;
+    position: relative;
+    gap: 2px;
+  }
+  
+  .svgIcon {
+    width: 12px;
+    transition-duration: 0.3s;
+  }
+  
+  .svgIcon path {
+    fill: white;
+  }
+  
+  .button:hover {
+    transition-duration: 0.3s;
+    background-color: rgb(255, 69, 69);
+    align-items: center;
+    gap: 0;
+  }
+  
+  .bin-top {
+    transform-origin: bottom right;
+  }
+  .deleteClass:hover .bin-top {
+    transition-duration: 0.5s;
+    transform: rotate(160deg);
+  }
+  
+  .buttonDiv {
+    display: flex;
+    gap: 5px;
+  }
+
+  .registered_btn {
+    position: relative;
+    margin: 1rem;
+    z-index: 2;
+    border-radius: 8px;
+    appearance: none;
+    padding: 1em 2em;
+    transition: all 0.2s;
+  }
+  
+  .registered_btn {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .registered_btn::before {
+    position: absolute;
+    display: flex;
+    top: -0.75em;
+    right: -0.75em;
+    height: 1.8em;
+    width: 1.8em;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    z-index: 999;
+    transition: all 0.2s;
+  }
+  
+  .registered_btn:hover {
+    border-radius: 3px;
+    border-color: red;
+  }
+  
+  .registered_btn:hover::before {
+    height: 2em;
+    width: 2em;
+    font-size: 1.5em;
+  }
+
+  .divBtn {
+    display: flex;
+  }

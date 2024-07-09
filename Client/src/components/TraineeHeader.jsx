@@ -9,16 +9,11 @@ export default function TraineeHeader({ setUserData, userData }) {
 
     const [notificationsCount, setNotificationsCount] = useState(0);
 
-    useEffect(() => {
-        const url = `notifications?user_id=${userData.user_id}`;
+    const fetchNotificationsCount = () => {
+        const url = `notifications?user_id=${userData.user_id}&is_read=0`;
 
         serverRequests('GET', url, null)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch notifications');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data && data.notifications) {
                     setNotificationsCount(data.notifications.length);
@@ -30,6 +25,12 @@ export default function TraineeHeader({ setUserData, userData }) {
                 console.error('Error', error);
                 setNotificationsCount(0);
             });
+    };
+
+    useEffect(() => {
+        const intervalId = setInterval(fetchNotificationsCount, 5000);
+
+        return () => clearInterval(intervalId);
     }, [userData.user_id]);
 
     const profileHandleClick = () => {
@@ -48,6 +49,7 @@ export default function TraineeHeader({ setUserData, userData }) {
     }
 
     const handleNotificationsClick = () => {
+        setNotificationsCount(0);
         navigate('notifications')
     }
 
@@ -90,30 +92,6 @@ export default function TraineeHeader({ setUserData, userData }) {
                         ></path>
                     </svg>
                     Profile
-                </button>
-
-                <button className="value" onClick={trainersHandleClick}>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 122.598 122.598"
-                        fill="#7D8590"
-                    >
-                        <g>
-                            <circle cx="56.882" cy="31.147" r="10.524" />
-                            <path d="M118.648,3.364V1.6H107.23v11.007H15.368V1.6H3.949v1.765H0v24.713h3.949v1.765h11.419V18.835h12.665
-                                c-1.311,1.339-1.57,3.45-0.505,5.084L45.287,51.17c0.232,0.354,0.513,0.658,0.824,0.913v22.582c0,1.798,0.559,3.401,1.492,4.757
-                                l-12.54,35.12c-0.896,2.513,0.412,5.276,2.925,6.173c0.535,0.189,1.084,0.283,1.622,0.283c1.985,0,3.844-1.232,4.55-3.207
-                                l12.092-33.866c0.211,0.011,0.42,0.026,0.631,0.026c0.593,0,1.178-0.051,1.757-0.135l12.132,33.975
-                                c0.703,1.975,2.563,3.207,4.547,3.207c0.539,0,1.088-0.094,1.623-0.283c2.512-0.896,3.821-3.66,2.924-6.173L66.878,78.165
-                                c0.491-1.058,0.776-2.23,0.776-3.5V51.433c0-0.009,0-0.021,0-0.028c0.059-0.079,0.121-0.151,0.174-0.234L85.59,23.919
-                                c1.062-1.634,0.805-3.745-0.505-5.084h22.146v11.007h11.418v-1.765h3.949V3.364H118.648z M78.742,19.455L62.932,43.716
-                                c-1.067-0.651-2.236-1.141-3.427-1.434l-2.622,2.64l-2.541-2.668c-0.01,0.002-0.018,0.002-0.026,0.004
-                                c-1.386,0.33-2.742,0.929-3.945,1.742L34.375,19.455c-0.148-0.225-0.317-0.432-0.5-0.62h45.367
-                                C79.059,19.024,78.891,19.231,78.742,19.455z"
-                            />
-                        </g>
-                    </svg>
-                    Trainers
                 </button>
 
                 <button className="value" onClick={handleClassesClick}>

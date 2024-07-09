@@ -105,6 +105,7 @@ const TraineeSmallProfile = ({ trainee, setTrainees, allTrainees }) => {
                 </svg>
             </div>
             <p className="name-client">
+                Id: {`${trainee.user_id}`} <br/>
                 {`${trainee.first_name} ${trainee.last_name}`}
                 <span>{trainee.email}</span>
                 <span>{trainee.phone}</span>

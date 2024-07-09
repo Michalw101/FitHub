@@ -208,10 +208,6 @@ VALUES
 (22, 'Snow', 'White', 'micsharo@g.jct.ac.il', '0548429273', '2004-02-25', 'Female', 3),
 (23, 'Cinderella', 'Glass', 'micsharo@g.jct.ac.il', '0548429273', '2004-03-30', 'Female', 3),
 (24, 'Pocahontas', 'Native', 'micsharo@g.jct.ac.il', '0548429273', '2004-04-22', 'Female', 3);
-
-
-insert into notifications(notification_id, user_id, note, is_read, date, hour)
-values(1, 1, "check", false, '2004-10-12', '08:00:00');
     
 
 INSERT INTO trainers (trainer_id, experience, degree_link, specialization, instegram_link, facebook_link, twitter_link)

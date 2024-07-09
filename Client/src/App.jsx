@@ -5,8 +5,6 @@ import Layout from "./components/Layout"
 import HomeLayout from "./components/HomeLayout"
 import Enter from "./pages/Enter"
 import Login from './pages/LogIn'
-import Blogs from './pages/Blogs'
-import Trainers from './components/Trainers'
 import Registration from './pages/Registration'
 import UserDetails from './pages/UserDetails'
 import TraineeHome from './pages/TraineeHome'
@@ -21,7 +19,6 @@ import TrainerHome from './pages/TrainerHome'
 import TraineeClasses from './pages/TraineeClasses'
 import MyClasses from './pages/MyClasses'
 import TrainersInHome from './pages/TrainersInHome'
-import TrainersInTraineesHome from './pages/TrainersInTraineesHome'
 import Trainees from './pages/Trainees'
 import MyTraineeClasses from './pages/MyTraineeClasses'
 import TrainersAdmin from './pages/TrainersAdmin'
@@ -85,7 +82,6 @@ function App() {
             <Route path="login" element={<Login setUserData={setUserData} />} />
             <Route path="register" element={<Registration setUserData={setUserData} />} />
             <Route path="user-details" element={<UserDetails setUserData={setUserData} />} />
-            <Route path="blog" element={<Blogs />} />
             <Route path="trainers" element={<TrainersInHome userData={userData} setUserData={setUserData} />} />
             <Route path="trainer-registeration" element={<TrainerRegistration setUserData={setUserData} />} />
           </Route>
@@ -94,7 +90,6 @@ function App() {
             <Route index element={<TraineeHome userData={userData} />} />
             <Route path="profile" element={<Profile />} />
             <Route path="trainee-classes" element={<TraineeClasses userData={userData} />} />
-            <Route path="trainers" element={<TrainersInTraineesHome setUserData={setUserData} userData={userData} />} />
             <Route path="trainee-my-classes" element={<MyTraineeClasses userData={userData} />} />
             <Route path="notifications" element={<Notifications userData={userData} />} />
 
@@ -107,6 +102,7 @@ function App() {
             <Route path="new-trainers" element={<NewTrainers />} />
             <Route path="all-trainees" element={<Trainees />} />
             <Route path="all-trainers" element={<TrainersAdmin />} />
+            <Route path="notifications" element={<Notifications userData={userData} />} />
 
           </Route>
 

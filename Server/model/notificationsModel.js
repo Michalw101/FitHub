@@ -24,9 +24,20 @@ async function createNotification(body) {
 }
 
 async function getNotifications(query) {
+    console.log('query', query);
     try {
-        const sql = `SELECT * FROM notifications WHERE ?`;
-        const result = await pool.query(sql, [query]);
+        let sql;
+        let params;
+
+        if (query.is_read !== undefined) {
+            sql = `SELECT * FROM notifications WHERE user_id = ? AND is_read = ?`;
+            params = [query.user_id, query.is_read];
+        } else {
+            sql = `SELECT * FROM notifications WHERE user_id = ?`;
+            params = [query.user_id];
+        }
+
+        const result = await pool.query(sql, params);
         if (result[0].length > 0) {
             return { success: true, message: "Notifications successful", notifications: result[0] };
         } else {

@@ -37,7 +37,7 @@ const TrainersInHome = ({ userData, setUserData }) => {
       <Trainers userData={userData} setUserData={setUserData} />
       <br/>
       <div className="container">
-        <h1>Join FitHub's Trainers Team now!</h1>
+        <h2>Join FitHub's Trainers Team now!</h2>
         <div tabIndex="0" className="plusButton" onClick={handleAddTrainer}>
           <svg className="plusIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
             <g mask="url(#mask0_21_345)">

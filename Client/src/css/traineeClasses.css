@@ -69,15 +69,6 @@
     height: 50px;
 }
 
-.circle {
-    width: 100%;
-    height: 100%;
-    border: 3px solid transparent;
-    border-top-color: #007BFF;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
 .line-1, .line-2, .line-3, .line-4 {
     position: absolute;
     width: 100%;

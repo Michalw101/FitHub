@@ -44,46 +44,52 @@ export default function EditTrainerProfileModal({ formData, setFormData, onClose
         <div className="modal-overlay">
             <div className="modal-content">
                 <button className="close-button" onClick={onClose}>❌</button>
-                <h2>Edit your profile...</h2>
+                <h1>Edit your profile...</h1>
+                <br />
                 <label>
-                    First name:
-                    <input
-                        type="text"
-                        value={editFormData.first_name}
-                        name="first_name"
-                        onChange={handleChanged}
-                    />
+                    <h4>First name</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.first_name}
+                            name="first_name"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br />
                 <label>
-                    Last name:
-                    <input
-                        type="text"
-                        value={editFormData.last_name}
-                        name="last_name"
-                        onChange={handleChanged}
-                    />
+                    <h4>Last name</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.last_name}
+                            name="last_name"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br />
                 <label>
-                    Email:
-                    <input
-                        type="text"
-                        value={editFormData.email}
-                        name="email"
-                        onChange={handleChanged}
-                    />
+                    <h4>Email</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="text"
+                            value={editFormData.email}
+                            name="email"
+                            onChange={handleChanged}
+                        /></div>
                 </label>
-                <br /><br />
                 <label>
-                    Phone:
-                    <input
-                        type="tel"
-                        value={editFormData.phone}
-                        name="phone"
-                        onChange={handleChanged} />
+                    <h4>Phone</h4>
+                    <div className='inputGroup'>
+                        <input
+                            type="tel"
+                            value={editFormData.phone}
+                            name="phone"
+                            onChange={handleChanged} /></div>
                 </label>
-                <br /><br />
+                <label className="container" onClick={() => { SetShowMore((prev) => !prev) }}>
+                    <input type="checkbox" defaultChecked={true} onChange={() => { SetShowMore((prev) => !prev) }} />
+                    <svg className="chevron-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path></svg>
+                    <svg className="chevron-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+                </label>
                 {showMore && (<div>
                     <label htmlFor="heart_disease">Do you have heart disease?</label>
                     <div className='radio-inputs'>
@@ -440,17 +446,7 @@ export default function EditTrainerProfileModal({ formData, setFormData, onClose
 
                     </div>
                 </div>)}
-
-                <br /><br />
-                <label className="container" onClick={() => { SetShowMore((prev) => !prev) }}>
-                    <input type="checkbox" defaultChecked={true} onChange={() => { SetShowMore((prev) => !prev) }} />
-                    <svg className="chevron-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path></svg>
-                    <svg className="chevron-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
-                </label>
-
-                <br /><br />
-
-
+                <br />
                 <button className="bookmarkBtn" onClick={handleSave}>
                     <span className="IconContainer">
                         <svg viewBox="0 0 384 512" height="0.9em" className="icon">

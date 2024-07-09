@@ -6,6 +6,7 @@ import '../css/notification.css';
 const Notifications = ({ userData }) => {
     const [notifications, setNotifications] = useState([]);
 
+
     const fetchNotifications = () => {
         const urlFetch = `notifications?user_id=${userData.user_id}`;
 
@@ -23,8 +24,7 @@ const Notifications = ({ userData }) => {
                 console.error('Error', error);
             });
     };
-
-    const updateNotifications = () => {
+    useEffect(() => {
         if (notifications.length === 0) return;
 
         const url = `notifications`;
@@ -40,15 +40,11 @@ const Notifications = ({ userData }) => {
             .catch(error => {
                 console.error('Error', error);
             });
-    };
+    }, [notifications])
 
     useEffect(() => {
-        const fetchAndMarkNotifications = async () => {
-            await fetchNotifications();
-            updateNotifications();
-        };
-
-        fetchAndMarkNotifications();
+             fetchNotifications();
+      
 
         const intervalId = setInterval(fetchNotifications, 5000);
 

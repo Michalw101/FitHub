@@ -70,7 +70,16 @@ export default function EditClassModal({ myClass, myClasses, setMyClasses, onClo
                     }).then(data => {
                         if (data.ok == false) {
                             alert(data.res);
-                            //note to admin
+                            serverRequests('POST', 'notifications', { users: [214955064, 214859415], message: data.message })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        return;
+                                    }
+                                    return response.json();
+                                })
+                                .catch(error => {
+                                    console.error('Error ', error);
+                                });
                             navigate('/');
                             return;
                         }
@@ -105,26 +114,26 @@ export default function EditClassModal({ myClass, myClasses, setMyClasses, onClo
         <div className="modal-overlay">
             <div className="modal-content">
                 <button className="close-button" onClick={onClose}>❌</button>
-                <h2>Edit Class</h2><br />
+                <h1>Edit Class</h1><br />
                 <label>
-                    Description:
+                    <h4>Description</h4>
+                    <div className='inputGroup'>
                     <input
                         type="text"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                    />
+                    /></div>
                 </label>
-                <br /><br />
                 <label>
-                    Price:
+                   <h4>Price</h4> 
+                   <div className='inputGroup'>
                     <input
                         type="number"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
-                    />
+                    /></div>
                 </label>
-                <br /><br />
-                <p>Class Type</p><br />
+                <h4>Class Type</h4><br />
                 <div className="radio-group inputGroup">
                     {classTypeOptions.map((option) => (
                         <button
@@ -137,7 +146,7 @@ export default function EditClassModal({ myClass, myClasses, setMyClasses, onClo
                     ))}
                 </div>
                 <br />
-                <p>Select the appropriate gender option</p><br />
+                <h4>Select the appropriate gender option</h4><br />
                 <div className="radio-group inputGroup">
                     {genderOptions.map((option) => (
                         <button

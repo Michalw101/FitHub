@@ -10,6 +10,8 @@
 
 /* button styling */
 .button1 {
+    border: none;
+    background: none;
     text-align: left;
     --text-stroke-color: rgba(102, 167, 152, 0.6);
     --animation-color: #00ffc8;

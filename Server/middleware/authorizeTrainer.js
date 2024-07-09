@@ -9,7 +9,7 @@ const authorizeTrainer = (req, res, next) => {
             next(); 
         } else {
             console.log('1');
-            res.status(403).send({ ok: false , massage: `user ${user.user_id} role ${user.role_id} tried to do actions without permissions`, res: "You dont have the permission what are you doing here 😈"}); 
+            res.status(403).send({ ok: false , message: `User ${user.user_id} role ${user.role_id} tried to do actions without permissions in a Trainer page.`, res: "You dont have the permission what are you doing here 😈"}); 
         }
     });
 };

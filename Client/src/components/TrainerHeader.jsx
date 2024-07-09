@@ -9,7 +9,7 @@ export default function TrainerHeader({ setUserData, userData }) {
     const [notificationsCount, setNotificationsCount] = useState(0);
 
     const fetchNotificationsCount = () => {
-        const url = `notifications?user_id=${userData.user_id}andis_read=0`;
+        const url = `notifications?user_id=${userData.user_id}&is_read=0`;
 
         serverRequests('GET', url, null)
             .then(response => response.json())

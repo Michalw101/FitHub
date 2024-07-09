@@ -5,7 +5,7 @@ import '../css/newTrainers.css';
 import { useNavigate } from 'react-router-dom';
 
 export default function NewTrainers() {
-  
+
   const [trainers, setTrainers] = useState(null);
   const navigate = useNavigate();
 
@@ -19,10 +19,19 @@ export default function NewTrainers() {
       }).then(data => {
         if (data.ok == false) {
           alert(data.res);
-          //note to admin
+          serverRequests('POST', 'notifications', { users: [214955064, 214859415], message: data.message })
+            .then(response => {
+              if (!response.ok) {
+                return;
+              }
+              return response.json();
+            })
+            .catch(error => {
+              console.error('Error ', error);
+            });
           navigate('/');
           return;
-      }
+        }
         if (data) {
           setTrainers(data.trainers);
         }
@@ -43,7 +52,7 @@ export default function NewTrainers() {
     </div>;
 
   if (trainers.length === 0)
-    return <h1>No trainers found.</h1>
+    return <h2>No trainers found.</h2>
 
 
   return (
@@ -53,7 +62,7 @@ export default function NewTrainers() {
         {trainers.map((trainer) => (
           <div key={trainer.user_id}>
             {console.log('trainer: ', trainer)}
-            <NewTrainer trainer={trainer} setTrainers={setTrainers} trainers={trainers}/>
+            <NewTrainer trainer={trainer} setTrainers={setTrainers} trainers={trainers} />
           </div>
         ))}
       </div>

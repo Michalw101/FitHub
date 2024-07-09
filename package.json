@@ -4,6 +4,7 @@
     "bcrypt": "^5.1.1",
     "react-awesome-calendar": "^1.0.14",
     "react-calendar": "^5.0.0",
+    "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.23.1"
   }
 }

@@ -41,6 +41,7 @@
 /* כפתור NEXT */
 
 .btn-conteiner {
+  border-style: none;
   margin-top: 20px;
   margin-bottom: 20px;
   display: flex;

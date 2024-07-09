@@ -12,7 +12,7 @@ const authorizeAdmin = (req, res, next) => {
         } else {
             res.status(403).send({
                 ok: false,
-                message: `User ${user.user_id} with role ${user.role_id} tried to perform actions without permissions`,
+                message: `User ${user.user_id} with role ${user.role_id} tried to perform actions without permissions in an Admin page.`,
                 res: "You don't have the permission. What are you doing here 😈"
             });
         }

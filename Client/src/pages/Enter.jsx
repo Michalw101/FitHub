@@ -41,8 +41,7 @@ export default function EnterPage() {
         <>
             <div className='enterLinks'>
                 <NavLink to="/login" className="styledLink">Get Started</NavLink>
-                <NavLink to="/blog" className="styledLink">Blogs</NavLink>
-                <NavLink to="/trainers" className="styledLink">Our Trainers</NavLink>
+                <NavLink to="/trainers" className="styledLink">FitHub's Trainers</NavLink>
             </div>
 
             <div className="enterPageWelcome">

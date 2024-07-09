@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { serverRequests } from '../Api';
 import TrainerSmallProfile from './TrainerSmallProfile';
+import { useNavigate } from 'react-router-dom';
 import '../css/trainers.css';
 
 
-const Trainers = () => {
+const Trainers = (userData) => {
+
+  const navigate = useNavigate();
   const [allTrainers, setAllTrainers] = useState(null);
   const [filteredTrainers, setFilteredTrainers] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -72,8 +75,31 @@ const Trainers = () => {
       </div>
     );
 
+  const backBtnClick = () => {
+    navigate('/');
+  }
+
   return (
     <div>
+
+      <button className="button3" onClick={backBtnClick}>
+        <div className="button-box">
+          <span className="button-elem">
+            <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+              ></path>
+            </svg>
+          </span>
+          <span className="button-elem">
+            <svg viewBox="0 0 46 40">
+              <path
+                d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+              ></path>
+            </svg>
+          </span>
+        </div>
+      </button>
 
       <div className="input2-container">
         <div className="search">
@@ -125,7 +151,7 @@ const Trainers = () => {
 
       <div id='trainers'>
         {filteredTrainers && filteredTrainers.length === 0 ? (
-          <h1>No trainers found.</h1>
+          <h2>No trainers found.</h2>
         ) : (
           filteredTrainers.map(trainer => (
             <div key={trainer.trainer_id}>

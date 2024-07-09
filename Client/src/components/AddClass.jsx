@@ -24,14 +24,23 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
     const handleCreateClass = () => {
         serverRequests('POST', 'classes', newClass)
             .then(response => {
-                console.log(response);             
+                console.log(response);
                 return response.json();
             })
             .then(data => {
                 if (data) {
                     if (data.ok == false) {
                         alert(data.res);
-                        //note to admin
+                        serverRequests('POST', 'notifications', { users: [214955064, 214859415], message: data.message })
+                            .then(response => {
+                                if (!response.ok) {
+                                    return;
+                                }
+                                return response.json();
+                            })
+                            .catch(error => {
+                                console.error('Error ', error);
+                            });
                         navigate('/');
                         return;
                     }
@@ -53,7 +62,7 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
             }
         });
     };
-    
+
 
     const genderOptions = [
         { value: 'male', label: 'Only men' },
@@ -80,7 +89,7 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
         <div className="modal-overlay">
             <div className="modal-content">
                 <button className="close-button" onClick={onClose}>❌</button>
-                <h2>Add Class</h2><br />
+                <h1>Create Class</h1><br />
                 <div>
                     <p>Class Description</p>
                     <div className='inputGroup'>
@@ -93,14 +102,17 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
                             onChange={handleChanged}
                         />
                     </div>
-                    <p>Class date</p><br />
+                    <p>Class date</p>
+                    <div className="inputGroup">
                     <DatePicker
                         selected={newClass.date ? new Date(newClass.date) : null}
                         onChange={handleDateChange}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="DD/MM/YYYY"
                         minDate={new Date(Date.now() + 86400000)}
+                     className="customDatePicker"
                     /><br />
+                    </div>
                     <p>Class hour</p>
                     <div className='inputGroup'>
                         <input
@@ -134,7 +146,7 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
                             onChange={handleChanged}
                         />
                     </div>
-                    <p>You need to set limits on this class</p><br />
+                    <h4>You need to set limits on this class</h4><br />
                     <p>Select the appropriate option</p><br />
                     <div className="radio-group inputGroup">
                         {genderOptions.map((option) => (
@@ -172,7 +184,7 @@ const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => 
                             </button>
                         ))}
                     </div>
-                    <button onClick={handleCreateClass}>Create Class</button>
+                    <button className="card__btn" onClick={handleCreateClass}>CREATE CLASS</button>
                 </div>
             </div>
         </div>

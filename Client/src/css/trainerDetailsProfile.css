@@ -75,7 +75,7 @@
 
 /*social links*/
 
-  .wrapper {
+  .wrapper_ {
     list-style: none;
     width: 100%;
     padding-top: 20px;
@@ -84,7 +84,7 @@
     justify-content: center;
   }
   
-  .wrapper .icon {
+  .wrapper_ .icon {
     position: relative;
     background: #fff;
     border-radius: 50%;
@@ -101,7 +101,7 @@
     transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
   
-  .wrapper .tooltip {
+  .wrapper_ .tooltip {
     position: absolute;
     top: 0;
     font-size: 14px;
@@ -116,18 +116,18 @@
   }
   
 
-.wrapper .instagram {
+.wrapper_ .instagram {
   color: #e4405f;
 }
-.wrapper .twitter {
+.wrapper_ .twitter {
   color: #1da1f2;
 }
-.wrapper .facebook {
+.wrapper_ .facebook {
   color: #1877f2;
 }
 
 
-  .wrapper .tooltip::before {
+  .wrapper_ .tooltip::before {
     position: absolute;
     content: "";
     height: 8px;
@@ -139,35 +139,35 @@
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
   
-  .wrapper .icon:hover .tooltip {
+  .wrapper_ .icon:hover .tooltip {
     top: -45px;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
   }
   
-  .wrapper .icon:hover span,
-  .wrapper .icon:hover .tooltip {
+  .wrapper_ .icon:hover span,
+  .wrapper_ .icon:hover .tooltip {
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
   }
   
-  .wrapper .facebook:hover,
-  .wrapper .facebook:hover .tooltip,
-  .wrapper .facebook:hover .tooltip::before {
+  .wrapper_ .facebook:hover,
+  .wrapper_ .facebook:hover .tooltip,
+  .wrapper_ .facebook:hover .tooltip::before {
     background: #1877f2;
     color: #fff;
   }
   
-  .wrapper .twitter:hover,
-  .wrapper .twitter:hover .tooltip,
-  .wrapper .twitter:hover .tooltip::before {
+  .wrapper_ .twitter:hover,
+  .wrapper_ .twitter:hover .tooltip,
+  .wrapper_ .twitter:hover .tooltip::before {
     background: #1da1f2;
     color: #fff;
   }
   
-  .wrapper .instagram:hover,
-  .wrapper .instagram:hover .tooltip,
-  .wrapper .instagram:hover .tooltip::before {
+  .wrapper_ .instagram:hover,
+  .wrapper_ .instagram:hover .tooltip,
+  .wrapper_ .instagram:hover .tooltip::before {
     background: #e4405f;
     color: #fff;
   }

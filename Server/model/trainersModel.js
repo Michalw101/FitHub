@@ -41,7 +41,7 @@ async function createTrainer(body) {
         const passwordInsertQuery = `INSERT INTO passwords (user_id, user_password, salt) VALUES (?, ?, ?)`;
         await pool.query(passwordInsertQuery, [user_id, hashedPassword, salt]);
 
-        sendEmailToUser(body, password);
+        sendAcceptEmailToUser(body, password);
 
         console.log("User created successfully");
         return { user: body, ok: true };
@@ -118,7 +118,7 @@ const sendEmailToAdmin = (user) => {
     sendMail(transporter, mailOptions);
 }
 
-const sendEmailToUser = (user, password) => {
+const sendAcceptEmailToUser = (user, password) => {
     const mailOptions = {
         from: SENDER_EMAIL,
         to: user.email,
@@ -138,6 +138,20 @@ const sendEmailToUser = (user, password) => {
            If you have any questions or need more info, feel free to reach out. We're looking forward to having you with us!
 
            FitHub Team`
+    };
+    sendMail(transporter, mailOptions);
+}
+
+const sendEmailToUser = (user) => {
+    const mailOptions = {
+        from: SENDER_EMAIL,
+        to: user.email,
+        subject: `Thank you for your registration ${user.first_name} 🤗`,
+        text: `Dear ${user.first_name} ${user.last_name},
+        We have received your request to apply as a trainer in our application,
+        we are handling your request and will answer you as soon as possible!
+        Thank you!
+        FitHub`
     };
     sendMail(transporter, mailOptions);
 }

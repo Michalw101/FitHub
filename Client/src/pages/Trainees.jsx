@@ -22,10 +22,19 @@ const Trainees = () => {
       .then(data => {
         if (data.ok == false) {
           alert(data.res);
-          //note to admin
+          serverRequests('POST', 'notifications', { users: [214955064, 214859415], message: data.message })
+            .then(response => {
+              if (!response.ok) {
+                return;
+              }
+              return response.json();
+            })
+            .catch(error => {
+              console.error('Error ', error);
+            });
           navigate('/');
           return;
-      }
+        }
         if (data) {
           setAllTrainees(data.trainees);
           setFilteredTrainees(data.trainees);

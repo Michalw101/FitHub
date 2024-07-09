@@ -1,11 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import React from 'react';
 import TraineeClasses from './TraineeClasses';
 
 const TraineeHome = ( {userData}) => {
-
-  const navigate = useNavigate();
-
 
   return (
     <div>

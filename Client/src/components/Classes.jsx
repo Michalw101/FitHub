@@ -245,7 +245,7 @@ const Classes = ({ setClasses, classes, userData }) => {
                 <div>
                     <div className="single-class-modal">
                         <div className="single-class-content">
-                        <button className="close-button" onClick={() => { setSelectedDayEvents([]) }}>❌</button>
+                            <button className="close-button" onClick={() => { setSelectedDayEvents([]) }}>❌</button>
                             <h2>What's on today? {new Date(date).toLocaleDateString()}</h2><br />
 
                             {selectedDayEvents.map(event => {
@@ -253,12 +253,26 @@ const Classes = ({ setClasses, classes, userData }) => {
                                 const eventHasPassed = currentDateTime > event.from;
                                 return (
                                     <div key={event.id} className="event-details">
-                                        <h3>{event.title}</h3><br />
+                                        <h3>{event.title} 💪</h3><br />
                                         <p>{`${new Date(event.from).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.to).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p><br />
                                         <p><strong>Only ${event.price}</strong></p>
-                                        <button onClick={() => handleSeeMoreClick(event.id)}>
-                                            {seeMoreBtn === event.id ? 'See less...' : 'See more...'}
-                                        </button>
+
+                                        <label className="container" onClick={() => handleSeeMoreClick(event.id)}>
+                                            <input
+                                                type="checkbox"
+                                                checked={seeMoreBtn === event.id}
+                                                onChange={() => handleSeeMoreClick(event.id)}
+                                            />
+                                            {seeMoreBtn === event.id ? (
+                                                <svg className="chevron-down" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                                                    <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
+                                                </svg>
+                                            ) : (
+                                                <svg className="chevron-right" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                                                    <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path>
+                                                </svg>
+                                            )}
+                                        </label>
                                         {seeMoreBtn === event.id && (
                                             <>
                                                 <br />
@@ -273,7 +287,7 @@ const Classes = ({ setClasses, classes, userData }) => {
                                                 ) : (
                                                     <p>No restrictions.</p>
                                                 )}
-                                                <br />
+                                                
                                                 {userData.role_id === 3 && !eventHasPassed && (
                                                     <button className="contactButton" onClick={() => handleClassRegistration(event)}>
                                                         Join Now
@@ -285,17 +299,17 @@ const Classes = ({ setClasses, classes, userData }) => {
                                                         </div>
                                                     </button>
                                                 )}
-                                                <br />
+                                                
                                                 {registrationError && (
                                                     <p style={{ color: 'red' }}>{registrationError}</p>
                                                 )}
                                                 <br />
-                                                <p>Contact {event.trainer.first_name}!</p><br />
+                                                <p>Contact {event.trainer.first_name}!</p>
                                                 <p><strong>{event.trainer.phone}</strong></p>
-                                                <p><strong>{event.trainer.email}</strong></p><br />
+                                                <p><strong>{event.trainer.email}</strong></p>
 
                                                 <p>Find {event.trainer.first_name}...</p>
-                                                <div className="wrapper">
+                                                <div className="wrapper_">
                                                     <a className="icon facebook" href={event.trainer.facebook_link}>
                                                         <span className="tooltip">{event.trainer.facebook_link}</span>
                                                         <svg
