@@ -5,7 +5,6 @@ const authorizeTrainer = require('../middleware/authorizeTrainer')
 
 
 router.get("/",authorizeTrainer, async (req, res) => {
-    console.log("query", req.query);
     try {
         res.send(await controller.getTrainerClasses(req.query));
     } catch (err) {
@@ -14,7 +13,6 @@ router.get("/",authorizeTrainer, async (req, res) => {
 });
 
 router.get("/trainee/registered", async (req, res) => {
-    console.log("query", req.query);
     try {
         res.send(await controller.getTraineeRegisteredClasses(req.query));
     } catch (err) {
@@ -23,7 +21,6 @@ router.get("/trainee/registered", async (req, res) => {
 });
 
 router.get("/trainee/approved", async (req, res) => {
-    console.log("query", req.query);
     try {
         res.send(await controller.getTraineeApprovedClasses(req.query));
     } catch (err) {

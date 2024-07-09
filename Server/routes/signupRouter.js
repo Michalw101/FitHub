@@ -4,7 +4,6 @@ const controller = require('../controllers/signupController.js');
 
 
 router.post("/", async (req, res) => {
-    console.log("req:", req.body);
     try {
         res.send(await controller.postSignup(req.body));
 
@@ -16,10 +15,8 @@ router.post("/", async (req, res) => {
 
 
 router.put("/", async (req, res) => {
-    console.log("req:", req.body);
     try {
         const result = await controller.putSignup(req.body);
-        console.log('result', result);
         if (result.success) {
             req.session.jwt = result.token;
             req.session.user = result.user;

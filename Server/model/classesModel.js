@@ -20,7 +20,6 @@ async function getAllClasses() {
 };
 
 async function getClassesByQuery(query) {
-    console.log(query);
     try {
         let user_id;
         if (typeof query === 'object' && query.user_id) {
@@ -71,8 +70,6 @@ AND (l.chronic_disease = FALSE OR i.chronic_disease = FALSE)
 AND (l.pregnancy_risk = FALSE OR i.pregnancy_risk = FALSE);
 `;
         const result = await pool.query(sql, user_id);
-
-        console.log('result class', result[0]);
 
         if (result.length > 0) {
             return { success: true, message: "Classes successful", classes: result[0] };
@@ -182,7 +179,6 @@ async function createClass(body) {
         `;
         const [limitsResult] = await pool.query(limitsSql, [trainer_id, gender_limit, heart_disease, chest_pain, fainted_or_dizziness, asthma, family_heart_disease_or_sudden_death, exercise_supervision, chronic_disease, pregnancy_risk]);
 
-        console.log(limitsResult.insertId);
 
         const classSql = `
             INSERT INTO classes (trainer_id, date, hour, description, price, link, limits_id, class_type)
@@ -190,7 +186,6 @@ async function createClass(body) {
         `;
         const [classResult] = await pool.query(classSql, [trainer_id, date, hour, description, price, link, limitsResult.insertId, class_type]);
 
-        console.log(classResult.insertId);
 
         const sqlSelect = `
             SELECT classes.*, trainers.*, users.*, limits_in_class.*
@@ -202,7 +197,6 @@ async function createClass(body) {
         `;
         const [response] = await pool.query(sqlSelect, [classResult.insertId]);
 
-        console.log(response[0]);
 
         if (response.length > 0) {
             return { success: true, message: "Class created successfully", class: response[0] };
@@ -224,7 +218,6 @@ async function deleteClass(id) {
         const limitSql = `select limits_id from classes where class_id = ?`;
         const limitResult = await pool.query(limitSql, [id]);
         const limit_id = limitResult[0][0].limits_id;
-        console.log(limit_id)
         const classSql = `DELETE FROM classes WHERE class_id = ?`;
         await pool.query(classSql, [id]);
 

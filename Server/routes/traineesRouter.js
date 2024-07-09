@@ -28,7 +28,6 @@ router.get("/trainer/:id", async (req, res) => {
 
 
 router.get("/waiting", async (req, res) => {
-    console.log('waiting received:', req.query);
     try {
         res.send(await controller.getWaitingTrainees(req.query));
     } catch (err) {
@@ -38,7 +37,6 @@ router.get("/waiting", async (req, res) => {
 });
 
 router.delete("/waiting", authorizeTrainer, async (req, res) => {
-    console.log('delete waiting received:', req.query);
     try {
         res.send(await controller.deleteWaitingTrainees(req.query));
     } catch (err) {
@@ -69,7 +67,6 @@ router.delete("/approved", authorizeTrainer, async (req, res) => {
 router.delete("/:id", authorizeAdmin, async (req, res) => {
     const id = req.params.id;
     const sendMail = req.body.sendMail;
-    console.log('delete trainee received:');
     try {
         res.send(await controller.deleteTrainee(id, sendMail));
     } catch (err) {
@@ -105,7 +102,6 @@ router.post("/approved", authorizeTrainer, async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        console.log('trainees router');
         res.send(await controller.updateTrainee(req.body, id));
     } catch (err) {
         console.error("Error in PUT /:", err);
@@ -114,7 +110,6 @@ router.put('/:id', async (req, res) => {
 })
 
 router.post('/waiting', async (req, res) => {
-    console.log('waiting class router', req.body);
     try {
         res.send(await controller.createWaitingTrainee(req.body));
     } catch (err) {

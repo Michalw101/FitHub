@@ -24,7 +24,6 @@ async function createNotification(body) {
 }
 
 async function getNotifications(query) {
-    console.log('query', query);
     try {
         let sql;
         let params;
@@ -52,7 +51,6 @@ async function getNotifications(query) {
 async function putNotifications(body) {
     try {
         const {notifications} = body
-        console.log('noti', notifications)
         const sql = `UPDATE notifications SET is_read = 1 WHERE notification_id = ?`;
         for (let noteId of notifications) {
             await pool.query(sql, noteId);

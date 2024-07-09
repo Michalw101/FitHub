@@ -21,6 +21,8 @@ const Registration = ({ setUserData }) => {
             setSignUpError('The passwords are not the same');
             return;
         }
+        if(!CheckPassword(password))
+            return;
 
         const signupUser = {
             user_id: userId,

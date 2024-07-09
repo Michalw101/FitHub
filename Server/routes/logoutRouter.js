@@ -3,7 +3,6 @@ const router = express.Router();
 
 router.post('/',async (req, res) => {
 
-    console.log("in router logout")
     req.session.destroy(err => {
         if (err) {
             return res.status(500).send({ message: 'Logout failed' });

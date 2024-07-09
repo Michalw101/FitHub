@@ -195,7 +195,14 @@ const Classes = ({ setClasses, classes, userData }) => {
                         class_id: event.id
                     };
                     serverRequests('POST', url, body)
-                        .then(response => response.ok ? response.json() : setRegistrationError("You already registered for this class"))
+                        .then(response => {
+                            if (response.ok)
+                                return response.json()
+                            else {
+                                setRegistrationError("You already registered for this class")
+                                return;
+                            }
+                        })
                         .then(data => {
                             if (data) {
                                 alert(`Hey! To complete the registration process for the ${event.title} class, pay by Bit a $${event.price} payment to the Trainer ${event.trainer.first_name}. A link to the class will be sent to you when the payment is confirmed. ${event.trainer.first_name}'s phone number: ${event.trainer.phone}. Thank you very much!`);
@@ -237,6 +244,8 @@ const Classes = ({ setClasses, classes, userData }) => {
                 <SingleClass
                     userData={userData}
                     event={selectedEvent}
+                    registrationError={registrationError}
+                    setRegistrationError={setRegistrationError}
                     handleClassRegistration={handleClassRegistration}
                     onClose={() => { setSelectedEvent(null) }}
                 />
@@ -287,7 +296,7 @@ const Classes = ({ setClasses, classes, userData }) => {
                                                 ) : (
                                                     <p>No restrictions.</p>
                                                 )}
-                                                
+
                                                 {userData.role_id === 3 && !eventHasPassed && (
                                                     <button className="contactButton" onClick={() => handleClassRegistration(event)}>
                                                         Join Now
@@ -299,8 +308,7 @@ const Classes = ({ setClasses, classes, userData }) => {
                                                         </div>
                                                     </button>
                                                 )}
-                                                
-                                                {registrationError && (
+                                                {registrationError != '' && (
                                                     <p style={{ color: 'red' }}>{registrationError}</p>
                                                 )}
                                                 <br />

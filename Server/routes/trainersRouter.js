@@ -10,8 +10,6 @@ const authorizeTrainer = require("../middleware/authorizeTrainer")
 
 router.get("/", async (req, res) => {
     try {
-        console.log('Request received:', req.body); 
-
         res.send(await controller.getAllTrainers());
     } catch (err) {
         console.error("Error in POST /:", err); 
@@ -30,7 +28,6 @@ router.post("/",authorizeAdmin, async (req, res) => {
 });
 
 router.post("/waiting", async (req, res) => {
-    console.log("req:", req.body);
     try {
         res.send(await controller.postSignup(req.body));
     } catch (err) {
@@ -52,7 +49,6 @@ router.put('/:id',authorizeTrainer,  async (req, res) => {
 
 router.delete("/:id",authorizeAdmin, async (req, res) => {
     const id= req.params.id;
-    console.log('delete trainer received:'); 
     try {
         res.send(await controller.deleteTrainer(id));
     } catch (err) {

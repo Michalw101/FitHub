@@ -41,7 +41,6 @@ async function getEmailById(id) {
     try {
         const userSql = `SELECT email FROM users WHERE user_id = ?`;
         const result = await pool.query(userSql, [id]);
-        console.log(result[0][0]);
         if (result[0].length === 0) {
             return { success: true, message: "Incorect ID"};
         }
@@ -55,10 +54,8 @@ async function getEmailById(id) {
 
 async function getUserByEmail(email) {
     try {
-        console.log('email', email);
         const userSql = `SELECT * FROM users WHERE email = ?`;
         const result = await pool.query(userSql, [email]);
-        console.log(result[0]);
         if (result[0].length === 0) {
             return { success: true, message: "Incorrect email"};
         }

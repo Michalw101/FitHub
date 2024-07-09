@@ -6,10 +6,6 @@ require('dotenv').config();
 async function postLogin(body) {
     try {
         const { user_id, password } = body;
-        console.log('user_id', user_id);
-        console.log('password', password);
-
-
         const loginSql = `SELECT * FROM passwords where user_id = ?`
         const loginResult = await pool.query(loginSql, user_id);
 
@@ -44,7 +40,6 @@ async function postLogin(body) {
                 }
 
                 const user = fullUserResult[0][0];
-                console.log('User:', user);
 
                 const accessToken = jwt.sign({ user_id: user.user_id, role_id: user.role_id }, JWT_SECRET, { expiresIn: '1h' });
 
@@ -68,10 +63,8 @@ async function postLogin(body) {
 
 async function getSalt(id) {
     try {
-        console.log('salt model');
         const sql = "SELECT salt from passwords where user_id = ? "
         const result = await pool.query(sql, id);
-        console.log(result[0]);
 
         if (result[0].length > 0) {
             return { success: true, salt: result[0][0].salt };

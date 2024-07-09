@@ -23,7 +23,6 @@ async function getEmailById(id) {
 
 async function updatePassword(body, id) {
     try {
-        console.log('controller id', id);
         const { password } = body;
         const salt = crypto.randomBytes(16).toString('hex');
 
@@ -39,7 +38,6 @@ async function forgotPassword(body) {
     try {
         const result = await model.getUserByEmail(body.email);
         const user= result.user;
-        console.log('user', user);
 
         if (!user) {
             return { success: false, message: "User not found" };
@@ -69,7 +67,6 @@ const generateRandomPassword = (length) => {
 }
 
 const sendEmailToUser = async (user, password) => {
-    console.log('user', user);
 
     const { SENDER_EMAIL, APP_PASSWORD } = process.env;
 

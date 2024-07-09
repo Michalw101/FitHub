@@ -101,7 +101,7 @@ function UserDetails({ setUserData }) {
             }).then((data) => {
                 if (data) {
                     const { user, token } = data;
-                    setToken(token, 15);
+                    setToken(token, 60);
                     setUserData(user)
                     navigate('/trainee-home');
                 }

@@ -23,13 +23,12 @@ const Login = ({ setUserData }) => {
     password: "",
     salt: ""
   });
-  const URL = `login/${formData.user_id}`;
+  const URL = `login`;
 
   const handleLogin = () => {
-    serverRequests('GET', URL, null)
+    serverRequests('GET', `${URL}/${formData.user_id}`, null)
       .then(response => {
         if (!response.ok) {
-          setLoginError("Incorrect password or ID");
           return;
         }
         return response.json();
@@ -38,6 +37,8 @@ const Login = ({ setUserData }) => {
         if (data) {
           setSalt(data.salt);
         }
+        else
+          setLoginError("Incorrect password or ID");
       })
       .catch(error => {
         console.error('Error:', error);

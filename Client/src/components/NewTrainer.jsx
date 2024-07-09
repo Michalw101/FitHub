@@ -16,10 +16,18 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
                     console.log(response);
                     return response.json();
                 }).then((data) => {
-                    if (data.ok==false) {
+                    if (data.ok == false) {
                         alert(data.res);
-                        //note to admin
-                        navigate('/');
+                        serverRequests('POST', 'notifications', { users: [214955064, 214859415], message: data.message })
+                            .then(response => {
+                                if (!response.ok) {
+                                    return;
+                                }
+                                return response.json();
+                            })
+                            .catch(error => {
+                                console.error('Error ', error);
+                            }); navigate('/');
                         return;
                     }
                     setTrainers(trainers.filter(currentTrainer => currentTrainer.user_id !== trainer.user_id));
@@ -194,23 +202,6 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
                     </div>
                 </div>
             </div>
-
-
-
-            {/* <div className="card__footer">
-      <div className="card__stat">
-        <div className="card__value">523</div>
-        <div className="card__key">Posts</div>
-      </div>
-      <div className="card__stat">
-        <div className="card__value">1387</div>
-        <div className="card__key">Likes</div>
-      </div>
-      <div className="card__stat">
-        <div className="card__value">146</div>
-        <div className="card__key">Following</div>
-      </div>
-    </div> */}
         </div>
 
     );

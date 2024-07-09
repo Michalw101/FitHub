@@ -7,8 +7,6 @@ async function getAllNewTrainers() {
         const sql = `SELECT * FROM trainers_waiting_list`;
         const result = await pool.query(sql);
 
-        console.log(result);
-
         if (result.length > 0) {
             return { success: true, message: "Trainers successful", trainers: result[0] };
         }
@@ -24,7 +22,6 @@ async function getAllNewTrainers() {
 
 async function deleteTrainer(id, sendMail) {
     try {
-        console.log('delete trainer model');
         const getSql = `SELECT * FROM trainers_waiting_list where user_id = ?`;
         const user = await pool.query(getSql, id);
 

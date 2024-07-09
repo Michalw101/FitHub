@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import '../css/singleClass.css'
-const SingleClass = ({ userData, event, onClose, registrationError, handleClassRegistration }) => {
-    // const [isDetailsVisible, setIsDetailsVisible] = useState(false);
-
-    // const toggleDetailsVisibility = () => {
-    //     setIsDetailsVisible(!isDetailsVisible);
-    // };
-
+const SingleClass = ({ userData, event, onClose, registrationError, setRegistrationError, handleClassRegistration }) => {
+   
     const [seeMoreBtn, setSeeMoreBtn] = useState(0);
-
     const handleSeeMoreClick = (id) => {
         setSeeMoreBtn(prev => (prev !== id ? id : 0));
     };
@@ -29,7 +23,7 @@ const SingleClass = ({ userData, event, onClose, registrationError, handleClassR
     return (
         <div className="single-class-modal">
             <div className="single-class-content">
-                <button className="close-button" onClick={onClose}>❌</button>
+                <button className="close-button" onClick={()=>{onClose(); setRegistrationError(null)}}>❌</button>
                 <h2>What's on today? {new Date(event.from).toLocaleDateString()}</h2><br />
                 <h3>{event.title} 💪</h3><br />
                 <p>{`${new Date(event.from).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.to).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p><br />

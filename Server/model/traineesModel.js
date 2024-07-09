@@ -74,11 +74,8 @@ async function getWaitingTrainees(query) {
 async function getApprovedTrainees(query) {
     try {
         const { class_id } = query;
-        console.log("class_id", class_id);
         const sql = `SELECT * FROM trainees_in_class join users where users.user_id = trainees_in_class.trainee_id and class_id =? `;
         const result = await pool.query(sql, class_id);
-        console.log(result);
-
 
         if (result.length > 0) {
             return { success: true, message: "trainees successful", trainees: result[0] };
@@ -236,7 +233,6 @@ async function updateTrainee(body, id) {
         const getInfoIdSql = 'select information_id from trainees where trainee_id =?';
         const infoIdResult = await pool.query(getInfoIdSql, user_id);
         const info_id = infoIdResult[0][0].information_id;
-        console.log("info_id", info_id);
 
         const infoSql = `update information set heart_disease=?, chest_pain_at_rest=?, chest_pain_daily_activity=?, chest_pain_exercise=?,
             dizziness_balance_loss=?, fainting=?, asthma_medication=?, asthma_symptoms=?, family_heart_disease=?, family_sudden_death=?, 
@@ -259,11 +255,8 @@ async function checkIfApproved(query) {
     try {
 
         const { user_id, class_id } = query;
-        console.log('user_id', user_id);
-        console.log('class_id', class_id);
         const sql = `select * from trainees_in_class where trainee_id =? and class_id =?`;
         const result = await pool.query(sql, [user_id, class_id]);
-        console.log(result);
         if (result[0].length > 0)
             return { success: true, message: "trainees successful", isApproved: true };
         else
@@ -276,7 +269,6 @@ async function checkIfApproved(query) {
 }
 async function createWaitingTrainee(body) {
     try {
-        console.log("model", body);
         const { trainee_id, class_id} = body;
 
         const userInsertQuery = `INSERT INTO trainees_waiting_list (trainee_id ,class_id)

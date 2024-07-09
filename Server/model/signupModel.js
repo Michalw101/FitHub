@@ -51,7 +51,6 @@ async function postSignup(body) {
 
         const idSql = `SELECT * FROM users WHERE user_id = ?`;
         const result = await pool.query(idSql, user_id);
-        console.log(result[0][0]);
 
         if (result[0][0]) {
             console.log("User already exist");

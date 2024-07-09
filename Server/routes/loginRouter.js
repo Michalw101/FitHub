@@ -4,9 +4,7 @@ const controller = require('../controllers/loginController.js');
 
 router.post("/", async (req, res) => {
     try {
-        console.log('req', req.body);
         const result = await controller.postLogin(req.body);
-        console.log('result', result);
         if (result.success) {
             req.session.jwt = result.token;
             req.session.user = result.user;

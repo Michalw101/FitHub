@@ -5,7 +5,6 @@ const authorizeTrainer = require('../middleware/authorizeTrainer');
 
 
 router.get("/", authorizeTrainer, async (req, res) => {
-    console.log('all');
     try {
         res.send(await controller.getAllClasses());
     } catch (err) {
@@ -15,7 +14,6 @@ router.get("/", authorizeTrainer, async (req, res) => {
 
 
 router.get("/by-query", async (req, res) => {
-    console.log('query');
     try {
         const query= req.query; 
         res.send(await controller.getClassesByQuery(query));
@@ -27,7 +25,6 @@ router.get("/by-query", async (req, res) => {
 
 router.post('/', authorizeTrainer, async (req, res) => {
     try {
-        console.log('class router');
         res.send(await controller.createClass(req.body));
     } catch (err) {
         res.status(500).send({ ok: false });
@@ -37,7 +34,6 @@ router.post('/', authorizeTrainer, async (req, res) => {
 router.put('/:id', authorizeTrainer, async (req, res) => {
     try {
         const id = req.params.id;
-        console.log('class router');
         res.send(await controller.updateClass(req.body, id));
     } catch (err) {
         res.status(500).send({ ok: false });
@@ -46,7 +42,6 @@ router.put('/:id', authorizeTrainer, async (req, res) => {
 
 router.delete("/:id" ,authorizeTrainer,  async (req, res) => {
     const id = req.params.id;
-    console.log('delete class router');
     try {
         res.send(await controller.deleteClass(id));
     } catch (err) {

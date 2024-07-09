@@ -107,7 +107,7 @@ function App() {
           </Route>
 
           <Route path="/trainer-home" element={<HomeLayout setUserData={setUserData} userData={userData} role={2} />} >
-            <Route index element={<TrainerHome />} />
+            <Route index element={<TrainerHome userData={userData} />} />
             <Route path="trainer-profile" element={<TrainerProfile />} />
             <Route path="trainer-classes" element={<TrainerClasses userData={userData} />} />
             <Route path="my-classes" element={<MyClasses userData={userData} />} />

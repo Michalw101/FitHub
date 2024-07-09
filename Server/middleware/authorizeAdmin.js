@@ -5,7 +5,6 @@ const authorizeAdmin = (req, res, next) => {
 
     authenticateSession(req, res, () => {
         const user = req.user;
-        console.log('admin user', user);
 
         if (user && user.role_id === 1) {
             next();
