@@ -13,6 +13,11 @@
     --gradient: linear-gradient(to bottom, #2adac2, #2adac2, #2adac2);
     --color: #2adac2
   }
+
+  .notification.read {
+    background: #38383a; 
+}
+
   
   .notification:before {
     position: absolute;

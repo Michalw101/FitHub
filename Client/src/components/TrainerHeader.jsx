@@ -8,16 +8,11 @@ export default function TrainerHeader({ setUserData, userData }) {
     const navigate = useNavigate();
     const [notificationsCount, setNotificationsCount] = useState(0);
 
-    useEffect(() => {
-        const url = `notifications?user_id=${userData.user_id}&is_read=false`;
-    
+    const fetchNotificationsCount = () => {
+        const url = `notifications?user_id=${userData.user_id}andis_read=0`;
+
         serverRequests('GET', url, null)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch notifications');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data && data.notifications) {
                     setNotificationsCount(data.notifications.length);
@@ -29,8 +24,13 @@ export default function TrainerHeader({ setUserData, userData }) {
                 console.error('Error', error);
                 setNotificationsCount(0);
             });
+    };
+
+    useEffect(() => {
+        const intervalId = setInterval(fetchNotificationsCount, 5000);
+
+        return () => clearInterval(intervalId);
     }, [userData.user_id]);
-    
 
     const profileHandleClick = () => {
         navigate('trainer-profile')
@@ -45,7 +45,9 @@ export default function TrainerHeader({ setUserData, userData }) {
     }
 
     const handleNotificationsClick = () => {
-        navigate('notifications')
+        setNotificationsCount(0);
+        navigate('notifications');
+        
     }
 
     const handleLogoutClicked = () => {
@@ -131,7 +133,6 @@ export default function TrainerHeader({ setUserData, userData }) {
                     Notifications
                     
                 </button>
-
                 
 
                 <button className="value" onClick={handleLogoutClicked}>

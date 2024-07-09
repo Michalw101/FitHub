@@ -6,33 +6,63 @@ import '../css/notification.css';
 const Notifications = ({ userData }) => {
     const [notifications, setNotifications] = useState([]);
 
-    useEffect(() => {
+    const fetchNotifications = () => {
         const urlFetch = `notifications?user_id=${userData.user_id}`;
-        const urlMarkAsRead = `notifications/markAsRead?user_id=${userData.user_id}`;
 
-        const fetchAndMarkNotifications = () => {
-            serverRequests('GET', urlFetch, null)
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data && data.notifications) {
-                        setNotifications(data.notifications);
-                    } else {
-                        setNotifications([]);
-                    }
-                    return serverRequests('PUT', urlMarkAsRead, null);
-                })
-                .then((response) => response.json())
-                .catch((error) => {
-                    console.error('Error', error);
-                });
+        serverRequests('GET', urlFetch, null)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.notifications) {
+                    const sortedNotifications = data.notifications.sort((a, b) => new Date(b.hour) - new Date(a.hour)).reverse();
+                    setNotifications(sortedNotifications);
+                } else {
+                    setNotifications([]);
+                }
+            })
+            .catch(error => {
+                console.error('Error', error);
+            });
+    };
+
+    const updateNotifications = () => {
+        if (notifications.length === 0) return;
+
+        const url = `notifications`;
+        const notificationsId = notifications.map(note => note.notification_id);
+
+        serverRequests('PUT', url, { notifications: notificationsId })
+            .then(response => response.json())
+            .then(data => {
+                if (!data || data.ok === false) {
+                    alert("Error updating notifications");
+                }
+            })
+            .catch(error => {
+                console.error('Error', error);
+            });
+    };
+
+    useEffect(() => {
+        const fetchAndMarkNotifications = async () => {
+            await fetchNotifications();
+            updateNotifications();
         };
 
         fetchAndMarkNotifications();
 
-        const intervalId = setInterval(fetchAndMarkNotifications, 5000); 
+        const intervalId = setInterval(fetchNotifications, 5000);
 
-        return () => clearInterval(intervalId); 
+        return () => clearInterval(intervalId);
     }, [userData.user_id]);
+
+    const formatDate = (date) => {
+        const d = new Date(date);
+        const day = d.getDate();
+        const month = d.getMonth() + 1;
+        const year = d.getFullYear();
+
+        return `${day}.${month}.${year}`;
+    };
 
     return (
         <div className="notifications-container">
@@ -40,10 +70,16 @@ const Notifications = ({ userData }) => {
                 <h2>No notifications yet</h2>
             ) : (
                 notifications.map((note) => (
-                    <React.Fragment key={note.notification_id}>
-                        <Notification note={note.note} id={note.notification_id} date={note.date} hour={note.hour} is_read={note.is_read} />
+                    <div key={note.notification_id} className="notification-item">
+                        <Notification
+                            note={note.note}
+                            id={note.notification_id}
+                            date={formatDate(note.date)}
+                            hour={note.hour}
+                            is_read={note.is_read}
+                        />
                         <br />
-                    </React.Fragment>
+                    </div>
                 ))
             )}
         </div>

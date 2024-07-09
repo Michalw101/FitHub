@@ -288,19 +288,19 @@ VALUES
 INSERT INTO classes (trainer_id, date, hour, description, price, link, limits_id, class_type) 
 VALUES 
 (1, '2024-07-01', '08:00:00', 'Morning Workout with Kevin', 20, 'https://meet.google.com/sov-bfcd-uku', 1, 'Strength training'),
-(1, '2024-07-09', '18:00:00', 'Evening Workout with Kevin', 15, 'https://meet.google.com/sov-bfcd-uku', 2, 'Strength training'),
+(1, '2024-07-02', '18:00:00', 'Evening Workout with Kevin', 15, 'https://meet.google.com/sov-bfcd-uku', 2, 'Strength training'),
 (3, '2024-07-01', '08:00:00', 'Dive deep into underwater yoga with Ariel!', 20, 'https://meet.google.com/sov-bfcd-uku', 3, 'Yoga'),
 (3, '2024-07-05', '18:00:00', 'Relax and stretch with Ariel’s underwater yoga.', 15, 'https://meet.google.com/sov-bfcd-uku', 4, 'Yoga'),
 (4, '2024-07-01', '10:30:00', 'Experience the thrill of running in the savannah with Simba!', 25, 'https://meet.google.com/sov-bfcd-uku', 5, 'Crossfit'),
 (4, '2024-07-03', '06:00:00', 'Join Simba for a high-energy crossfit session.', 20, 'https://meet.google.com/sov-bfcd-uku', 6, 'Crossfit'),
-(5, '2024-07-02', '10:00:00', 'Dance your way to fitness with Belle’s enchanted dance class.', 20, 'https://meet.google.com/sov-bfcd-uku', 7, 'Zumba'),
-(5, '2024-07-04', '10:00:00', 'Join Belle for a magical Zumba session.', 30, 'https://meet.google.com/sov-bfcd-uku', 8, 'Zumba'),
-(6, '2024-07-02', '08:00:00', 'Craft ice sculptures and stay fit with Elsa’s unique workout.', 20, 'https://meet.google.com/sov-bfcd-uku', 9, 'Strength training'),
-(6, '2024-07-06', '18:00:00', 'Strength training with Elsa - cool and powerful!', 15, 'https://meet.google.com/sov-bfcd-uku', 10, 'Strength training'),
-(7, '2024-07-03', '10:30:00', 'Master desert survival skills with Aladdin.', 25, 'https://meet.google.com/sov-bfcd-uku', 11, 'Other'),
-(7, '2024-07-05', '06:00:00', 'Join Aladdin for a session on desert survival techniques.', 20, 'https://meet.google.com/sov-bfcd-uku', 12, 'Other'),
-(8, '2024-07-04', '10:00:00', 'Train like a hero with Hercules in Olympic weightlifting.', 20, 'https://meet.google.com/sov-bfcd-uku', 13, 'Strength training'),
-(8, '2024-07-06', '10:00:00', 'Build your strength with Hercules’ Olympic weightlifting class.', 30, 'https://meet.google.com/sov-bfcd-uku', 14, 'Strength training');
+(5, '2024-07-20', '10:00:00', 'Dance your way to fitness with Belle’s enchanted dance class.', 20, 'https://meet.google.com/sov-bfcd-uku', 7, 'Zumba'),
+(5, '2024-07-19', '10:00:00', 'Join Belle for a magical Zumba session.', 30, 'https://meet.google.com/sov-bfcd-uku', 8, 'Zumba'),
+(6, '2024-07-22', '08:00:00', 'Craft ice sculptures and stay fit with Elsa’s unique workout.', 20, 'https://meet.google.com/sov-bfcd-uku', 9, 'Strength training'),
+(6, '2024-07-23', '18:00:00', 'Strength training with Elsa - cool and powerful!', 15, 'https://meet.google.com/sov-bfcd-uku', 10, 'Strength training'),
+(7, '2024-07-24', '10:30:00', 'Master desert survival skills with Aladdin.', 25, 'https://meet.google.com/sov-bfcd-uku', 11, 'Other'),
+(7, '2024-07-25', '06:00:00', 'Join Aladdin for a session on desert survival techniques.', 20, 'https://meet.google.com/sov-bfcd-uku', 12, 'Other'),
+(8, '2024-07-18', '10:00:00', 'Train like a hero with Hercules in Olympic weightlifting.', 20, 'https://meet.google.com/sov-bfcd-uku', 13, 'Strength training'),
+(8, '2024-07-20', '10:00:00', 'Build your strength with Hercules’ Olympic weightlifting class.', 30, 'https://meet.google.com/sov-bfcd-uku', 14, 'Strength training');
 
 
 

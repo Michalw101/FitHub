@@ -9,7 +9,7 @@ async function createNotification(body) {
         const localDate = israelTime.toISOString().slice(0, 10);
         const localTime = israelTime.toTimeString().slice(0, 8);
 
-        const sql = `INSERT INTO notifications(user_id, note, is_read, date, hour) VALUES(?, ?, FALSE, ?, ?);`;
+        const sql = `INSERT INTO notifications(user_id, note, is_read, date, hour) VALUES(?, ?, 0, ?, ?);`;
 
         for (let userId of users) {
             await pool.query(sql, [userId, message, localDate, localTime]);
@@ -25,7 +25,7 @@ async function createNotification(body) {
 
 async function getNotifications(query) {
     try {
-        const sql = `SELECT * FROM notifications WHERE user_id = ?`;
+        const sql = `SELECT * FROM notifications WHERE ?`;
         const result = await pool.query(sql, [query]);
         if (result[0].length > 0) {
             return { success: true, message: "Notifications successful", notifications: result[0] };
@@ -38,10 +38,14 @@ async function getNotifications(query) {
     }
 }
 
-async function putNotifications(user_id) {
+async function putNotifications(body) {
     try {
-        const sql = `UPDATE notifications SET is_read = TRUE WHERE user_id = ?`;
-        await pool.query(sql, [user_id]);
+        const {notifications} = body
+        console.log('noti', notifications)
+        const sql = `UPDATE notifications SET is_read = 1 WHERE notification_id = ?`;
+        for (let noteId of notifications) {
+            await pool.query(sql, noteId);
+        }        
         return { success: true, message: "Notifications read successful" };
     } catch (err) {
         console.error("Error:", err);

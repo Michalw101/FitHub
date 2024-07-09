@@ -18,9 +18,9 @@ async function getNotifications(query) {
     }
 };
 
-async function putNotifications(user_id) {
+async function putNotifications(body) {
     try {
-        return model.putNotifications(user_id);
+        return model.putNotifications(body);
     }
     catch (err) {
         throw err;

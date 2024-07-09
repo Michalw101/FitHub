@@ -19,11 +19,9 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.put('/markAsRead', async (req, res) => {
-
+router.put('/', async (req, res) => {
     try {
-        const user_id = req.query.user_id;
-        res.send(await controller.putNotifications(user_id));
+        res.send(await controller.putNotifications(req.body));
     } catch (err) {
         res.status(500).send({ ok: false });
     }
