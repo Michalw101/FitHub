@@ -1,10 +1,14 @@
 import React from 'react';
 import '../css/notification.css';
 
-export default function Notification({ note }) {
+export default function Notification({ note, id, date, hour, is_read }) {
     return (
-        <div className="notification">
-            <p>{note}</p>
-        </div>
+            <div className="notification">
+                <div className="notiglow"></div>
+                <div className="notiborderglow"></div>
+                <div className="notititle">{id}</div>
+                <div className="notititle">{date} {hour} {is_read}</div>
+                <div className="notibody">{note}</div>
+            </div>
     );
 }

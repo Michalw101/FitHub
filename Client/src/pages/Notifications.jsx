@@ -7,30 +7,31 @@ const Notifications = ({ userData }) => {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
-        const url = `notifications?user_id=${userData.user_id}`;
+        const urlFetch = `notifications?user_id=${userData.user_id}`;
+        const urlMarkAsRead = `notifications/markAsRead?user_id=${userData.user_id}`;
 
-        serverRequests('GET', url, null)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch notifications');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data && data.notifications) {
-                    const notificationsWithRead = data.notifications.map(notification => ({
-                        ...notification,
-                        read: false
-                    }));
-                    setNotifications(notificationsWithRead);
-                } else {
-                    setNotifications([]);
-                }
-            })
-            .catch(error => {
-                console.error('Error', error);
-                setNotifications([]);
-            });
+        const fetchAndMarkNotifications = () => {
+            serverRequests('GET', urlFetch, null)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data && data.notifications) {
+                        setNotifications(data.notifications);
+                    } else {
+                        setNotifications([]);
+                    }
+                    return serverRequests('PUT', urlMarkAsRead, null);
+                })
+                .then((response) => response.json())
+                .catch((error) => {
+                    console.error('Error', error);
+                });
+        };
+
+        fetchAndMarkNotifications();
+
+        const intervalId = setInterval(fetchAndMarkNotifications, 5000); 
+
+        return () => clearInterval(intervalId); 
     }, [userData.user_id]);
 
     return (
@@ -39,7 +40,10 @@ const Notifications = ({ userData }) => {
                 <h2>No notifications yet</h2>
             ) : (
                 notifications.map((note) => (
-                    <Notification key={note.notification_id} note={note.note} />
+                    <React.Fragment key={note.notification_id}>
+                        <Notification note={note.note} id={note.notification_id} date={note.date} hour={note.hour} is_read={note.is_read} />
+                        <br />
+                    </React.Fragment>
                 ))
             )}
         </div>

@@ -88,13 +88,13 @@ export default function MyTraineeClasses({ userData }) {
         <div>
             <div className="nav-bar">
                 <div className={`nav-item ${activeTab === 'past' ? 'active' : ''}`} onClick={() => setActiveTab('past')}>
-                    Past Classes <span className="notification-badge1">{pastClasses.length}</span>
+                    Past Classes ({pastClasses.length})
                 </div>
                 <div className={`nav-item ${activeTab === 'approved' ? 'active' : ''}`} onClick={() => setActiveTab('approved')}>
-                    Approved Classes <span className="notification-badge1">{approvedClasses.length}</span>
+                 Approved Classes ({approvedClasses.length})
                 </div>
                 <div className={`nav-item ${activeTab === 'registered' ? 'active' : ''}`} onClick={() => setActiveTab('registered')}>
-                    Registered Classes <span className="notification-badge1">{registeredClasses.length}</span>
+                Registered Classes ({registeredClasses.length})
                 </div>
             </div>
 
