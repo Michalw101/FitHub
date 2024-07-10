@@ -1,5 +1,4 @@
 const pool = require('../DB.js');
-const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 async function getAllTrainees() {
@@ -130,7 +129,7 @@ async function deleteWaitingTrainees(query) {
     }
 }
 
-async function deleteTrainee(id, sendMail) {
+async function deleteTrainee(id) {
     const connection = await pool.getConnection();
     try {
         await connection.beginTransaction();
@@ -169,8 +168,6 @@ async function deleteTrainee(id, sendMail) {
 
         await connection.commit();
 
-        if (sendMail) sendEmailToUser(user);
-
         return { success: true, message: "Trainee deleted successfully" };
     } catch (err) {
         await connection.rollback();
@@ -180,44 +177,6 @@ async function deleteTrainee(id, sendMail) {
         connection.release();
     }
 }
-
-
-
-const { SENDER_EMAIL, APP_PASSWORD } = process.env
-
-const sendMail = async (transporter, mailOptions) => {
-
-    try {
-        await transporter.sendMail(mailOptions);
-        console.log('Email sent');
-    }
-    catch (error) {
-        console.error(error);
-    }
-}
-
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-        user: SENDER_EMAIL,
-        pass: APP_PASSWORD,
-    },
-});
-
-const sendEmailToUser = (user) => {
-    const mailOptions = {
-        from: SENDER_EMAIL,
-        to: user.email,
-        subject: `Hi ${user.first_name}`,
-        text: `Due to unusual behavior that does not comply with the regulations of the Fithub website, we are forced to delete your account. Your account has been deleted. FitHub`
-    }
-    sendMail(transporter, mailOptions)
-}
-
-
 
 
 async function updateTrainee(body, id) {
@@ -248,8 +207,6 @@ async function updateTrainee(body, id) {
         throw error;
     }
 };
-
-
 
 async function checkIfApproved(query) {
     try {
@@ -288,8 +245,5 @@ async function createWaitingTrainee(body) {
         }
       }
 };
-
-
-
 
 module.exports = { getAllTrainees, createWaitingTrainee, deleteTrainee, deleteTraineeFromClass, getApprovedTrainees, getWaitingTrainees, checkIfApproved, addApprovedTrainees,getTraineesByTrainer, deleteWaitingTrainees, updateTrainee }

@@ -1,6 +1,4 @@
 const pool = require('../DB.js');
-const nodemailer = require('nodemailer');
-require('dotenv').config();
 const crypto = require('crypto');
 
 async function getAllTrainers() {
@@ -20,7 +18,7 @@ async function getAllTrainers() {
     }
 }
 
-async function createTrainer(body) {
+async function createTrainer(body, hashedPassword, salt) {
     try {
         console.log('Model received data:', body);
         const { user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, specialization, experience, instegram_link, facebook_link, twitter_link } = body;
@@ -33,33 +31,15 @@ async function createTrainer(body) {
         const trainerInsertQuery = `INSERT INTO trainers (trainer_id, degree_link, specialization, experience, instegram_link, facebook_link, twitter_link) VALUES (?,?,?,?,?,?,?)`;
         await pool.query(trainerInsertQuery, [user_id, degree_link, specialization, experience, instegram_link, facebook_link, twitter_link]);
 
-        const password = generateRandomPassword(8);
-        const salt = crypto.randomBytes(16).toString('hex');
-        const saltedPassword = password + salt;
-        const hashedPassword = crypto.createHash('sha256').update(saltedPassword).digest('hex');
-
         const passwordInsertQuery = `INSERT INTO passwords (user_id, user_password, salt) VALUES (?, ?, ?)`;
         await pool.query(passwordInsertQuery, [user_id, hashedPassword, salt]);
 
-        sendAcceptEmailToUser(body, password);
-
-        console.log("User created successfully");
         return { user: body, ok: true };
 
     } catch (error) {
         console.error("Error creating user:", error);
         throw error;
     }
-}
-
-const generateRandomPassword = (length) => {
-    const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let password = "";
-    for (let i = 0; i < length; i++) {
-        const randomNumber = Math.floor(Math.random() * chars.length);
-        password += chars.substring(randomNumber, randomNumber + 1);
-    }
-    return password;
 }
 
 async function postSignup(body) {
@@ -69,91 +49,12 @@ async function postSignup(body) {
         const userInsertQuery = `INSERT INTO trainers_waiting_list (user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, experience, specialization, last_work_place, place_of_study, instegram_link, facebook_link, twitter_link) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
         await pool.query(userInsertQuery, [user_id, first_name, last_name, email, phone, birth_date, gender, degree_link, experience, specialization, last_work_place, diploma, instegram_link, facebook_link, twitter_link]);
 
-        sendEmailToAdmin(body);
-        sendEmailToUser(body);
-
-        console.log("User created successfully");
         return { user: body, ok: true };
 
     } catch (error) {
         console.log("Error creating user:", error);
         throw error;
     }
-}
-
-const { SENDER_EMAIL, ADMIN_1_EMAIL, ADMIN_2_EMAIL, APP_PASSWORD } = process.env;
-
-const sendMail = async (transporter, mailOptions) => {
-    try {
-        await transporter.sendMail(mailOptions);
-        console.log('Email sent');
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-        user: SENDER_EMAIL,
-        pass: APP_PASSWORD,
-    },
-});
-
-const sendEmailToAdmin = (user) => {
-    const mailOptions = {
-        from: SENDER_EMAIL,
-        to: [ADMIN_1_EMAIL, ADMIN_2_EMAIL],
-        subject: `New trainer registration (${user.email})`,
-        text: `New trainer wants to join your team!
-        ${user.first_name} ${user.last_name} (${user.gender})
-        with ${user.experience} years of experience in ${user.specialization},
-        Degree link to your Google Drive: ${user.degree_link} (degree from ${user.diploma})
-        Email to contact ${user.first_name} ${user.last_name}: ${user.email}
-        Or by phone: ${user.phone}`
-    };
-    sendMail(transporter, mailOptions);
-}
-
-const sendAcceptEmailToUser = (user, password) => {
-    const mailOptions = {
-        from: SENDER_EMAIL,
-        to: user.email,
-        subject: `Congratulations ${user.first_name} 😍`,
-        text: `Dear ${user.first_name} ${user.last_name},
-
-           I hope you're doing well.
-
-           I'm excited to let you know that we'd love to have you join our team at FitHub. Your skills and passion for fitness really stood out to us, and we think you'll be a great fit.
-
-           Here is your password: 
-
-           ${password} 
-           
-           Feel free to change it after your first login.
-
-           If you have any questions or need more info, feel free to reach out. We're looking forward to having you with us!
-
-           FitHub Team`
-    };
-    sendMail(transporter, mailOptions);
-}
-
-const sendEmailToUser = (user) => {
-    const mailOptions = {
-        from: SENDER_EMAIL,
-        to: user.email,
-        subject: `Thank you for your registration ${user.first_name} 🤗`,
-        text: `Dear ${user.first_name} ${user.last_name},
-        We have received your request to apply as a trainer in our application,
-        we are handling your request and will answer you as soon as possible!
-        Thank you!
-        FitHub`
-    };
-    sendMail(transporter, mailOptions);
 }
 
 async function updateTrainer(body, id) {
@@ -202,8 +103,6 @@ async function deleteTrainer(id) {
         const userSql = `DELETE FROM users
                            WHERE user_id = ?`;
         await pool.query(userSql, id);
-
-
 
         return { success: true, message: "Trainer delete successfully" };
 

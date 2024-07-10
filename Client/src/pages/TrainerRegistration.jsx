@@ -80,9 +80,6 @@ function TrainerRegistration({ setUserData }) {
         return Object.keys(newErrors).length === 0;
     };
     
-  
-    
-
     const nextStep = async () => {
         let isValid = true;
         switch (currentStep) {

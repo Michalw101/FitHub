@@ -59,7 +59,6 @@ const TraineeProfile = () => {
 
     useEffect(() => {
         if (salt) {
-
             serverRequests('POST', 'login', { password: newPassword.old, salt: salt, user_id: formData.user_id })
                 .then(response => {
                     console.log(response);
