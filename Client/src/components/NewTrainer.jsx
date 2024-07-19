@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { serverRequests } from '../Api';
 import '../css/newTrainer.css'
+require('dotenv').config();
+
+const { ADMIN_1_ID, ADMIN_2_ID} = process.env;
 
 export default function NewTrainer({ trainer, setTrainers, trainers }) {
     const [acceptingTrainer, setAcceptingTrainer] = useState(false);
@@ -18,7 +21,7 @@ export default function NewTrainer({ trainer, setTrainers, trainers }) {
                 }).then((data) => {
                     if (data.ok == false) {
                         alert(data.res);
-                        serverRequests('POST', 'notifications', { users: [214955064, 214859415], message: data.message })
+                        serverRequests('POST', 'notifications', { users: [ADMIN_1_ID, ADMIN_2_ID], message: data.message })
                             .then(response => {
                                 if (!response.ok) {
                                     return;

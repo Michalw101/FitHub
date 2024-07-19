@@ -3,6 +3,9 @@ import { serverRequests } from '../Api';
 import TraineeSmallProfile from '../components/TraineeSmallProfile';
 import '../css/trainees.css';
 import { useNavigate } from 'react-router-dom';
+require('dotenv').config();
+
+const { ADMIN_1_ID, ADMIN_2_ID} = process.env;
 
 const Trainees = () => {
 
@@ -22,7 +25,7 @@ const Trainees = () => {
       .then(data => {
         if (data.ok == false) {
           alert(data.res);
-          serverRequests('POST', 'notifications', { users: [214955064, 214859415], message: data.message })
+          serverRequests('POST', 'notifications', { users: [ADMIN_1_ID, ADMIN_2_ID], message: data.message })
             .then(response => {
               if (!response.ok) {
                 return;

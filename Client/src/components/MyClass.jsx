@@ -4,6 +4,9 @@ import '../css/myClass.css';
 import { serverRequests } from '../Api';
 import EditClassModal from './EditClassModal'
 import toast, { Toaster } from 'react-hot-toast';
+require('dotenv').config();
+
+const { ADMIN_1_ID, ADMIN_2_ID} = process.env;
 
 
 export default function MyClass({ myClass, myClasses, setMyClasses, pastClass }) {
@@ -167,7 +170,7 @@ export default function MyClass({ myClass, myClasses, setMyClasses, pastClass })
                     .then((data) => {
                         if (data.ok == false) {
                             alert(data.res);
-                            serverRequests('POST', 'notifications', { users: [214955064, 214859415], message: data.message })
+                            serverRequests('POST', 'notifications', { users: [ADMIN_1_ID, ADMIN_2_ID], message: data.message })
                                 .then(response => {
                                     if (!response.ok) {
                                         return;
