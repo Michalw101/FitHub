@@ -22,7 +22,7 @@ app.use(session({
   cookie: { secure: false } 
 }));
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 const usersRouter = require('./routes/usersRouter');
 app.use("/users", usersRouter);

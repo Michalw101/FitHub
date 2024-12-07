@@ -3,9 +3,8 @@ import MyClass from '../components/MyClass';
 import { serverRequests } from '../Api';
 import '../css/myClasses.css';
 import { useNavigate } from 'react-router-dom';
-require('dotenv').config();
-
-const { ADMIN_1_ID, ADMIN_2_ID} = process.env;
+const  ADMIN_1_ID =1;
+const  ADMIN_2_ID =1;
 
 export default function MyClasses({ userData }) {
     const [myClasses, setMyClasses] = useState(null);

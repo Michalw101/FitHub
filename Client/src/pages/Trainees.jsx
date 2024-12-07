@@ -3,9 +3,8 @@ import { serverRequests } from '../Api';
 import TraineeSmallProfile from '../components/TraineeSmallProfile';
 import '../css/trainees.css';
 import { useNavigate } from 'react-router-dom';
-require('dotenv').config();
-
-const { ADMIN_1_ID, ADMIN_2_ID} = process.env;
+const  ADMIN_1_ID =1;
+const  ADMIN_2_ID =1;
 
 const Trainees = () => {
 

@@ -5,9 +5,10 @@ import { serverRequests } from '../Api';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/addClass.css';
 
-require('dotenv').config();
 
-const { ADMIN_1_ID, ADMIN_2_ID} = process.env;
+const  ADMIN_1_ID =1;
+const  ADMIN_2_ID =1;
+
 
 
 const AddClass = ({ onClose, newClass, handleChanged, setClasses, classes }) => {

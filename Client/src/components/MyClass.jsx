@@ -4,10 +4,9 @@ import '../css/myClass.css';
 import { serverRequests } from '../Api';
 import EditClassModal from './EditClassModal'
 import toast, { Toaster } from 'react-hot-toast';
-require('dotenv').config();
 
-const { ADMIN_1_ID, ADMIN_2_ID} = process.env;
-
+const  ADMIN_1_ID =1;
+const  ADMIN_2_ID =1;
 
 export default function MyClass({ myClass, myClasses, setMyClasses, pastClass }) {
     const [registeredUsers, setRegisteredUsers] = useState([]);
